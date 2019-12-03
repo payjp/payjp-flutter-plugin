@@ -1,0 +1,15 @@
+.DS_Store
+.dart_tool/
+
+.packages
+.pub/
+
+build/
+
+.vscode/settings.json
+.vscode/launch.json
+
+*.iml
+*.ipr
+*.iws
+.idea/

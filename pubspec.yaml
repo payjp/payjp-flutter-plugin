@@ -1,0 +1,20 @@
+name: payjp_flutter
+description: A Flutter plugin for PAY.JP Mobile SDK.
+version: 0.0.1
+author: PAY.JP Support <support@pay.jp>
+homepage: https://github.com/payjp/payjp-flutter-plugin
+documentation: https://github.com/payjp/payjp-flutter-plugin
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+
+flutter:
+  plugin:
+    androidPackage: jp.pay.flutter
+    pluginClass: PayjpFlutterPlugin
