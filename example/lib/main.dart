@@ -35,7 +35,7 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   void _onStartCardForm() async {
-    await Payjp.startCardForm(null);
+    await Payjp.startCardForm();
   }
 
   void _onStartApplePay(BuildContext context) {

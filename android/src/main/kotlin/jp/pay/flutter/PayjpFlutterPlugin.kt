@@ -5,21 +5,46 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
+import jp.pay.android.Payjp
+import jp.pay.android.PayjpConfiguration
+import jp.pay.android.model.TenantId
 
-class PayjpFlutterPlugin: MethodCallHandler {
+class PayjpFlutterPlugin(
+  register: Registrar,
+  channel: MethodChannel
+) : MethodCallHandler {
   companion object {
+    private const val CHANNEL_NAME = "payjp"
     @JvmStatic
     fun registerWith(registrar: Registrar) {
-      val channel = MethodChannel(registrar.messenger(), "payjp_flutter")
-      channel.setMethodCallHandler(PayjpFlutterPlugin())
+      val channel = MethodChannel(registrar.messenger(), CHANNEL_NAME)
+      channel.setMethodCallHandler(PayjpFlutterPlugin(registrar, channel))
     }
   }
 
-  override fun onMethodCall(call: MethodCall, result: Result) {
-    if (call.method == "getPlatformVersion") {
-      result.success("Android ${android.os.Build.VERSION.RELEASE}")
-    } else {
-      result.notImplemented()
+  private val cardFormModule = CardFormModule(register, channel)
+
+  override fun onMethodCall(call: MethodCall, result: Result) = when (call.method) {
+    ChannelContracts.CONFIGURE -> {
+      val publicKey = checkNotNull(call.argument<String>("publicKey"))
+      val debugEnabled = checkNotNull(call.argument<Boolean>("debugEnabled"))
+      Payjp.init(PayjpConfiguration.Builder(publicKey = publicKey)
+        .setDebugEnabled(debugEnabled)
+        .setTokenBackgroundHandler(cardFormModule)
+        .build())
+      result.success(null)
     }
+    ChannelContracts.START_CARD_FORM -> {
+      val tenantId = call.argument<String>("tenantId")?.let { TenantId(it) }
+      cardFormModule.startCardForm(result, tenantId)
+    }
+    ChannelContracts.SHOW_TOKEN_PROCESSING_ERROR -> {
+      val message = checkNotNull(call.argument<String>("message"))
+      cardFormModule.showTokenProcessingError(result, message)
+    }
+    ChannelContracts.COMPLETE_CARD_FORM -> {
+      cardFormModule.completeCardForm(result)
+    }
+    else -> result.notImplemented()
   }
 }
