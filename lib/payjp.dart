@@ -1,12 +1,15 @@
 import 'dart:async';
 
+import 'package:built_value/standard_json_plugin.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'package:payjp_flutter/card_form_status.dart';
+import 'package:payjp_flutter/card_token.dart';
+import 'package:payjp_flutter/serializers.dart';
 
-typedef OnCardFormCompletedCallback = void Function(Object token); // TODO: type
+typedef OnCardFormCompletedCallback = void Function(Token token);
 typedef OnCardFormCanceledCallback = void Function();
-typedef OnCardFormProducedTokenCallback = CardFormStatus Function(Object token); // TODO: type
+typedef OnCardFormProducedTokenCallback = FutureOr<CardFormStatus> Function(Token token);
 
 // ignore: avoid_classes_with_only_static_members
 class Payjp {
@@ -14,9 +17,11 @@ class Payjp {
   static OnCardFormCompletedCallback _onCardFormCompletedCallback;
   static OnCardFormProducedTokenCallback _onCardFormProducedTokenCallback;
 
-  static final MethodChannel _channel =
-      const MethodChannel('payjp')
-        ..setMethodCallHandler(_nativeCallHandler);
+  static final MethodChannel _channel = const MethodChannel('payjp')
+    ..setMethodCallHandler(_nativeCallHandler);
+
+  static final _serializers =
+      (serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
 
   static Future<dynamic> _nativeCallHandler(MethodCall call) async {
     switch (call.method) {
@@ -27,24 +32,31 @@ class Payjp {
         break;
       case 'onCardFormCompleted':
         if (_onCardFormCompletedCallback != null) {
-          _onCardFormCompletedCallback(call.arguments); // TODO: convert
+          final token =
+              _serializers.deserializeWith(Token.serializer, call.arguments);
+          _onCardFormCompletedCallback(token);
         }
         break;
       case 'onCardFormProducedToken':
-        var status = CardFormComplete();
+        CardFormStatus status = CardFormComplete();
         if (_onCardFormProducedTokenCallback != null) {
-          status = _onCardFormProducedTokenCallback(call.arguments); // TODO: convert
+          final token =
+              _serializers.deserializeWith(Token.serializer, call.arguments);
+          final statusFutureOr = _onCardFormProducedTokenCallback(token);
+          if (statusFutureOr is Future<CardFormStatus>) {
+            status = await statusFutureOr;
+          } else {
+            status = statusFutureOr as CardFormStatus;
+          }
         }
-        await requestCardFormStatus(status);
+        await _requestCardFormStatus(status);
         break;
     }
     return null;
   }
 
-  static Future configure({
-    @required String publicKey,
-    bool debugEnabled = false
-  }) async {
+  static Future configure(
+      {@required String publicKey, bool debugEnabled = false}) async {
     final params = <String, dynamic>{
       'publicKey': publicKey,
       'debugEnabled': debugEnabled,
@@ -52,12 +64,11 @@ class Payjp {
     await _channel.invokeMethod('configure', params);
   }
 
-  static Future startCardForm({
-    OnCardFormCanceledCallback onCardFormCanceledCallback,
-    OnCardFormCompletedCallback onCardFormCompletedCallback,
-    OnCardFormProducedTokenCallback onCardFormProducedTokenCallback,
-    String tenantId
-  }) async {
+  static Future startCardForm(
+      {OnCardFormCanceledCallback onCardFormCanceledCallback,
+      OnCardFormCompletedCallback onCardFormCompletedCallback,
+      OnCardFormProducedTokenCallback onCardFormProducedTokenCallback,
+      String tenantId}) async {
     _onCardFormCanceledCallback = onCardFormCanceledCallback;
     _onCardFormCompletedCallback = onCardFormCompletedCallback;
     _onCardFormProducedTokenCallback = onCardFormProducedTokenCallback;
@@ -67,8 +78,7 @@ class Payjp {
     await _channel.invokeMethod('startCardForm', params);
   }
 
-  static Future requestCardFormStatus(
-      CardFormStatus status) async {
+  static Future _requestCardFormStatus(CardFormStatus status) async {
     if (status is CardFormComplete) {
       await completeCardForm();
     } else if (status is CardFormError) {
@@ -87,5 +97,5 @@ class Payjp {
     await _channel.invokeMethod('showTokenProcessingError', params);
   }
 
-  // TODO: applePay
+// TODO: applePay
 }
