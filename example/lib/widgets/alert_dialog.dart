@@ -14,9 +14,6 @@ Future<void> showAlertDialog({
     child: Text(message),
   );
   final buttonText = Text(button);
-  onPressed() {
-    Navigator.pop(context);
-  };
   if (Platform.isIOS) {
     return showCupertinoDialog<void>(
       context: context,
@@ -26,7 +23,7 @@ Future<void> showAlertDialog({
         actions: <Widget>[
           CupertinoDialogAction(
             child: buttonText,
-            onPressed: onPressed,
+            onPressed: () => Navigator.of(context).pop(),
           )
         ],
       ));
@@ -40,7 +37,7 @@ Future<void> showAlertDialog({
         actions: <Widget>[
           FlatButton(
             child: buttonText,
-            onPressed: onPressed,
+            onPressed: () => Navigator.of(context).pop(),
           ),
         ],
       ));
