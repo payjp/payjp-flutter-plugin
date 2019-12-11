@@ -8,14 +8,16 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 A Flutter plugin for PAY.JP Mobile SDK.
                        DESC
-  s.homepage         = 'http://example.com'
-  s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.homepage         = 'https://github.com/payjp/payjp-flutter-plugin'
+  s.license          = { :type => 'MIT' }
+  s.author           = { 'PAY.JP (https://pay.jp)' => 'support@pay.jp' }
+  s.swift_version    = '5.0'
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
+  s.dependency 'PAYJP', '~> 1.0.2'
   s.dependency 'Flutter'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
 end
 

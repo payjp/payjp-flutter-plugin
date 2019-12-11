@@ -9,7 +9,8 @@ import 'package:payjp_flutter/serializers.dart';
 
 typedef OnCardFormCompletedCallback = void Function(Token token);
 typedef OnCardFormCanceledCallback = void Function();
-typedef OnCardFormProducedTokenCallback = FutureOr<CardFormStatus> Function(Token token);
+typedef OnCardFormProducedTokenCallback = FutureOr<CardFormStatus> Function(
+    Token token);
 
 // ignore: avoid_classes_with_only_static_members
 class Payjp {
