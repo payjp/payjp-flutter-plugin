@@ -1,12 +1,12 @@
 PODS:
   - Flutter (1.0.0)
-  - PAYJP (1.0.2)
+  - PAYJP (1.1.0)
   - payjp_flutter (0.0.1):
     - Flutter
-    - PAYJP (~> 1.0.2)
+    - PAYJP (~> 1.1.0)
 
 DEPENDENCIES:
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `Flutter`)
   - payjp_flutter (from `.symlinks/plugins/payjp_flutter/ios`)
 
 SPEC REPOS:
@@ -15,15 +15,15 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: Flutter
   payjp_flutter:
     :path: ".symlinks/plugins/payjp_flutter/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  PAYJP: e7ce0c08a832bd3c271b126b8cc83334be4b270c
-  payjp_flutter: 841bd03e687f2d1da6cea933fb824b7f7ab09e8b
+  PAYJP: 039c6329b1d09c06350c25705fd8b516f20d1c40
+  payjp_flutter: d932fe6dfcaa5d2d71055321829c6d587073b5d2
 
-PODFILE CHECKSUM: b6a0a141693093b304368d08511b46cf3d1d0ac5
+PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
 
 COCOAPODS: 1.8.4

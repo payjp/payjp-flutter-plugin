@@ -24,7 +24,7 @@ internal class CardFormModule(
 
     init {
         registrar.addActivityResultListener { _, _, data ->
-            Payjp.handleCardFormResult(data, PayjpCardFormResultCallback { result ->
+            Payjp.cardForm().handleResult(data, PayjpCardFormResultCallback { result ->
                 if (result.isSuccess()) {
                     val tokenMap = result.retrieveToken().toMap()
                     channel.invokeMethod(ChannelContracts.ON_CARD_FORM_COMPLETED, tokenMap)
@@ -39,7 +39,7 @@ internal class CardFormModule(
     // handle MethodCall
 
     fun startCardForm(result: MethodChannel.Result, tenantId: TenantId?) {
-        Payjp.startCardForm(currentActivity, tenant = tenantId)
+        Payjp.cardForm().start(currentActivity, tenant = tenantId)
         result.success(null)
     }
 
