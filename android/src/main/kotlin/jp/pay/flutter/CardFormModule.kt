@@ -26,8 +26,7 @@ internal class CardFormModule(
         registrar.addActivityResultListener { _, _, data ->
             Payjp.cardForm().handleResult(data, PayjpCardFormResultCallback { result ->
                 if (result.isSuccess()) {
-                    val tokenMap = result.retrieveToken().toMap()
-                    channel.invokeMethod(ChannelContracts.ON_CARD_FORM_COMPLETED, tokenMap)
+                    channel.invokeMethod(ChannelContracts.ON_CARD_FORM_COMPLETED, null)
                 } else if (result.isCanceled()) {
                     channel.invokeMethod(ChannelContracts.ON_CARD_FORM_CANCELED, null)
                 }

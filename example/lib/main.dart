@@ -18,7 +18,8 @@ void main() => runApp(MaterialApp(
 class HomeScreen extends StatefulWidget {
   @override
   HomeScreenState createState() => HomeScreenState();
-  static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  static final GlobalKey<ScaffoldState> scaffoldKey =
+      GlobalKey<ScaffoldState>();
 }
 
 class HomeScreenState extends State<HomeScreen> {
@@ -61,12 +62,12 @@ class HomeScreenState extends State<HomeScreen> {
         message: 'カード登録をキャンセルしました。');
   }
 
-  void _onCardFormCompleted(Token token) {
-    print('_onCardFormCompleted $token');
+  void _onCardFormCompleted() {
+    print('_onCardFormCompleted');
     showAlertDialog(
         context: HomeScreen.scaffoldKey.currentContext,
         title: 'カード登録',
-        message: 'カードを登録しました。\nid: ${token.id}');
+        message: 'カードを登録しました。');
   }
 
   FutureOr<CardFormStatus> _onCardFormProducedToken(Token token) async {

@@ -7,7 +7,7 @@ import 'package:payjp_flutter/card_form_status.dart';
 import 'package:payjp_flutter/card_token.dart';
 import 'package:payjp_flutter/serializers.dart';
 
-typedef OnCardFormCompletedCallback = void Function(Token token);
+typedef OnCardFormCompletedCallback = void Function();
 typedef OnCardFormCanceledCallback = void Function();
 typedef OnCardFormProducedTokenCallback = FutureOr<CardFormStatus> Function(
     Token token);
@@ -33,9 +33,7 @@ class Payjp {
         break;
       case 'onCardFormCompleted':
         if (_onCardFormCompletedCallback != null) {
-          final token =
-              _serializers.deserializeWith(Token.serializer, call.arguments);
-          _onCardFormCompletedCallback(token);
+          _onCardFormCompletedCallback();
         }
         break;
       case 'onCardFormProducedToken':
