@@ -46,7 +46,7 @@ class CardFormModule : CardFormModuleType {
 
     func showTokenProcessingError(_ result: FlutterResult, with message: String) {
         if let completionHandler = self.completionHandler {
-            completionHandler(nil) // TODO: Error with message
+            completionHandler(TokenStoringError(errorDescription: message))
             self.completionHandler = nil
         }
         result(nil)
@@ -92,7 +92,7 @@ extension CardFormModule : CardFormViewControllerDelegate {
                                 completionHandler: @escaping (Error?) -> Void) {
         self.completionHandler = completionHandler
         let method = ChannelMethodFromNative.onCardFormProducedToken
-        self.channel.invokeMethod(method.rawValue, arguments: nil) // TODO: token as dictionary
+        self.channel.invokeMethod(method.rawValue, arguments: token.rawValue)
     }
 
 }

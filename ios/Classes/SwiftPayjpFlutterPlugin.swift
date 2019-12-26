@@ -30,10 +30,16 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
         result(nil)
         break;
     case .startCardForm:
+        let tenantId = argsDictionary?["tenantId"] as? String
+        self.cardFormModule.startCardForm(result, with: tenantId)
         break;
     case .showTokenProcessingError:
+        if let message = argsDictionary?["message"] as? String {
+            self.cardFormModule.showTokenProcessingError(result, with: message)
+        }
         break;
     case .completeCardForm:
+        self.cardFormModule.completeCardForm(result)
         break;
     }
   }
