@@ -1,9 +1,9 @@
 PODS:
   - Flutter (1.0.0)
-  - PAYJP (1.1.0)
+  - PAYJP (1.1.1)
   - payjp_flutter (0.0.1):
     - Flutter
-    - PAYJP (~> 1.1.0)
+    - PAYJP (~> 1.1.1)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -21,8 +21,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  PAYJP: 039c6329b1d09c06350c25705fd8b516f20d1c40
-  payjp_flutter: d932fe6dfcaa5d2d71055321829c6d587073b5d2
+  PAYJP: b90359de75e6293d1f5e2fe05dfdf6c368f9e770
+  payjp_flutter: 1083ec3923ca9770c17a7cbf333cbe81d9d0dbf9
 
 PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
 
