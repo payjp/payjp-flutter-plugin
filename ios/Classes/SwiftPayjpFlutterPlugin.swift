@@ -65,8 +65,11 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
             }
             break
         case .completeApplePay:
-            if let errorMessage = argsDictionary?["errorMessage"] as? String {
-                self.applePayModule.completeApplePay(result, with: errorMessage)
+            if let isSuccess = argsDictionary?["isSuccess"] as? Bool {
+                let errorMessage = argsDictionary?["errorMessage"] as? String
+                self.applePayModule.completeApplePay(result,
+                                                     isSuccess: isSuccess,
+                                                     errorMessage: errorMessage)
             }
             break
         }

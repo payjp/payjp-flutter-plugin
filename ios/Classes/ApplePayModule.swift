@@ -23,7 +23,10 @@ protocol ApplePayModuleType {
         summaryItemAmount: String,
         requiredBillingAddress: Bool)
 
-    func completeApplePay(_ result: FlutterResult, with errorMessage: String?)
+    func completeApplePay(
+        _ result: FlutterResult,
+        isSuccess: Bool,
+        errorMessage: String?)
 }
 
 // MARK: - ApplePayModule
@@ -74,20 +77,30 @@ class ApplePayModule: NSObject, ApplePayModuleType {
         result(nil)
     }
 
-    func completeApplePay(_ result: FlutterResult, with errorMessage: String?) {
+    func completeApplePay(
+        _ result: FlutterResult,
+        isSuccess: Bool,
+        errorMessage: String?
+    ) {
         if let completionHandler = self.completionHandler {
             if #available(iOS 11.0, *) {
-                if let errorMessage = errorMessage {
-                    let error = TokenStoringError(errorDescription: errorMessage)
-                    completionHandler(PKPaymentAuthorizationResult.init(status: .failure, errors: [error]))
-                } else {
+                if isSuccess {
                     completionHandler(PKPaymentAuthorizationResult.init(status: .success, errors: nil))
+                } else {
+                    let errors: [Error]?
+                    if let errorMessage = errorMessage {
+                        let error = TokenStoringError(errorDescription: errorMessage)
+                        errors = [error]
+                    } else {
+                        errors = nil
+                    }
+                    completionHandler(PKPaymentAuthorizationResult.init(status: .failure, errors: errors))
                 }
             } else {
-                if errorMessage != nil {
-                    completionHandler(PKPaymentAuthorizationStatus.failure)
-                } else {
+                if isSuccess {
                     completionHandler(PKPaymentAuthorizationStatus.success)
+                } else {
+                    completionHandler(PKPaymentAuthorizationStatus.failure)
                 }
             }
             self.completionHandler = nil

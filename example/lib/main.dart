@@ -11,6 +11,9 @@ import 'widgets/alert_dialog.dart';
 
 const String payjpPublicKey = "pk_test_0383a1b8f91e8a6e3ea0e2a9";
 
+const String appleMerchantId =
+    'merchant.jp.pay'; // TODO: REPLACE WITH YOUR APPLE MERCHANT ID
+
 void main() => runApp(MaterialApp(
       home: HomeScreen(),
     ));
@@ -24,6 +27,7 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   bool _isLoading = true;
+  bool _isApplePayEnabled = false;
 
   @override
   void initState() {
@@ -33,8 +37,13 @@ class HomeScreenState extends State<HomeScreen> {
 
   Future<void> _initPayjp() async {
     await Payjp.configure(publicKey: payjpPublicKey, debugEnabled: true);
+    var isApplePaySupported = false;
+    if (Platform.isIOS) {
+      isApplePaySupported = await Payjp.isSupportedApplePay();
+    }
     setState(() {
       _isLoading = false;
+      _isApplePayEnabled = isApplePaySupported;
     });
   }
 
@@ -46,12 +55,18 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _onStartApplePay() {
-    // TODO: Apple Pay
-    showAlertDialog(
-        context: HomeScreen.scaffoldKey.currentContext,
-        title: 'TODO',
-        message: 'TODO: unimplemented');
+  void _onStartApplePay() async {
+    await Payjp.makeApplePayToken(
+      appleMerchantId: appleMerchantId,
+      currencyCode: 'JPY',
+      countryCode: 'JP',
+      summaryItemLabel: 'PAY.JP T-shirt',
+      summaryItemAmount: '100',
+      requiredBillingAddress: false,
+      onApplePayProducedTokenCallback: _onApplePayProducedToken,
+      onApplePayFailedRequestTokenCallback: _onApplePayFailedRequestToken,
+      onApplePayCompletedCallback: _onApplePayCompleted,
+    );
   }
 
   void _onCardFormCanceled() {
@@ -88,6 +103,33 @@ You can send token(${token.id}) to your own server to make Customer etc.
     return CardFormComplete();
   }
 
+  FutureOr<String> _onApplePayProducedToken(Token token) async {
+    print('_onApplePayProducedToken');
+    if (backendUrl.isEmpty) {
+      final message = """
+`backendUrl` is not replaced yet.
+You can send token(${token.id}) to your own server to make Customer etc.
+       """;
+      print(message);
+      return null;
+    }
+    try {
+      await saveCard(token);
+    } on ApiException catch (e) {
+      return e.message;
+    }
+    return null;
+  }
+
+  FutureOr<String> _onApplePayFailedRequestToken() async {
+    print('_onApplePayFailedRequestToken');
+    return 'TODO';
+  }
+
+  void _onApplePayCompleted() {
+    print('onApplePayCompleted');
+  }
+
   @override
   Widget build(BuildContext context) => MaterialApp(
         home: Scaffold(
@@ -108,7 +150,10 @@ You can send token(${token.id}) to your own server to make Customer etc.
                     Card(
                         child: ListTile(
                       title: Text('Start ApplePay Sample (iOS only)'),
-                      enabled: Platform.isIOS,
+                      subtitle: Text(_isApplePayEnabled
+                          ? 'Sample payment with Apple Pay.'
+                          : 'This device is not supported.'),
+                      enabled: _isApplePayEnabled,
                       onTap: _onStartApplePay,
                     )),
                   ],
