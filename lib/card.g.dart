@@ -100,10 +100,10 @@ class _$CardSerializer implements StructuredSerializer<Card> {
       'brand',
       serializers.serialize(object.brand,
           specifiedType: const FullType(CardBrand)),
-      'expirationMonth',
+      'exp_month',
       serializers.serialize(object.expirationMonth,
           specifiedType: const FullType(int)),
-      'expirationYear',
+      'exp_year',
       serializers.serialize(object.expirationYear,
           specifiedType: const FullType(int)),
       'fingerprint',
@@ -148,11 +148,11 @@ class _$CardSerializer implements StructuredSerializer<Card> {
           result.brand = serializers.deserialize(value,
               specifiedType: const FullType(CardBrand)) as CardBrand;
           break;
-        case 'expirationMonth':
+        case 'exp_month':
           result.expirationMonth = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'expirationYear':
+        case 'exp_year':
           result.expirationYear = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;

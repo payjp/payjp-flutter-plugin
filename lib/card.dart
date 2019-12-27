@@ -21,7 +21,7 @@ class CardBrand extends EnumClass {
   @BuiltValueEnumConst(wireName: 'Unknown')
   static const CardBrand unknown = _$unknown;
 
-  const CardBrand._(String name): super(name);
+  const CardBrand._(String name) : super(name);
 
   static BuiltSet<CardBrand> get values => _$cardBrandValues;
   static CardBrand valueOf(String name) => _$cardBrandValueOf(name);
@@ -32,7 +32,9 @@ abstract class Card implements Built<Card, CardBuilder> {
   @nullable
   String get name;
   CardBrand get brand;
+  @BuiltValueField(wireName: "exp_month")
   int get expirationMonth;
+  @BuiltValueField(wireName: "exp_year")
   int get expirationYear;
   String get fingerprint;
   bool get livemode;

@@ -8,8 +8,8 @@ internal fun Card.toMap(): Map<String, Any?> = linkedMapOf(
     "name" to name,
     "last4" to last4,
     "brand" to brand.rawValue,
-    "expirationMonth" to expirationMonth,
-    "expirationYear" to expirationYear,
+    "exp_month" to expirationMonth,
+    "exp_year" to expirationYear,
     "fingerprint" to fingerprint,
     "livemode" to livemode,
     "created" to created.time
