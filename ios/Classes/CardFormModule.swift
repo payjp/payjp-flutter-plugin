@@ -20,7 +20,7 @@ protocol CardFormModuleType {
 
 // MARK: - CardFormModule
 
-class CardFormModule : CardFormModuleType {
+class CardFormModule: CardFormModuleType {
     private let channel: FlutterMethodChannel
     private var completionHandler: ((Error?) -> Void)?
 
@@ -63,17 +63,17 @@ class CardFormModule : CardFormModuleType {
 
 // MARK: - CardFormViewControllerDelegate
 
-extension CardFormModule : CardFormViewControllerDelegate {
+extension CardFormModule: CardFormViewControllerDelegate {
     func cardFormViewController(_: CardFormViewController,
                                 didCompleteWith result: CardFormResult) {
         let method: ChannelMethodFromNative
         switch result {
         case .cancel:
             method = .onCardFormCanceled
-            break;
+            break
         case .success:
             method = .onCardFormCompleted
-            break;
+            break
         }
         if let hostViewController = UIApplication.shared.keyWindow?.rootViewController {
             if let navigationController = hostViewController as? UINavigationController {

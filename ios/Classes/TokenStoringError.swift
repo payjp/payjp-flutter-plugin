@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct TokenStoringError : LocalizedError {
+struct TokenStoringError: LocalizedError {
     let errorDescription: String
 }

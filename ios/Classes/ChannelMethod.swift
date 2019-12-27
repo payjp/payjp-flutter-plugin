@@ -12,12 +12,18 @@ enum ChannelMethodToNative: String {
     case configure,
     startCardForm,
     showTokenProcessingError,
-    completeCardForm
+    completeCardForm,
+    isSupportedApplePay,
+    makeApplePayToken,
+    completeApplePay
 }
 
 /// MethodCall from Native
 enum ChannelMethodFromNative: String {
     case onCardFormCompleted,
     onCardFormCanceled,
-    onCardFormProducedToken
+    onCardFormProducedToken,
+    onApplePayProducedToken,
+    onApplePayFailedRequestToken,
+    onApplePayCompleted
 }
