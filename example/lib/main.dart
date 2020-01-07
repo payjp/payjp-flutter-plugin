@@ -9,10 +9,11 @@ import 'package:payjp_flutter/payjp.dart';
 import 'sample_backend_service.dart';
 import 'widgets/alert_dialog.dart';
 
+// TODO: REPLACE WITH YOUR PAYJP Public key
 const String payjpPublicKey = "pk_test_0383a1b8f91e8a6e3ea0e2a9";
 
 const String appleMerchantId =
-    'merchant.jp.pay'; // TODO: REPLACE WITH YOUR APPLE MERCHANT ID
+    'merchant.jp.pay.example2'; // TODO: REPLACE WITH YOUR APPLE MERCHANT ID
 
 void main() => runApp(MaterialApp(
       home: HomeScreen(),
