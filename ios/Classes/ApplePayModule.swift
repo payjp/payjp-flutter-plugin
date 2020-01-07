@@ -34,7 +34,7 @@ protocol ApplePayModuleType {
 class ApplePayModule: NSObject, ApplePayModuleType {
 
     private let channel: FlutterMethodChannel
-    private var completionHandler: ((Any) -> Void)?
+    private var completionHandler: Any?
 
     init(channel: FlutterMethodChannel) {
         self.channel = channel
@@ -82,29 +82,35 @@ class ApplePayModule: NSObject, ApplePayModuleType {
         isSuccess: Bool,
         errorMessage: String?
     ) {
-        if let completionHandler = self.completionHandler {
-            if #available(iOS 11.0, *) {
-                if isSuccess {
-                    completionHandler(PKPaymentAuthorizationResult.init(status: .success, errors: nil))
-                } else {
-                    let errors: [Error]?
-                    if let errorMessage = errorMessage {
-                        let error = TokenStoringError(errorDescription: errorMessage)
-                        errors = [error]
-                    } else {
-                        errors = nil
-                    }
-                    completionHandler(PKPaymentAuthorizationResult.init(status: .failure, errors: errors))
-                }
-            } else {
-                if isSuccess {
-                    completionHandler(PKPaymentAuthorizationStatus.success)
-                } else {
-                    completionHandler(PKPaymentAuthorizationStatus.failure)
-                }
+        if #available(iOS 11.0, *) {
+            guard let completion = self.completionHandler as? (PKPaymentAuthorizationResult) -> Void else {
+                result(nil)
+                return
             }
-            self.completionHandler = nil
+            if isSuccess {
+                completion(PKPaymentAuthorizationResult.init(status: .success, errors: nil))
+            } else {
+                let errors: [Error]?
+                if let errorMessage = errorMessage {
+                    let error = TokenStoringError(errorDescription: errorMessage)
+                    errors = [error]
+                } else {
+                    errors = nil
+                }
+                completion(PKPaymentAuthorizationResult.init(status: .failure, errors: errors))
+            }
+        } else {
+            guard let completion = self.completionHandler as? (PKPaymentAuthorizationStatus) -> Void else {
+                result(nil)
+                return
+            }
+            if isSuccess {
+                completion(PKPaymentAuthorizationStatus.success)
+            } else {
+                completion(PKPaymentAuthorizationStatus.failure)
+            }
         }
+        self.completionHandler = nil
         result(nil)
     }
 
@@ -132,7 +138,7 @@ extension ApplePayModule: PKPaymentAuthorizationViewControllerDelegate {
         completion: @escaping (PKPaymentAuthorizationStatus) -> Void
     ) {
         if #available(iOS 11.0, *) {/* nothing */} else {
-            self.completionHandler = (completion as! ((Any) -> Void))
+            self.completionHandler = completion
             self.createToken(with: payment.token)
         }
     }
@@ -143,7 +149,7 @@ extension ApplePayModule: PKPaymentAuthorizationViewControllerDelegate {
         didAuthorizePayment payment: PKPayment,
         handler completion: @escaping (PKPaymentAuthorizationResult) -> Void
     ) {
-        self.completionHandler = (completion as! ((Any) -> Void))
+        self.completionHandler = completion
         self.createToken(with: payment.token)
     }
 
@@ -170,6 +176,7 @@ extension ApplePayModule: PKPaymentAuthorizationViewControllerDelegate {
                 method = .onApplePayFailedRequestToken
                 // TODO: error message strategy
                 let errorObject: [String: Any] = [
+                    "errorType": "applepay",
                     "errorCode": error.errorCode,
                     "errorMessage": error.localizedDescription
                 ]

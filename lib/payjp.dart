@@ -89,7 +89,7 @@ class Payjp {
           }
         }
         final params = <String, dynamic>{
-          'isSuccess': false,
+          'isSuccess': message != null,
           'errorMessage': message,
         };
         await _channel.invokeMethod('completeApplePay', params);
