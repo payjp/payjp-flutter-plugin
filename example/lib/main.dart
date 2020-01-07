@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:payjp_flutter/error_info.dart';
 import 'package:payjp_flutter/card_form_status.dart';
 import 'package:payjp_flutter/card_token.dart';
 import 'package:payjp_flutter/payjp.dart';
@@ -122,9 +123,11 @@ You can send token(${token.id}) to your own server to make Customer etc.
     return null;
   }
 
-  FutureOr<String> _onApplePayFailedRequestToken() async {
+  FutureOr<String> _onApplePayFailedRequestToken(ErrorInfo errorInfo) async {
     print('_onApplePayFailedRequestToken');
-    return 'TODO';
+    print('errorCode ${errorInfo.errorCode}');
+    print('errorMessage ${errorInfo.errorMessage}');
+    return errorInfo.errorMessage;
   }
 
   void _onApplePayCompleted() {

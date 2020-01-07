@@ -9,6 +9,7 @@ part of 'serializers.dart';
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Card.serializer)
       ..add(CardBrand.serializer)
+      ..add(ErrorInfo.serializer)
       ..add(Token.serializer))
     .build();
 

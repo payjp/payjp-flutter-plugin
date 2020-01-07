@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'package:payjp_flutter/card_form_status.dart';
 import 'package:payjp_flutter/card_token.dart';
+import 'package:payjp_flutter/error_info.dart';
 import 'package:payjp_flutter/serializers.dart';
 
 typedef OnCardFormCompletedCallback = void Function();
@@ -13,8 +14,8 @@ typedef OnCardFormProducedTokenCallback = FutureOr<CardFormStatus> Function(
     Token token);
 typedef OnApplePayProducedTokenCallback = FutureOr<String> Function(
     Token token);
-typedef OnApplePayFailedRequestTokenCallback = FutureOr<String>
-    Function(); // TODO: error
+typedef OnApplePayFailedRequestTokenCallback = FutureOr<String> Function(
+    ErrorInfo errorInfo);
 typedef OnApplePayCompletedCallback = void Function();
 
 // ignore: avoid_classes_with_only_static_members
@@ -72,16 +73,18 @@ class Payjp {
           }
         }
         final params = <String, dynamic>{
-          'isSuccess': message != null,
+          'isSuccess': message == null,
           'errorMessage': message,
         };
         await _channel.invokeMethod('completeApplePay', params);
         break;
       case 'onApplePayFailedRequestToken':
-        String message;
+        final errorInfo = _serializers.deserializeWith(
+            ErrorInfo.serializer, call.arguments);
+        var message = errorInfo.errorMessage;
         if (_onApplePayFailedRequestTokenCallback != null) {
-          // TODO: error object
-          final messageFutureOr = _onApplePayFailedRequestTokenCallback();
+          final messageFutureOr =
+              _onApplePayFailedRequestTokenCallback(errorInfo);
           if (messageFutureOr is Future<String>) {
             message = await messageFutureOr;
           } else {
@@ -89,7 +92,7 @@ class Payjp {
           }
         }
         final params = <String, dynamic>{
-          'isSuccess': message != null,
+          'isSuccess': false,
           'errorMessage': message,
         };
         await _channel.invokeMethod('completeApplePay', params);
