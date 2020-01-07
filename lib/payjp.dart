@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:flutter/services.dart';
@@ -79,8 +80,8 @@ class Payjp {
         await _channel.invokeMethod('completeApplePay', params);
         break;
       case 'onApplePayFailedRequestToken':
-        final errorInfo = _serializers.deserializeWith(
-            ErrorInfo.serializer, call.arguments);
+        final errorInfo =
+            _serializers.deserializeWith(ErrorInfo.serializer, call.arguments);
         var message = errorInfo.errorMessage;
         if (_onApplePayFailedRequestTokenCallback != null) {
           final messageFutureOr =
@@ -107,10 +108,13 @@ class Payjp {
   }
 
   static Future configure(
-      {@required String publicKey, bool debugEnabled = false}) async {
+      {@required String publicKey,
+      bool debugEnabled = false,
+      Locale locale}) async {
     final params = <String, dynamic>{
       'publicKey': publicKey,
       'debugEnabled': debugEnabled,
+      'locale': locale.toLanguageTag(),
     };
     await _channel.invokeMethod('configure', params);
   }

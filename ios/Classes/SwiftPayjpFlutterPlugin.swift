@@ -28,6 +28,11 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
         case .configure:
             if let publicKey = argsDictionary?["publicKey"] as? String {
                 PAYJPSDK.publicKey = publicKey
+                if let localeString = argsDictionary?["locale"] as? String {
+                    PAYJPSDK.locale = Locale.init(identifier: localeString)
+                } else {
+                    PAYJPSDK.locale = Locale.current
+                }
             }
             result(nil)
             break
