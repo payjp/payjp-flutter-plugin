@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:payjp_flutter/error_info.dart';
 import 'package:payjp_flutter/card_form_status.dart';
 import 'package:payjp_flutter/card_token.dart';
+import 'package:payjp_flutter/error_info.dart';
 import 'package:payjp_flutter/payjp.dart';
 
 import 'sample_backend_service.dart';
@@ -38,7 +38,9 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _initPayjp() async {
-    await Payjp.configure(publicKey: payjpPublicKey, debugEnabled: true);
+    await Payjp.configure(
+        publicKey: payjpPublicKey,
+        debugEnabled: !bool.fromEnvironment('dart.vm.product'));
     var isApplePaySupported = false;
     if (Platform.isIOS) {
       isApplePaySupported = await Payjp.isSupportedApplePay();

@@ -1,5 +1,6 @@
 package jp.pay.flutter
 
+import androidx.core.os.LocaleListCompat
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -8,6 +9,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar
 import jp.pay.android.Payjp
 import jp.pay.android.PayjpConfiguration
 import jp.pay.android.model.TenantId
+import java.util.Locale
 
 class PayjpFlutterPlugin(
   register: Registrar,
@@ -27,10 +29,14 @@ class PayjpFlutterPlugin(
   override fun onMethodCall(call: MethodCall, result: Result) = when (call.method) {
     ChannelContracts.CONFIGURE -> {
       val publicKey = checkNotNull(call.argument<String>("publicKey"))
-      val debugEnabled = checkNotNull(call.argument<Boolean>("debugEnabled"))
+      val debugEnabled = call.argument<Boolean>("debugEnabled") ?: false
+      val locale = call.argument<String>("locale")?.let { tag ->
+        LocaleListCompat.forLanguageTags(tag).takeIf { it.size() > 0 }?.get(0)
+      } ?: Locale.getDefault()
       Payjp.init(PayjpConfiguration.Builder(publicKey = publicKey)
         .setDebugEnabled(debugEnabled)
         .setTokenBackgroundHandler(cardFormModule)
+        .setLocale(locale)
         .build())
       result.success(null)
     }
