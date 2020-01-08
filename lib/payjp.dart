@@ -130,14 +130,23 @@ class Payjp {
     return null;
   }
 
+  /// Initialize PAYJP with [publicKey] and other configurations.
+  ///
+  /// ```dart
+  /// Payjp.configure(publicKey: 'pk_test_xxxx');
+  /// ```
+  /// If you'd like to enable debugging, set [debugEnabled] to true.
+  /// You can also set [locale] manually, which is following the device setting
+  /// by default.
   static Future configure(
       {@required String publicKey,
       bool debugEnabled = false,
+      bool scannerEnabled = true,
       Locale locale}) async {
     final params = <String, dynamic>{
       'publicKey': publicKey,
       'debugEnabled': debugEnabled,
-      'locale': locale.toLanguageTag(),
+      'locale': locale != null ? locale.toLanguageTag() : null,
     };
     await _channel.invokeMethod('configure', params);
   }

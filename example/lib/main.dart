@@ -61,9 +61,7 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _initPayjp() async {
-    await Payjp.configure(
-        publicKey: payjpPublicKey,
-        debugEnabled: !bool.fromEnvironment('dart.vm.product'));
+    await Payjp.configure(publicKey: payjpPublicKey, debugEnabled: true);
     var isApplePaySupported = false;
     if (Platform.isIOS) {
       isApplePaySupported = await Payjp.isSupportedApplePay();

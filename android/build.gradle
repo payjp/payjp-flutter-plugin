@@ -70,4 +70,8 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "jp.pay:payjp-android:$payjpSdkVersion"
+    implementation "jp.pay:payjp-android-cardio:$payjpSdkVersion"
+
+    implementation "androidx.appcompat:appcompat:1.1.0"
+    implementation "io.card:android-sdk:5.5.1"
 }

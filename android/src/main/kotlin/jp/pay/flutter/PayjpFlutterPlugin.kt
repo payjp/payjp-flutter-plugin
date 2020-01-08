@@ -31,6 +31,7 @@ import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 import jp.pay.android.Payjp
 import jp.pay.android.PayjpConfiguration
+import jp.pay.android.cardio.PayjpCardScannerPlugin
 import jp.pay.android.model.TenantId
 import java.util.Locale
 
@@ -52,7 +53,7 @@ class PayjpFlutterPlugin(
   override fun onMethodCall(call: MethodCall, result: Result) = when (call.method) {
     ChannelContracts.CONFIGURE -> {
       val publicKey = checkNotNull(call.argument<String>("publicKey"))
-      val debugEnabled = call.argument<Boolean>("debugEnabled") ?: false
+      val debugEnabled = checkNotNull(call.argument<Boolean>("debugEnabled"))
       val locale = call.argument<String>("locale")?.let { tag ->
         LocaleListCompat.forLanguageTags(tag).takeIf { it.size() > 0 }?.get(0)
       } ?: Locale.getDefault()
@@ -60,6 +61,7 @@ class PayjpFlutterPlugin(
         .setDebugEnabled(debugEnabled)
         .setTokenBackgroundHandler(cardFormModule)
         .setLocale(locale)
+        .setCardScannerPlugin(PayjpCardScannerPlugin)
         .build())
       result.success(null)
     }

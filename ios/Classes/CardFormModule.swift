@@ -30,6 +30,9 @@ class CardFormModule: CardFormModuleType {
     }
 
     func startCardForm(_ result: FlutterResult, with tenantId: String?) {
+        // validate Info.plist for scanner
+        let description = Bundle.main.object(forInfoDictionaryKey: "NSCameraUsageDescription") as? String
+        assert(description?.isEmpty == false, "The app's Info.plist must contain an NSCameraUsageDescription key to use scanner in card form.")
         let cardForm = CardFormViewController.createCardFormViewController()
         cardForm.delegate = self
         // get host ViewController
