@@ -25,7 +25,7 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
         }
         let argsDictionary = call.arguments as? Dictionary<String, Any>
         switch method {
-        case .configure:
+        case .initialize:
             if let publicKey = argsDictionary?["publicKey"] as? String {
                 PAYJPSDK.publicKey = publicKey
                 if let localeString = argsDictionary?["locale"] as? String {
@@ -48,8 +48,8 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
         case .completeCardForm:
             self.cardFormModule.completeCardForm(result)
             break
-        case .isSupportedApplePay:
-            self.applePayModule.isSupportedApplePay(result)
+        case .isApplePayAvailable:
+            self.applePayModule.isApplePayAvailable(result)
             break
         case .makeApplePayToken:
             if let appleMerchantId = argsDictionary?["appleMerchantId"] as? String,

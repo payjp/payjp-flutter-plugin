@@ -25,7 +25,7 @@ package jp.pay.flutter
 
 internal object ChannelContracts {
 
-    const val CONFIGURE = "configure"
+    const val INITIALIZE = "initialize"
     const val START_CARD_FORM = "startCardForm"
     const val SHOW_TOKEN_PROCESSING_ERROR = "showTokenProcessingError"
     const val COMPLETE_CARD_FORM = "completeCardForm"

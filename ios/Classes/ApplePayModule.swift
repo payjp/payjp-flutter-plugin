@@ -12,7 +12,7 @@ import PassKit
 // MARK: - ApplePayModuleType
 
 protocol ApplePayModuleType {
-    func isSupportedApplePay(_ result: FlutterResult)
+    func isApplePayAvailable(_ result: FlutterResult)
 
     func makeApplePayToken(
         _ result: FlutterResult,
@@ -41,7 +41,7 @@ class ApplePayModule: NSObject, ApplePayModuleType {
         self.completionHandler = nil
     }
 
-    func isSupportedApplePay(_ result: FlutterResult) {
+    func isApplePayAvailable(_ result: FlutterResult) {
         let canMakePayments = PKPaymentAuthorizationViewController.canMakePayments()
         result(canMakePayments)
     }

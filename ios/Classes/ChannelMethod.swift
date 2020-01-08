@@ -9,11 +9,11 @@ import Foundation
 
 /// MethodCall to Native
 enum ChannelMethodToNative: String {
-    case configure,
+    case initialize,
     startCardForm,
     showTokenProcessingError,
     completeCardForm,
-    isSupportedApplePay,
+    isApplePayAvailable,
     makeApplePayToken,
     completeApplePay
 }

@@ -24,12 +24,21 @@
 import 'package:meta/meta.dart';
 
 @sealed
-class CardFormStatus {}
+// ignore: one_member_abstracts
+abstract class CallbackResult {
+  bool isOk();
+}
 
-class CardFormComplete extends CardFormStatus {}
+class CallbackResultOk extends CallbackResult {
+  @override
+  bool isOk() => true;
+}
 
-class CardFormError extends CardFormStatus {
+class CallbackResultError extends CallbackResult {
   final String message;
 
-  CardFormError(this.message);
+  CallbackResultError(this.message);
+
+  @override
+  bool isOk() => false;
 }

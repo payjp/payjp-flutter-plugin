@@ -51,7 +51,7 @@ class PayjpFlutterPlugin(
   private val cardFormModule = CardFormModule(register, channel)
 
   override fun onMethodCall(call: MethodCall, result: Result) = when (call.method) {
-    ChannelContracts.CONFIGURE -> {
+    ChannelContracts.INITIALIZE -> {
       val publicKey = checkNotNull(call.argument<String>("publicKey"))
       val debugEnabled = checkNotNull(call.argument<Boolean>("debugEnabled"))
       val locale = call.argument<String>("locale")?.let { tag ->

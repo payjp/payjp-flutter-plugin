@@ -27,19 +27,19 @@ import 'dart:ui';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
-import 'package:payjp_flutter/card_form_status.dart';
+import 'package:payjp_flutter/callback_result.dart';
 import 'package:payjp_flutter/card_token.dart';
 import 'package:payjp_flutter/error_info.dart';
 import 'package:payjp_flutter/serializers.dart';
 
 typedef OnCardFormCompletedCallback = void Function();
 typedef OnCardFormCanceledCallback = void Function();
-typedef OnCardFormProducedTokenCallback = FutureOr<CardFormStatus> Function(
+typedef OnCardFormProducedTokenCallback = FutureOr<CallbackResult> Function(
     Token token);
-typedef OnApplePayProducedTokenCallback = FutureOr<String> Function(
+typedef OnApplePayProducedTokenCallback = FutureOr<CallbackResult> Function(
     Token token);
-typedef OnApplePayFailedRequestTokenCallback = FutureOr<String> Function(
-    ErrorInfo errorInfo);
+typedef OnApplePayFailedRequestTokenCallback = FutureOr<CallbackResultError>
+    Function(ErrorInfo errorInfo);
 typedef OnApplePayCompletedCallback = void Function();
 
 // ignore: avoid_classes_with_only_static_members
@@ -71,34 +71,38 @@ class Payjp {
         }
         break;
       case 'onCardFormProducedToken':
-        CardFormStatus status = CardFormComplete();
+        CallbackResult result = CallbackResultOk();
         if (_onCardFormProducedTokenCallback != null) {
           final token =
               _serializers.deserializeWith(Token.serializer, call.arguments);
-          final statusFutureOr = _onCardFormProducedTokenCallback(token);
-          if (statusFutureOr is Future<CardFormStatus>) {
-            status = await statusFutureOr;
+          final resultFutureOr = _onCardFormProducedTokenCallback(token);
+          if (resultFutureOr is Future<CallbackResult>) {
+            result = await resultFutureOr;
           } else {
-            status = statusFutureOr as CardFormStatus;
+            result = resultFutureOr as CallbackResult;
           }
         }
-        await _requestCardFormStatus(status);
+        if (result is CallbackResultOk) {
+          await completeCardForm();
+        } else if (result is CallbackResultError) {
+          await showTokenProcessingError(result.message);
+        }
         break;
       case 'onApplePayProducedToken':
-        String message;
+        CallbackResult result = CallbackResultOk();
         if (_onApplePayProducedTokenCallback != null) {
           final token =
               _serializers.deserializeWith(Token.serializer, call.arguments);
-          final messageFutureOr = _onApplePayProducedTokenCallback(token);
-          if (messageFutureOr is Future<String>) {
-            message = await messageFutureOr;
+          final resultFutureOr = _onApplePayProducedTokenCallback(token);
+          if (resultFutureOr is Future<CallbackResult>) {
+            result = await resultFutureOr;
           } else {
-            message = messageFutureOr as String;
+            result = resultFutureOr as CallbackResult;
           }
         }
         final params = <String, dynamic>{
-          'isSuccess': message == null,
-          'errorMessage': message,
+          'isSuccess': result.isOk(),
+          'errorMessage': result is CallbackResultError ? result.message : null,
         };
         await _channel.invokeMethod('completeApplePay', params);
         break;
@@ -107,13 +111,15 @@ class Payjp {
             _serializers.deserializeWith(ErrorInfo.serializer, call.arguments);
         var message = errorInfo.errorMessage;
         if (_onApplePayFailedRequestTokenCallback != null) {
-          final messageFutureOr =
+          CallbackResultError result;
+          final resultFutureOr =
               _onApplePayFailedRequestTokenCallback(errorInfo);
-          if (messageFutureOr is Future<String>) {
-            message = await messageFutureOr;
+          if (resultFutureOr is Future<CallbackResultError>) {
+            result = await resultFutureOr;
           } else {
-            message = messageFutureOr as String;
+            result = resultFutureOr as CallbackResultError;
           }
+          message = result.message;
         }
         final params = <String, dynamic>{
           'isSuccess': false,
@@ -133,12 +139,12 @@ class Payjp {
   /// Initialize PAYJP with [publicKey] and other configurations.
   ///
   /// ```dart
-  /// Payjp.configure(publicKey: 'pk_test_xxxx');
+  /// Payjp.init(publicKey: 'pk_test_xxxx');
   /// ```
   /// If you'd like to enable debugging, set [debugEnabled] to true.
   /// You can also set [locale] manually, which is following the device setting
   /// by default.
-  static Future configure(
+  static Future init(
       {@required String publicKey,
       bool debugEnabled = false,
       bool scannerEnabled = true,
@@ -148,9 +154,12 @@ class Payjp {
       'debugEnabled': debugEnabled,
       'locale': locale != null ? locale.toLanguageTag() : null,
     };
-    await _channel.invokeMethod('configure', params);
+    await _channel.invokeMethod('initialize', params);
   }
 
+  /// Start card form.
+  /// It will activate a native screen provided by Payjp.
+  /// [tenantId] is a optional parameter only for platform API.
   static Future startCardForm(
       {OnCardFormCanceledCallback onCardFormCanceledCallback,
       OnCardFormCompletedCallback onCardFormCompletedCallback,
@@ -165,18 +174,12 @@ class Payjp {
     await _channel.invokeMethod('startCardForm', params);
   }
 
-  static Future _requestCardFormStatus(CardFormStatus status) async {
-    if (status is CardFormComplete) {
-      await completeCardForm();
-    } else if (status is CardFormError) {
-      await showTokenProcessingError(status.message);
-    }
-  }
-
+  /// Close displaying card form.
   static Future completeCardForm() async {
     await _channel.invokeMethod('completeCardForm');
   }
 
+  /// Keep displaying card form, and show [message] as error message.
   static Future showTokenProcessingError(String message) async {
     final params = <String, dynamic>{
       'message': message,
@@ -184,9 +187,13 @@ class Payjp {
     await _channel.invokeMethod('showTokenProcessingError', params);
   }
 
-  static Future<bool> isSupportedApplePay() async =>
-      _channel.invokeMethod('isSupportedApplePay');
+  /// Return availability of ApplePay.
+  /// You should call in only iOS.
+  /// See https://developer.apple.com/documentation/passkit/pkpaymentauthorizationviewcontroller/1616192-canmakepayments
+  static Future<bool> isApplePayAvailable() async =>
+      _channel.invokeMethod('isApplePayAvailable');
 
+  /// Start Apple Pay payment authorization flow.
   static Future makeApplePayToken(
       {@required String appleMerchantId,
       @required String currencyCode,

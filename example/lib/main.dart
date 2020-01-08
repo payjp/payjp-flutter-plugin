@@ -25,7 +25,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:payjp_flutter/card_form_status.dart';
+import 'package:payjp_flutter/callback_result.dart';
 import 'package:payjp_flutter/card_token.dart';
 import 'package:payjp_flutter/error_info.dart';
 import 'package:payjp_flutter/payjp.dart';
@@ -52,7 +52,7 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   bool _isLoading = true;
-  bool _isApplePayEnabled = false;
+  bool _canUseApplePay = false;
 
   @override
   void initState() {
@@ -61,14 +61,14 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _initPayjp() async {
-    await Payjp.configure(publicKey: payjpPublicKey, debugEnabled: true);
-    var isApplePaySupported = false;
+    await Payjp.init(publicKey: payjpPublicKey, debugEnabled: true);
+    var isApplePayAvailable = false;
     if (Platform.isIOS) {
-      isApplePaySupported = await Payjp.isSupportedApplePay();
+      isApplePayAvailable = await Payjp.isApplePayAvailable();
     }
     setState(() {
       _isLoading = false;
-      _isApplePayEnabled = isApplePaySupported;
+      _canUseApplePay = isApplePayAvailable;
     });
   }
 
@@ -110,7 +110,7 @@ class HomeScreenState extends State<HomeScreen> {
         message: 'カードを登録しました。');
   }
 
-  FutureOr<CardFormStatus> _onCardFormProducedToken(Token token) async {
+  FutureOr<CallbackResult> _onCardFormProducedToken(Token token) async {
     print('_onCardFormProducedToken');
     if (backendUrl.isEmpty) {
       final message = """
@@ -118,17 +118,17 @@ class HomeScreenState extends State<HomeScreen> {
 You can send token(${token.id}) to your own server to make Customer etc.
        """;
       print(message);
-      return CardFormComplete();
+      return CallbackResultOk();
     }
     try {
       await saveCard(token);
     } on ApiException catch (e) {
-      return CardFormError(e.message);
+      return CallbackResultError(e.message);
     }
-    return CardFormComplete();
+    return CallbackResultOk();
   }
 
-  FutureOr<String> _onApplePayProducedToken(Token token) async {
+  FutureOr<CallbackResult> _onApplePayProducedToken(Token token) async {
     print('_onApplePayProducedToken');
     if (backendUrl.isEmpty) {
       final message = """
@@ -136,21 +136,22 @@ You can send token(${token.id}) to your own server to make Customer etc.
 You can send token(${token.id}) to your own server to make Customer etc.
        """;
       print(message);
-      return null;
+      return CallbackResultOk();
     }
     try {
       await saveCard(token);
     } on ApiException catch (e) {
-      return e.message;
+      return CallbackResultError(e.message);
     }
-    return null;
+    return CallbackResultOk();
   }
 
-  FutureOr<String> _onApplePayFailedRequestToken(ErrorInfo errorInfo) async {
+  FutureOr<CallbackResultError> _onApplePayFailedRequestToken(
+      ErrorInfo errorInfo) async {
     print('_onApplePayFailedRequestToken');
     print('errorCode ${errorInfo.errorCode}');
     print('errorMessage ${errorInfo.errorMessage}');
-    return errorInfo.errorMessage;
+    return CallbackResultError(errorInfo.errorMessage);
   }
 
   void _onApplePayCompleted() {
@@ -177,10 +178,10 @@ You can send token(${token.id}) to your own server to make Customer etc.
                     Card(
                         child: ListTile(
                       title: Text('Start ApplePay Sample (iOS only)'),
-                      subtitle: Text(_isApplePayEnabled
+                      subtitle: Text(_canUseApplePay
                           ? 'Sample payment with Apple Pay.'
                           : 'This device is not supported.'),
-                      enabled: _isApplePayEnabled,
+                      enabled: _canUseApplePay,
                       onTap: _onStartApplePay,
                     )),
                   ],
