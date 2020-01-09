@@ -24,10 +24,8 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:payjp_flutter/callback_result.dart';
-import 'package:payjp_flutter/card_token.dart';
-import 'package:payjp_flutter/error_info.dart';
+import 'package:flutter/material.dart' hide Card;
+import 'package:flutter/material.dart' as material show Card;
 import 'package:payjp_flutter/payjp.dart';
 
 import 'sample_backend_service.dart';
@@ -169,13 +167,13 @@ You can send token(${token.id}) to your own server to make Customer etc.
               ? Center(child: CircularProgressIndicator())
               : ListView(
                   children: <Widget>[
-                    Card(
+                    material.Card(
                         child: ListTile(
                       title: Text('CardForm Sample'),
                       subtitle: Text('Tap here to start card form.'),
                       onTap: _onStartCardForm,
                     )),
-                    Card(
+                    material.Card(
                         child: ListTile(
                       title: Text('Start ApplePay Sample (iOS only)'),
                       subtitle: Text(_canUseApplePay

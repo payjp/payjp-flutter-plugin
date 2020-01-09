@@ -72,7 +72,7 @@ packages:
     source: hosted
     version: "4.2.1"
   built_collection:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: built_collection
       url: "https://pub.dartlang.org"

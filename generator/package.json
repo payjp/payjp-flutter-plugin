@@ -1,0 +1,19 @@
+{
+  "name": "generator",
+  "private": true,
+  "version": "1.0.0",
+  "description": "code generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "validate": "openapi-generator validate -i payjp.yaml",
+    "generate": "./generate.sh",
+    "fmt": "flutter format lib",
+    "copy": "cp -r lib/model/* ../lib/src"
+  },
+  "author": "yatatsu",
+  "license": "MIT",
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^1.0.8-4.2.2"
+  }
+}

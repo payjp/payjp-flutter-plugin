@@ -26,7 +26,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:payjp_flutter/card_token.dart';
+import 'package:payjp_flutter/payjp.dart';
 
 ///
 /// TODO: REPLACE WITH YOUR ENDPOINT URL

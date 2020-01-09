@@ -12,7 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
   built_value:
-  built_collection:
 
 dev_dependencies:
   build_runner:
