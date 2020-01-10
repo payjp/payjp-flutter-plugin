@@ -1,0 +1,16 @@
+{
+  "name": "payjp-openapi",
+  "version": "1.0.0",
+  "description": "PAY.JP API Spec by OpenAPI",
+  "main": "index.js",
+  "repository": "https://github.com/payjp/openapi",
+  "author": "PAY.JP Dev Team <support@pay.jp>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "validate": "openapi-generator validate -i *.yaml"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^1.0.8-4.2.2"
+  }
+}
