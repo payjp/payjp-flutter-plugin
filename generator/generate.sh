@@ -1,6 +1,6 @@
 #!/bin/bash -eux
 openapi-generator generate \
--i payjp.yaml \
+-i openapi/token-api.yaml \
 -g dart \
 -t templates \
 -Dmodels \
