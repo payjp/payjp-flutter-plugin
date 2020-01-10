@@ -43,6 +43,7 @@ typedef OnApplePayFailedRequestTokenCallback = FutureOr<CallbackResultError>
 typedef OnApplePayCompletedCallback = void Function();
 
 // ignore: avoid_classes_with_only_static_members
+/// Provides flutter bridge for PAY.JP.
 class Payjp {
   static OnCardFormCanceledCallback _onCardFormCanceledCallback;
   static OnCardFormCompletedCallback _onCardFormCompletedCallback;

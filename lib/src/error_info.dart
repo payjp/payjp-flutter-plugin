@@ -26,6 +26,7 @@ import 'package:built_value/serializer.dart';
 
 part 'error_info.g.dart';
 
+/// Information of error provided by Native.
 abstract class ErrorInfo implements Built<ErrorInfo, ErrorInfoBuilder> {
   String get errorType;
   int get errorCode;
