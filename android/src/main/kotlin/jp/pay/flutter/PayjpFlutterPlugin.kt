@@ -23,7 +23,12 @@
 
 package jp.pay.flutter
 
+import android.os.Build
+import android.util.Log
 import androidx.core.os.LocaleListCompat
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException
+import com.google.android.gms.common.GooglePlayServicesRepairableException
+import com.google.android.gms.security.ProviderInstaller
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -45,9 +50,11 @@ class PayjpFlutterPlugin(
     fun registerWith(registrar: Registrar) {
       val channel = MethodChannel(registrar.messenger(), CHANNEL_NAME)
       channel.setMethodCallHandler(PayjpFlutterPlugin(registrar, channel))
+      registrar.context()
     }
   }
 
+  private val applicationContext = register.context()
   private val cardFormModule = CardFormModule(register, channel)
 
   override fun onMethodCall(call: MethodCall, result: Result) = when (call.method) {
@@ -57,6 +64,7 @@ class PayjpFlutterPlugin(
       val locale = call.argument<String>("locale")?.let { tag ->
         LocaleListCompat.forLanguageTags(tag).takeIf { it.size() > 0 }?.get(0)
       } ?: Locale.getDefault()
+      activateModernTls(debugEnabled)
       Payjp.init(PayjpConfiguration.Builder(publicKey = publicKey)
         .setDebugEnabled(debugEnabled)
         .setTokenBackgroundHandler(cardFormModule)
@@ -77,5 +85,17 @@ class PayjpFlutterPlugin(
       cardFormModule.completeCardForm(result)
     }
     else -> result.notImplemented()
+  }
+  
+  private fun activateModernTls(debugEnabled: Boolean) {
+    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+      try {
+        ProviderInstaller.installIfNeeded(applicationContext)
+      } catch (e: GooglePlayServicesRepairableException) {
+        if (debugEnabled) Log.e("payjp-android", "error ssl setup", e)
+      } catch (e: GooglePlayServicesNotAvailableException) {
+        if (debugEnabled) Log.e("payjp-android", "error ssl setup", e)
+      }
+    }
   }
 }
