@@ -94,10 +94,6 @@ class HomeScreenState extends State<HomeScreen> {
 
   void _onCardFormCanceled() {
     print('_onCardFormCanceled');
-    showAlertDialog(
-        context: HomeScreen.scaffoldKey.currentContext,
-        title: 'カード登録',
-        message: 'カード登録をキャンセルしました。');
   }
 
   void _onCardFormCompleted() {
