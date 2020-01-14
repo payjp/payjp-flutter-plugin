@@ -1,17 +1,24 @@
 # Flutter Plugin for PAY.JP SDK
 
+[![pub package](https://img.shields.io/pub/v/payjp_flutter.svg)](https://pub.dartlang.org/packages/payjp_flutter)
+
 A Flutter plugin for PAY.JP Mobile SDK.
 
-## Getting Started
+オンライン決済サービス「[PAY.JP](https://pay.jp/)」をFlutterアプリケーションに組み込むためのプラグインです。
+このプラグインは以下の機能を提供します。
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+- クレジットカード決済のためのカードフォーム
+- Apple Payアプリ内決済（iOSのみ）
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+詳細は[公式オンラインドキュメント](https://pay.jp/docs/)を確認ください。
+
+## Compatible Platforms
+
+|Platform|CardForm          |ApplePay          |
+|--------|------------------|------------------|
+|iOS     |:white_check_mark:|:white_check_mark:|
+|Android |:white_check_mark:|                  |
+|Web     |                  |                  |
 
 ## License
 

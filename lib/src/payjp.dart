@@ -123,13 +123,12 @@ class Payjp {
   /// ```dart
   /// Payjp.init(publicKey: 'pk_test_xxxx');
   /// ```
-  /// If you'd like to enable debugging, set [debugEnabled] to true.
+  /// If you'd like to enable debugging, set [debugEnabled] to true (Android Only).
   /// You can also set [locale] manually, which is following the device setting
   /// by default.
   static Future init(
       {@required String publicKey,
       bool debugEnabled = false,
-      bool scannerEnabled = true,
       Locale locale}) async {
     final params = <String, dynamic>{
       'publicKey': publicKey,
@@ -141,7 +140,9 @@ class Payjp {
 
   /// Start card form.
   /// It will activate a native screen provided by Payjp.
-  /// [tenantId] is a optional parameter only for platform API.
+  /// All callback parameters are optional, but you should use [onCardFormProducedTokenCallback]
+  /// to send PAY.JP token to your server.
+  /// [tenantId] is a parameter only for platform API.
   static Future startCardForm(
       {OnCardFormCanceledCallback onCardFormCanceledCallback,
       OnCardFormCompletedCallback onCardFormCompletedCallback,
@@ -176,6 +177,11 @@ class Payjp {
       _channel.invokeMethod('isApplePayAvailable');
 
   /// Start Apple Pay payment authorization flow.
+  /// You have to set your own merchant id provided by Apple into [appleMerchantId].
+  /// All callback parameters are optional, but you should use [onApplePayProducedTokenCallback]
+  /// to send PAY.JP token to your server.
+  ///
+  /// [requiredBillingAddress] flag is false by default.
   static Future makeApplePayToken(
       {@required String appleMerchantId,
       @required String currencyCode,
