@@ -1,3 +1,7 @@
+## 0.1.1
+
+- Support Flutter Android embedding version 2 (and still support v1 too).
+
 ## 0.1.0
 
 - Update payjp-android to [1.1.2](https://github.com/payjp/payjp-android/releases/tag/1.1.2).
