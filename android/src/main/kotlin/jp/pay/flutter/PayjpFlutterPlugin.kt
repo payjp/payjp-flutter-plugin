@@ -23,12 +23,17 @@
 
 package jp.pay.flutter
 
+import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.core.os.LocaleListCompat
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.security.ProviderInstaller
+import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.embedding.engine.plugins.activity.ActivityAware
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
+import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -40,22 +45,62 @@ import jp.pay.android.cardio.PayjpCardScannerPlugin
 import jp.pay.android.model.TenantId
 import java.util.Locale
 
-class PayjpFlutterPlugin(
-  register: Registrar,
-  channel: MethodChannel
-) : MethodCallHandler {
+class PayjpFlutterPlugin: MethodCallHandler, FlutterPlugin, ActivityAware {
   companion object {
     private const val CHANNEL_NAME = "payjp"
+    @Suppress("unused")
     @JvmStatic
     fun registerWith(registrar: Registrar) {
-      val channel = MethodChannel(registrar.messenger(), CHANNEL_NAME)
-      channel.setMethodCallHandler(PayjpFlutterPlugin(registrar, channel))
-      registrar.context()
+      PayjpFlutterPlugin().setUpChannel(registrar.context(), registrar.messenger(), registrar)
     }
   }
 
-  private val applicationContext = register.context()
-  private val cardFormModule = CardFormModule(register, channel)
+  private var channel: MethodChannel? = null
+  private var applicationContext: Context? = null
+  private var cardFormModule: CardFormModule? = null
+
+  override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+    setUpChannel(binding.applicationContext, binding.binaryMessenger, null)
+  }
+
+  override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+    applicationContext = null
+    channel?.setMethodCallHandler(null)
+    channel = null
+    cardFormModule = null
+  }
+
+  override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+    cardFormModule?.binding = binding
+  }
+
+  override fun onDetachedFromActivity() {
+    cardFormModule?.binding = null
+  }
+
+  override fun onDetachedFromActivityForConfigChanges() {
+    onDetachedFromActivity()
+  }
+
+  override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+    onAttachedToActivity(binding)
+  }
+
+  /**
+   * compatible embedding before Flutter v1.12
+   *
+   */
+  private fun setUpChannel(
+    applicationContext: Context,
+    messenger: BinaryMessenger,
+    register: Registrar?
+  ) {
+    this.applicationContext = applicationContext
+    channel = MethodChannel(messenger, CHANNEL_NAME).also {
+      it.setMethodCallHandler(this)
+      cardFormModule = CardFormModule(it, register)
+    }
+  }
 
   override fun onMethodCall(call: MethodCall, result: Result) = when (call.method) {
     ChannelContracts.INITIALIZE -> {
@@ -75,22 +120,24 @@ class PayjpFlutterPlugin(
     }
     ChannelContracts.START_CARD_FORM -> {
       val tenantId = call.argument<String>("tenantId")?.let { TenantId(it) }
-      cardFormModule.startCardForm(result, tenantId)
+      cardFormModule?.startCardForm(result, tenantId) ?: result.pluginError("plugin not attached.")
     }
     ChannelContracts.SHOW_TOKEN_PROCESSING_ERROR -> {
       val message = checkNotNull(call.argument<String>("message"))
-      cardFormModule.showTokenProcessingError(result, message)
+      cardFormModule?.showTokenProcessingError(result, message) ?: result.pluginError("plugin not attached.")
     }
     ChannelContracts.COMPLETE_CARD_FORM -> {
-      cardFormModule.completeCardForm(result)
+      cardFormModule?.completeCardForm(result) ?: result.pluginError("plugin not attached.")
     }
     else -> result.notImplemented()
   }
-  
+
   private fun activateModernTls(debugEnabled: Boolean) {
     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
       try {
-        ProviderInstaller.installIfNeeded(applicationContext)
+        applicationContext?.let {
+          ProviderInstaller.installIfNeeded(it)
+        }
       } catch (e: GooglePlayServicesRepairableException) {
         if (debugEnabled) Log.e("payjp-android", "error ssl setup", e)
       } catch (e: GooglePlayServicesNotAvailableException) {

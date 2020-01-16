@@ -23,6 +23,11 @@
 
 package jp.pay.flutter
 
+import android.app.Activity
+import android.content.Intent
+import android.os.Handler
+import android.os.Looper
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.PluginRegistry
 import jp.pay.android.Payjp
@@ -32,38 +37,37 @@ import jp.pay.android.model.TenantId
 import jp.pay.android.model.Token
 import jp.pay.android.model.toJsonValue
 import jp.pay.android.ui.PayjpCardFormResultCallback
-import java.lang.RuntimeException
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.atomic.AtomicReference
 
 internal class CardFormModule(
-    registrar: PluginRegistry.Registrar,
-    private val channel: MethodChannel
-) : PayjpTokenBackgroundHandler {
+    private val channel: MethodChannel,
+    private val register: PluginRegistry.Registrar?
+) : PayjpTokenBackgroundHandler, PluginRegistry.ActivityResultListener {
 
-    private val currentActivity = registrar.activity()
+    private val mainThreadHandler = Handler(Looper.getMainLooper())
     private val reference: AtomicReference<CardFormStatus> = AtomicReference()
     @Volatile
     private var countDownLatch: CountDownLatch? = null
+    var binding: ActivityPluginBinding? = null
+      set(value) {
+          field = value
+          value?.addActivityResultListener(this)
+      }
 
     init {
-        registrar.addActivityResultListener { _, _, data ->
-            Payjp.cardForm().handleResult(data, PayjpCardFormResultCallback { result ->
-                if (result.isSuccess()) {
-                    channel.invokeMethod(ChannelContracts.ON_CARD_FORM_COMPLETED, null)
-                } else if (result.isCanceled()) {
-                    channel.invokeMethod(ChannelContracts.ON_CARD_FORM_CANCELED, null)
-                }
-            })
-            false
-        }
+        register?.addActivityResultListener(this)
     }
+
+    private fun currentActivity(): Activity? = register?.activity() ?: binding?.activity
 
     // handle MethodCall
 
     fun startCardForm(result: MethodChannel.Result, tenantId: TenantId?) {
-        Payjp.cardForm().start(currentActivity, tenant = tenantId)
-        result.success(null)
+        currentActivity()?.let { activity ->
+            Payjp.cardForm().start(activity, tenant = tenantId)
+            result.success(null)
+        } ?: result.pluginError("Activity not found.")
     }
 
     fun showTokenProcessingError(result: MethodChannel.Result, message: String) {
@@ -78,13 +82,26 @@ internal class CardFormModule(
         result.success(null)
     }
 
+    // PluginRegistry.ActivityResultListener
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
+        Payjp.cardForm().handleResult(data, PayjpCardFormResultCallback { result ->
+            if (result.isSuccess()) {
+                channel.invokeMethod(ChannelContracts.ON_CARD_FORM_COMPLETED, null)
+            } else if (result.isCanceled()) {
+                channel.invokeMethod(ChannelContracts.ON_CARD_FORM_CANCELED, null)
+            }
+        })
+        return false
+    }
+
     // PayjpTokenBackgroundHandler
 
     override fun handleTokenInBackground(token: Token): CardFormStatus {
         countDownLatch = CountDownLatch(1)
         // `handleTokenInBackground` runs on worker thread.
         val tokenMap = token.toJsonValue()
-        currentActivity.runOnUiThread {
+        mainThreadHandler.post {
             channel.invokeMethod(ChannelContracts.ON_CARD_FORM_PRODUCED_TOKEN, tokenMap)
         }
         try {
