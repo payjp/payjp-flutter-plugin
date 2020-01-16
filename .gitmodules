@@ -1,0 +1,3 @@
+[submodule "tool/generator/openapi"]
+	path = tool/generator/openapi
+	url = git@github.com:payjp/openapi.git
