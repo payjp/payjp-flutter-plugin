@@ -30,6 +30,7 @@ import jp.pay.android.PayjpTokenBackgroundHandler
 import jp.pay.android.PayjpTokenBackgroundHandler.CardFormStatus
 import jp.pay.android.model.TenantId
 import jp.pay.android.model.Token
+import jp.pay.android.model.toJsonValue
 import jp.pay.android.ui.PayjpCardFormResultCallback
 import java.lang.RuntimeException
 import java.util.concurrent.CountDownLatch
@@ -82,7 +83,7 @@ internal class CardFormModule(
     override fun handleTokenInBackground(token: Token): CardFormStatus {
         countDownLatch = CountDownLatch(1)
         // `handleTokenInBackground` runs on worker thread.
-        val tokenMap = token.toMap()
+        val tokenMap = token.toJsonValue()
         currentActivity.runOnUiThread {
             channel.invokeMethod(ChannelContracts.ON_CARD_FORM_PRODUCED_TOKEN, tokenMap)
         }
