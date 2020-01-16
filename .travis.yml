@@ -31,6 +31,8 @@ matrix:
             - libstdc++6
             - fonts-droid
       before_install:
+        - mkdir "$ANDROID_HOME/licenses" || true
+        - cp ./tool/.android-sdk-license "$ANDROID_HOME/licenses/android-sdk-license"
         - cd example
       install:
         - git clone https://github.com/flutter/flutter.git -b stable --depth 1
