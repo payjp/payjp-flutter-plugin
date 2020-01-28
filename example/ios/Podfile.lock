@@ -1,11 +1,11 @@
 PODS:
   - CardIO (5.4.1)
   - Flutter (1.0.0)
-  - PAYJP (1.1.2)
-  - payjp_flutter (0.1.2):
+  - PAYJP (1.1.3)
+  - payjp_flutter (0.1.3):
     - CardIO (~> 5.4.1)
     - Flutter
-    - PAYJP (~> 1.1.2)
+    - PAYJP (~> 1.1.3)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -25,8 +25,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CardIO: 56983b39b62f495fc6dae9ad7cf875143df06443
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  PAYJP: 7bc916d5d44b24fa49023a2be62796959f4c3878
-  payjp_flutter: 5167ed7e6a19bad714d4caf7562065dbff709797
+  PAYJP: ea303727b00d4d27c240741630251ea3db2e3cd1
+  payjp_flutter: 8c7a6d8b1ed4cc9c2aba01f6ff21b0b45e7d4dcc
 
 PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
 
