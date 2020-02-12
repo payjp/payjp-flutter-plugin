@@ -8,9 +8,6 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
         let instance = SwiftPayjpFlutterPlugin(channel: channel)
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
-    private static var pluginVersion: String {
-        return Bundle(for: SwiftPayjpFlutterPlugin.self).infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-    }
     private let channel: FlutterMethodChannel
     private let cardFormModule: CardFormModuleType
     private let applePayModule: ApplePayModule
@@ -36,7 +33,7 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
                 } else {
                     PAYJPSDK.locale = Locale.current
                 }
-                PAYJPSDK.clientInfo = ClientInfo.makeInfo(plugin: "jp.pay.flutter/\(SwiftPayjpFlutterPlugin.pluginVersion)", publisher: "payjp")
+                PAYJPSDK.clientInfo = ClientInfo.makeInfo(plugin: "jp.pay.flutter/\(PayjpPluginConstant.PluginVersion)", publisher: "payjp")
             }
             result(nil)
             break
