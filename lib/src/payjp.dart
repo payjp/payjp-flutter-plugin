@@ -170,6 +170,36 @@ class Payjp {
     await _channel.invokeMethod('showTokenProcessingError', params);
   }
 
+  /// Set CardForm Style for iOS.
+  static Future setIOSCardFormStyle(
+    {Color labelTextColor,
+    Color inputTextColor, 
+    Color errorTextColor,
+    Color tintColor, 
+    Color inputFieldBackgroundColor,
+    Color submitButtonColor}) async {
+    final params = <String, dynamic>{};
+    if (labelTextColor != null) {
+      params['labelTextColor'] = labelTextColor.value;
+    }
+    if (inputTextColor != null) {
+      params['inputTextColor'] = inputTextColor.value;
+    }
+    if (errorTextColor != null) {
+      params['errorTextColor'] = errorTextColor.value;
+    }
+    if (tintColor != null) {
+      params['tintColor'] = tintColor.value;
+    }
+    if (inputFieldBackgroundColor != null) {
+      params['inputFieldBackgroundColor'] = inputFieldBackgroundColor.value;
+    }
+    if (submitButtonColor != null) {
+      params['submitButtonColor'] = submitButtonColor.value;
+    }
+    await _channel.invokeMethod('setFormStyle', params);
+  }
+
   /// Return availability of ApplePay.
   /// You should call in only iOS.
   /// See https://developer.apple.com/documentation/passkit/pkpaymentauthorizationviewcontroller/1616192-canmakepayments

@@ -13,6 +13,7 @@ enum ChannelMethodToNative: String {
     startCardForm,
     showTokenProcessingError,
     completeCardForm,
+    setFormStyle,
     isApplePayAvailable,
     makeApplePayToken,
     completeApplePay

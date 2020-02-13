@@ -45,6 +45,12 @@ class HomeScreenState extends State<HomeScreen> {
     await Payjp.init(publicKey: payjpPublicKey, debugEnabled: true);
     var isApplePayAvailable = false;
     if (Platform.isIOS) {
+      await Payjp.setIOSCardFormStyle(
+        labelTextColor: Colors.black87,
+        inputTextColor: Colors.blue[700],
+        errorTextColor: Colors.red,
+        submitButtonColor: Colors.blue[800],
+      );
       isApplePayAvailable = await Payjp.isApplePayAvailable();
     }
     setState(() {
