@@ -42,6 +42,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar
 import jp.pay.android.Payjp
 import jp.pay.android.PayjpConfiguration
 import jp.pay.android.cardio.PayjpCardScannerPlugin
+import jp.pay.android.model.ClientInfo
 import jp.pay.android.model.TenantId
 import java.util.Locale
 
@@ -109,12 +110,17 @@ class PayjpFlutterPlugin: MethodCallHandler, FlutterPlugin, ActivityAware {
       val locale = call.argument<String>("locale")?.let { tag ->
         LocaleListCompat.forLanguageTags(tag).takeIf { it.size() > 0 }?.get(0)
       } ?: Locale.getDefault()
+      val clientInfo = ClientInfo.Builder()
+        .setPlugin("${BuildConfig.LIBRARY_PACKAGE_NAME}/${BuildConfig.VERSION_NAME}")
+        .setPublisher("payjp")
+        .build()
       activateModernTls(debugEnabled)
       Payjp.init(PayjpConfiguration.Builder(publicKey = publicKey)
         .setDebugEnabled(debugEnabled)
         .setTokenBackgroundHandler(cardFormModule)
         .setLocale(locale)
         .setCardScannerPlugin(PayjpCardScannerPlugin)
+        .setClientInfo(clientInfo)
         .build())
       result.success(null)
     }

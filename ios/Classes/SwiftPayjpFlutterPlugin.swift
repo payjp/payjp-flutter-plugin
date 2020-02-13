@@ -33,6 +33,7 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
                 } else {
                     PAYJPSDK.locale = Locale.current
                 }
+                PAYJPSDK.clientInfo = ClientInfo.makeInfo(plugin: "jp.pay.flutter/\(PayjpPluginConstant.PluginVersion)", publisher: "payjp")
             }
             result(nil)
             break

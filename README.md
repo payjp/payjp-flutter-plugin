@@ -30,3 +30,9 @@ Flutter Plugin for PAY.JP SDK is available under the MIT license. See the LICENS
 ### Generate models
 
 See generator/README.md.
+
+### Bump up version
+
+```bash
+tool/bump_version.sh [NEW_VERSION]
+```
