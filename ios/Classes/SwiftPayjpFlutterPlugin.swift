@@ -50,12 +50,12 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
             self.cardFormModule.completeCardForm(result)
             break
         case .setFormStyle:
-            var labelTextColor:UIColor?
-            var inputTextColor:UIColor?
-            var errorTextColor:UIColor?
-            var tintColor:UIColor?
-            var inputFieldBackgroundColor:UIColor?
-            var submitButtonColor:UIColor?
+            var labelTextColor: UIColor?
+            var inputTextColor: UIColor?
+            var errorTextColor: UIColor?
+            var tintColor: UIColor?
+            var inputFieldBackgroundColor: UIColor?
+            var submitButtonColor: UIColor?
             
             if let labelText = argsDictionary?["labelTextColor"] as? NSNumber {
                 labelTextColor = self.color(with: labelText.uintValue)

@@ -178,25 +178,14 @@ class Payjp {
     Color tintColor, 
     Color inputFieldBackgroundColor,
     Color submitButtonColor}) async {
-    final params = <String, dynamic>{};
-    if (labelTextColor != null) {
-      params['labelTextColor'] = labelTextColor.value;
-    }
-    if (inputTextColor != null) {
-      params['inputTextColor'] = inputTextColor.value;
-    }
-    if (errorTextColor != null) {
-      params['errorTextColor'] = errorTextColor.value;
-    }
-    if (tintColor != null) {
-      params['tintColor'] = tintColor.value;
-    }
-    if (inputFieldBackgroundColor != null) {
-      params['inputFieldBackgroundColor'] = inputFieldBackgroundColor.value;
-    }
-    if (submitButtonColor != null) {
-      params['submitButtonColor'] = submitButtonColor.value;
-    }
+    final params = <String, dynamic>{
+      'labelTextColor': labelTextColor?.value,
+      'inputTextColor': inputTextColor?.value,
+      'errorTextColor': errorTextColor?.value,
+      'tintColor': tintColor?.value,
+      'inputFieldBackgroundColor': inputFieldBackgroundColor?.value,
+      'submitButtonColor': submitButtonColor?.value,
+    };
     await _channel.invokeMethod('setFormStyle', params);
   }
 
