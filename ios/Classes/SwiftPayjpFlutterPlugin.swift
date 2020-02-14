@@ -49,6 +49,40 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
         case .completeCardForm:
             self.cardFormModule.completeCardForm(result)
             break
+        case .setFormStyle:
+            var labelTextColor: UIColor?
+            var inputTextColor: UIColor?
+            var errorTextColor: UIColor?
+            var tintColor: UIColor?
+            var inputFieldBackgroundColor: UIColor?
+            var submitButtonColor: UIColor?
+            
+            if let labelText = argsDictionary?["labelTextColor"] as? NSNumber {
+                labelTextColor = self.color(with: labelText.uintValue)
+            }
+            if let inputText = argsDictionary?["inputTextColor"] as? NSNumber {
+                inputTextColor = self.color(with: inputText.uintValue)
+            }
+            if let errorText = argsDictionary?["errorTextColor"] as? NSNumber {
+                errorTextColor = self.color(with: errorText.uintValue)
+            }
+            if let tint = argsDictionary?["tintColor"] as? NSNumber {
+                tintColor = self.color(with: tint.uintValue)
+            }
+            if let inputFieldBackground = argsDictionary?["inputFieldBackgroundColor"] as? NSNumber {
+                inputFieldBackgroundColor = self.color(with: inputFieldBackground.uintValue)
+            }
+            if let submitButton = argsDictionary?["submitButtonColor"] as? NSNumber {
+                submitButtonColor = self.color(with: submitButton.uintValue)
+            }
+            let style = FormStyle(labelTextColor: labelTextColor,
+                                  inputTextColor: inputTextColor,
+                                  errorTextColor: errorTextColor,
+                                  tintColor: tintColor,
+                                  inputFieldBackgroundColor: inputFieldBackgroundColor,
+                                  submitButtonColor: submitButtonColor)
+            self.cardFormModule.setFormStyle(result, with: style)
+            break
         case .isApplePayAvailable:
             self.applePayModule.isApplePayAvailable(result)
             break
@@ -79,5 +113,13 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
             }
             break
         }
+    }
+    
+    private func color(with hex: UInt) -> UIColor {
+        let a = CGFloat((hex & 0xFF000000) >> 24) / 255.0
+        let r = CGFloat((hex & 0x00FF0000) >> 16) / 255.0
+        let g = CGFloat((hex & 0x0000FF00) >>  8) / 255.0
+        let b = CGFloat(hex & 0x000000FF) / 255.0
+        return UIColor(red: r, green: g, blue: b, alpha: a)
     }
 }

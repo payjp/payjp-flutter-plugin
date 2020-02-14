@@ -16,6 +16,8 @@ protocol CardFormModuleType {
     func showTokenProcessingError(_ result: FlutterResult, with message: String)
 
     func completeCardForm(_ result: FlutterResult)
+    
+    func setFormStyle(_ result: FlutterResult, with style: FormStyle)
 }
 
 // MARK: - CardFormModule
@@ -23,6 +25,7 @@ protocol CardFormModuleType {
 class CardFormModule: CardFormModuleType {
     private let channel: FlutterMethodChannel
     private var completionHandler: ((Error?) -> Void)?
+    private var style: FormStyle?
 
     init(channel: FlutterMethodChannel) {
         self.channel = channel
@@ -33,7 +36,8 @@ class CardFormModule: CardFormModuleType {
         // validate Info.plist for scanner
         let description = Bundle.main.object(forInfoDictionaryKey: "NSCameraUsageDescription") as? String
         assert(description?.isEmpty == false, "The app's Info.plist must contain an NSCameraUsageDescription key to use scanner in card form.")
-        let cardForm = CardFormViewController.createCardFormViewController()
+        let cardForm = CardFormViewController.createCardFormViewController(style: self.style ?? FormStyle.defalutStyle,
+                                                                           tenantId: tenantId)
         cardForm.delegate = self
         // get host ViewController
         if let hostViewController = UIApplication.shared.keyWindow?.rootViewController {
@@ -60,6 +64,11 @@ class CardFormModule: CardFormModuleType {
             completionHandler(nil)
             self.completionHandler = nil
         }
+        result(nil)
+    }
+    
+    func setFormStyle(_ result: FlutterResult, with style: FormStyle) {
+        self.style = style
         result(nil)
     }
 }
