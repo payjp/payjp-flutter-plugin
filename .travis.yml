@@ -35,12 +35,12 @@ matrix:
       before_install:
         - mkdir "$ANDROID_HOME/licenses" || true
         - cp ./tool/.android-sdk-license "$ANDROID_HOME/licenses/android-sdk-license"
-        - cd example
       install:
         - git clone https://github.com/flutter/flutter.git -b stable --depth 1
         - ./flutter/bin/flutter doctor
       script:
-        - ./flutter/bin/flutter -v build apk
+        - ./flutter/bin/flutter -v test
+        - cd example && ../flutter/bin/flutter -v build apk
 
     - language: objective-c
       os: osx
@@ -52,7 +52,10 @@ matrix:
         - cd example
         - pod setup
         - pod repo update
+        - cd ../
+      install:
         - git clone https://github.com/flutter/flutter.git -b stable --depth 1
         - ./flutter/bin/flutter doctor
       script:
-        - ./flutter/bin/flutter -v build ios --no-codesign
+        - ./flutter/bin/flutter -v test
+        - cd example && ../flutter/bin/flutter -v build ios --no-codesign

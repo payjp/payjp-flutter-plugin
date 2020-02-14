@@ -36,7 +36,8 @@ class Payjp {
       _onApplePayFailedRequestTokenCallback;
   static OnApplePayCompletedCallback _onApplePayCompletedCallback;
 
-  static final MethodChannel _channel = const MethodChannel('payjp')
+  @visibleForTesting
+  static final MethodChannel channel = const MethodChannel('payjp')
     ..setMethodCallHandler(_nativeCallHandler);
 
   static final _serializers =
@@ -86,7 +87,7 @@ class Payjp {
           'isSuccess': result.isOk(),
           'errorMessage': result is CallbackResultError ? result.message : null,
         };
-        await _channel.invokeMethod('completeApplePay', params);
+        await channel.invokeMethod('completeApplePay', params);
         break;
       case 'onApplePayFailedRequestToken':
         final errorInfo =
@@ -107,7 +108,7 @@ class Payjp {
           'isSuccess': false,
           'errorMessage': message,
         };
-        await _channel.invokeMethod('completeApplePay', params);
+        await channel.invokeMethod('completeApplePay', params);
         break;
       case 'onApplePayCompleted':
         if (_onApplePayCompletedCallback != null) {
@@ -127,15 +128,13 @@ class Payjp {
   /// You can also set [locale] manually, which is following the device setting
   /// by default.
   static Future init(
-      {@required String publicKey,
-      bool debugEnabled,
-      Locale locale}) async {
+      {@required String publicKey, bool debugEnabled, Locale locale}) async {
     final params = <String, dynamic>{
       'publicKey': publicKey,
       'debugEnabled': debugEnabled ?? false,
       'locale': locale?.toLanguageTag(),
     };
-    await _channel.invokeMethod('initialize', params);
+    await channel.invokeMethod('initialize', params);
   }
 
   /// Start card form.
@@ -154,12 +153,12 @@ class Payjp {
     final params = <String, dynamic>{
       'tenantId': tenantId,
     };
-    await _channel.invokeMethod('startCardForm', params);
+    await channel.invokeMethod('startCardForm', params);
   }
 
   /// Close displaying card form.
   static Future completeCardForm() async {
-    await _channel.invokeMethod('completeCardForm');
+    await channel.invokeMethod('completeCardForm');
   }
 
   /// Keep displaying card form, and show [message] as error message.
@@ -167,17 +166,17 @@ class Payjp {
     final params = <String, dynamic>{
       'message': message,
     };
-    await _channel.invokeMethod('showTokenProcessingError', params);
+    await channel.invokeMethod('showTokenProcessingError', params);
   }
 
   /// Set CardForm Style for iOS.
   static Future setIOSCardFormStyle(
-    {Color labelTextColor,
-    Color inputTextColor, 
-    Color errorTextColor,
-    Color tintColor, 
-    Color inputFieldBackgroundColor,
-    Color submitButtonColor}) async {
+      {Color labelTextColor,
+      Color inputTextColor,
+      Color errorTextColor,
+      Color tintColor,
+      Color inputFieldBackgroundColor,
+      Color submitButtonColor}) async {
     final params = <String, dynamic>{
       'labelTextColor': labelTextColor?.value,
       'inputTextColor': inputTextColor?.value,
@@ -186,14 +185,14 @@ class Payjp {
       'inputFieldBackgroundColor': inputFieldBackgroundColor?.value,
       'submitButtonColor': submitButtonColor?.value,
     };
-    await _channel.invokeMethod('setFormStyle', params);
+    await channel.invokeMethod('setFormStyle', params);
   }
 
   /// Return availability of ApplePay.
   /// You should call in only iOS.
   /// See https://developer.apple.com/documentation/passkit/pkpaymentauthorizationviewcontroller/1616192-canmakepayments
   static Future<bool> isApplePayAvailable() async =>
-      _channel.invokeMethod('isApplePayAvailable');
+      channel.invokeMethod('isApplePayAvailable');
 
   /// Start Apple Pay payment authorization flow.
   /// You have to set your own merchant id provided by Apple into [appleMerchantId].
@@ -223,6 +222,6 @@ class Payjp {
       'summaryItemAmount': summaryItemAmount,
       'requiredBillingAddress': requiredBillingAddress ?? false
     };
-    await _channel.invokeMethod('makeApplePayToken', params);
+    await channel.invokeMethod('makeApplePayToken', params);
   }
 }
