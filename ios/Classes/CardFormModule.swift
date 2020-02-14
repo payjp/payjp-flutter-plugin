@@ -67,7 +67,7 @@ class CardFormModule: CardFormModuleType {
         result(nil)
     }
     
-    func setFormStyle(_ result: (Any?) -> Void, with style: FormStyle) {
+    func setFormStyle(_ result: FlutterResult, with style: FormStyle) {
         self.style = style
         result(nil)
     }
