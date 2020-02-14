@@ -128,12 +128,12 @@ class Payjp {
   /// by default.
   static Future init(
       {@required String publicKey,
-      bool debugEnabled = false,
+      bool debugEnabled,
       Locale locale}) async {
     final params = <String, dynamic>{
       'publicKey': publicKey,
-      'debugEnabled': debugEnabled,
-      'locale': locale != null ? locale.toLanguageTag() : null,
+      'debugEnabled': debugEnabled ?? false,
+      'locale': locale?.toLanguageTag(),
     };
     await _channel.invokeMethod('initialize', params);
   }
@@ -188,7 +188,7 @@ class Payjp {
       @required String countryCode,
       @required String summaryItemLabel,
       @required String summaryItemAmount,
-      bool requiredBillingAddress = false,
+      bool requiredBillingAddress,
       OnApplePayProducedTokenCallback onApplePayProducedTokenCallback,
       OnApplePayFailedRequestTokenCallback onApplePayFailedRequestTokenCallback,
       OnApplePayCompletedCallback onApplePayCompletedCallback}) async {
@@ -202,7 +202,7 @@ class Payjp {
       'countryCode': countryCode,
       'summaryItemLabel': summaryItemLabel,
       'summaryItemAmount': summaryItemAmount,
-      'requiredBillingAddress': requiredBillingAddress
+      'requiredBillingAddress': requiredBillingAddress ?? false
     };
     await _channel.invokeMethod('makeApplePayToken', params);
   }
