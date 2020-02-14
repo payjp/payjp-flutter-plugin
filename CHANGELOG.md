@@ -1,3 +1,7 @@
+## 0.1.5
+
+- Fix error message deserialization problem on Apple Pay (iOS).
+
 ## 0.1.4
 
 - Update payjp-ios to [1.1.5](https://github.com/payjp/payjp-ios/releases/tag/1.1.5).
