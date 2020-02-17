@@ -1,3 +1,7 @@
+## 0.1.6
+
+- Fix using string literal instead of BuildConfig.LIBRARY_PACKAGE_NAME.
+
 ## 0.1.5
 
 - Fix error message deserialization problem on Apple Pay (iOS).
