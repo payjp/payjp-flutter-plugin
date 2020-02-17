@@ -111,7 +111,7 @@ class PayjpFlutterPlugin: MethodCallHandler, FlutterPlugin, ActivityAware {
         LocaleListCompat.forLanguageTags(tag).takeIf { it.size() > 0 }?.get(0)
       } ?: Locale.getDefault()
       val clientInfo = ClientInfo.Builder()
-        .setPlugin("${BuildConfig.LIBRARY_PACKAGE_NAME}/${BuildConfig.VERSION_NAME}")
+        .setPlugin("jp.pay.flutter/${BuildConfig.VERSION_NAME}")
         .setPublisher("payjp")
         .build()
       activateModernTls(debugEnabled)
