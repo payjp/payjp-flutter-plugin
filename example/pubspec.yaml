@@ -14,6 +14,9 @@ dependencies:
 dev_dependencies:
   payjp_flutter:
     path: ../
+  flutter_driver:
+    sdk: flutter
+  e2e: ^0.2.4
 
 flutter:
   uses-material-design: true
