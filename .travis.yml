@@ -1,46 +1,92 @@
+env:
+  global:
+    # Android
+    - API=28
+    - ABI=x86_64
+    - G_SERVICES=default
+    - ANDROID_TOOLS=4333796 # android-28
+    # Flutter
+    - FLUTTER_CHANNEL=stable
+    # Path
+    - ANDROID_HOME=${HOME}/android-sdk-linux
+    - TOOLS=${ANDROID_HOME}/tools
+    - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
+    - JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+    - PATH="$JAVA_HOME/bin:$PATH"
+    - FLUTTER_HOME=${HOME}/flutter
+    - PATH=${HOME}/.pub-cache/bin:${PATH}
+    - PATH=${FLUTTER_HOME}/bin:${FLUTTER_HOME}/bin/cache/dart-sdk/bin:${PATH}
 git:
   submodules: false
+_install_flutter: &install_flutter
+  install:
+    - git clone https://github.com/flutter/flutter.git ${FLUTTER_HOME} -b ${FLUTTER_CHANNEL} --depth 1
+    - flutter precache
+    - flutter doctor -v
 matrix:
   include:
-    - language: android
-      sudo: false
-      jdk: oraclejdk8
-      os: linux
-      dist: trusty
-      licenses:
-        - 'android-sdk-preview-license-.+'
-        - 'android-sdk-license-.+'
-        - 'google-gdk-license-.+'
+    - os: linux
+      dist: bionic
+      language: shell
       cache:
         directories:
           - $HOME/.pub-cache
           - $HOME/.gradle/caches/
           - $HOME/.gradle/wrapper/
           - $HOME/.android/build-cache
-      android:
-        components:
-          - tools
-          - platform-tools
-          - android-28
-          - extra-google-m2repository
-          - extra-android-m2repository
-          - extra-google-google_play_services
+      before_cache:
+        - rm -rf $HOME/.gradle/caches/[1-9]*
+        - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
       addons:
         apt:
-          sources:
-            - ubuntu-toolchain-r-test
           packages:
             - libstdc++6
-            - fonts-droid
+            - libvirt-bin
+            - bridge-utils
+            - openjdk-8-jdk-headless
       before_install:
+        # Android tools
+        - curl -L "https://dl.google.com/android/repository/sdk-tools-linux-$ANDROID_TOOLS.zip" -o $HOME/tools.zip
+        - unzip -oq $HOME/tools.zip -d ${ANDROID_HOME}
         - mkdir "$ANDROID_HOME/licenses" || true
         - cp ./tool/.android-sdk-license "$ANDROID_HOME/licenses/android-sdk-license"
-      install:
-        - git clone https://github.com/flutter/flutter.git -b stable --depth 1
-        - ./flutter/bin/flutter doctor
+        # Download SDK tools
+        - yes | sdkmanager --licenses
+        - sdkmanager "tools" >/dev/null
+        - sdkmanager "platform-tools" >/dev/null
+        - sdkmanager "emulator" >/dev/null
+        - sdkmanager "platforms;android-$API" >/dev/null # We need the API of the emulator we will run
+        - sdkmanager "system-images;android-$API;$G_SERVICES;$ABI" >/dev/null # install system images for emulator
+        - sudo adduser $USER libvirt
+        # Define emulator parameters
+        - EMU_PARAMS="
+          -avd test
+          -no-audio
+          -no-window
+          -no-accel
+          -gpu swiftshader_indirect
+          -no-boot-anim
+          -camera-back none
+          -camera-front none"
+        # Create and start emulator as early as possible
+        - adb start-server
+        - avdmanager create avd --force --name test --package "system-images;android-$API;$G_SERVICES;$ABI" --abi $ABI --device 'Nexus 4' --sdcard 128M
+        - $ANDROID_HOME/emulator/emulator ${EMU_PARAMS} &
+        # Install other required tools:
+        - sdkmanager "build-tools;28.0.3" >/dev/null # Implicit gradle dependency - gradle drives changes
+        - sdkmanager "platforms;android-28" >/dev/null # We need the API of the current compileSdkVersion from gradle.properties
+        - sdkmanager "extras;android;m2repository" >/dev/null
+        # Download the script to wait for emulator
+        - curl -L https://raw.githubusercontent.com/travis-ci/travis-cookbooks/master/community-cookbooks/android-sdk/files/default/android-wait-for-emulator -o $HOME/bin/android-wait-for-emulator
+        - chmod +x $HOME/bin/android-wait-for-emulator
+      <<: *install_flutter
+      before_script:
+        - android-wait-for-emulator
+        - adb shell input keyevent 82 &
       script:
-        - ./flutter/bin/flutter -v test
-        - cd example && ../flutter/bin/flutter -v build apk
+        - flutter -v test
+        - cd example && flutter drive test_driver/payjp_e2e.dart && cd ../
+        - cd example && flutter -v build apk && cd ../
 
     - language: objective-c
       os: osx
@@ -53,9 +99,10 @@ matrix:
         - pod setup
         - pod repo update
         - cd ../
-      install:
-        - git clone https://github.com/flutter/flutter.git -b stable --depth 1
-        - ./flutter/bin/flutter doctor
+      <<: *install_flutter
+      before_script:
+        - open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app
       script:
-        - ./flutter/bin/flutter -v test
-        - cd example && ../flutter/bin/flutter -v build ios --no-codesign
+        - flutter -v test
+        - cd example && flutter drive test_driver/payjp_e2e.dart && cd ../
+        - cd example && flutter -v build ios --no-codesign && cd ../
