@@ -21,5 +21,9 @@ dev_dependencies:
 
 flutter:
   plugin:
-    androidPackage: jp.pay.flutter
-    pluginClass: PayjpFlutterPlugin
+    platforms:
+      android:
+        package: jp.pay.flutter
+        pluginClass: PayjpFlutterPlugin
+      ios:
+        pluginClass: PayjpFlutterPlugin
