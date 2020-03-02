@@ -25,7 +25,7 @@ protocol CardFormModuleType {
 class CardFormModule: CardFormModuleType {
     private let channel: FlutterMethodChannel
     private var completionHandler: ((Error?) -> Void)?
-    private var style: FormStyle?
+    private var style: FormStyle = .defaultStyle
 
     init(channel: FlutterMethodChannel) {
         self.channel = channel
@@ -36,7 +36,7 @@ class CardFormModule: CardFormModuleType {
         // validate Info.plist for scanner
         let description = Bundle.main.object(forInfoDictionaryKey: "NSCameraUsageDescription") as? String
         assert(description?.isEmpty == false, "The app's Info.plist must contain an NSCameraUsageDescription key to use scanner in card form.")
-        let cardForm = CardFormViewController.createCardFormViewController(style: self.style ?? FormStyle.defalutStyle,
+        let cardForm = CardFormViewController.createCardFormViewController(style: self.style,
                                                                            tenantId: tenantId)
         cardForm.delegate = self
         // get host ViewController
