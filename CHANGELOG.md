@@ -1,3 +1,9 @@
+## 0.1.7
+
+- Update payjp-ios to [1.1.6](https://github.com/payjp/payjp-ios/releases/tag/1.1.6).
+- Add e2e testing.
+- Specify supported platforms.
+
 ## 0.1.6
 
 - Fix using string literal instead of BuildConfig.LIBRARY_PACKAGE_NAME.
