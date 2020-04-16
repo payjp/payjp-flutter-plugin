@@ -45,6 +45,7 @@ class CardFormModule: CardFormModuleType {
                 navigationController.pushViewController(cardForm, animated: true)
             } else {
                 let navigationController = UINavigationController.init(rootViewController: cardForm)
+                navigationController.presentationController?.delegate = cardForm
                 hostViewController.present(navigationController, animated: true, completion: nil)
             }
         }
