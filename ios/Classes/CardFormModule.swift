@@ -37,8 +37,8 @@ class CardFormModule: CardFormModuleType {
         let description = Bundle.main.object(forInfoDictionaryKey: "NSCameraUsageDescription") as? String
         assert(description?.isEmpty == false, "The app's Info.plist must contain an NSCameraUsageDescription key to use scanner in card form.")
         let cardForm = CardFormViewController.createCardFormViewController(style: self.style,
-                                                                           tenantId: tenantId)
-        cardForm.delegate = self
+                                                                           tenantId: tenantId,
+                                                                           delegate: self)
         // get host ViewController
         if let hostViewController = UIApplication.shared.keyWindow?.rootViewController {
             if let navigationController = hostViewController as? UINavigationController {

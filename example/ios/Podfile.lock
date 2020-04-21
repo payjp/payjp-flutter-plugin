@@ -3,11 +3,11 @@ PODS:
   - e2e (0.0.1):
     - Flutter
   - Flutter (1.0.0)
-  - PAYJP (1.1.6)
+  - PAYJP (1.2.0)
   - payjp_flutter (0.1.7):
     - CardIO (~> 5.4.1)
     - Flutter
-    - PAYJP (~> 1.1.6)
+    - PAYJP (~> 1.2.0)
 
 DEPENDENCIES:
   - e2e (from `.symlinks/plugins/e2e/ios`)
@@ -31,9 +31,9 @@ SPEC CHECKSUMS:
   CardIO: 56983b39b62f495fc6dae9ad7cf875143df06443
   e2e: 967b9b1fc533b7636a3b7a719f840c27f301fe1f
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  PAYJP: 71cd9568120631aecf87dd0fdc9ccd2596e014e6
-  payjp_flutter: 9d21c9e1d46f633bf8f3eb596a657706823db722
+  PAYJP: 88f67737cd9708ce6c75748ab2de6df10c3f10f3
+  payjp_flutter: e60e5c3cf8330e7676d750030c0ea7d36d99a743
 
-PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
+PODFILE CHECKSUM: ec772da7ab1c0a8ddb7a5d925888232063b9b7cc
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1
