@@ -34,7 +34,14 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
                     PAYJPSDK.locale = Locale.current
                 }
                 PAYJPSDK.clientInfo = ClientInfo.makeInfo(plugin: "jp.pay.flutter/\(PayjpPluginConstant.PluginVersion)", publisher: "payjp")
+                if let tdsRedirectURL = argsDictionary?["threeDSecureRedirectUrl"] as? String,
+                    let tdsRedirectKey = argsDictionary?["threeDSecureRedirectKey"] as? String {
+                    PAYJPSDK.threeDSecureURLConfiguration =
+                        ThreeDSecureURLConfiguration(redirectURL: URL(string: tdsRedirectURL)!,
+                                                     redirectURLKey: tdsRedirectKey)
+                }
             }
+            PayjpAppDelegateInterceptor.sharedInstance()
             result(nil)
             break
         case .startCardForm:

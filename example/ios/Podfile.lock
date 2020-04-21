@@ -3,10 +3,25 @@ PODS:
   - e2e (0.0.1):
     - Flutter
   - Flutter (1.0.0)
+  - GoogleUtilities/AppDelegateSwizzler (6.5.2):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (6.5.2)
+  - GoogleUtilities/Logger (6.5.2):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/Network (6.5.2):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (6.5.2)"
+  - GoogleUtilities/Reachability (6.5.2):
+    - GoogleUtilities/Logger
   - PAYJP (1.2.0)
   - payjp_flutter (0.1.7):
     - CardIO (~> 5.4.1)
     - Flutter
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.5.2)
     - PAYJP (~> 1.2.0)
 
 DEPENDENCIES:
@@ -17,6 +32,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - CardIO
+    - GoogleUtilities
     - PAYJP
 
 EXTERNAL SOURCES:
@@ -31,8 +47,9 @@ SPEC CHECKSUMS:
   CardIO: 56983b39b62f495fc6dae9ad7cf875143df06443
   e2e: 967b9b1fc533b7636a3b7a719f840c27f301fe1f
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  GoogleUtilities: ad0f3b691c67909d03a3327cc205222ab8f42e0e
   PAYJP: 88f67737cd9708ce6c75748ab2de6df10c3f10f3
-  payjp_flutter: e60e5c3cf8330e7676d750030c0ea7d36d99a743
+  payjp_flutter: f827316a91127fd6e98f613c595eb4ce5d997c45
 
 PODFILE CHECKSUM: ec772da7ab1c0a8ddb7a5d925888232063b9b7cc
 
