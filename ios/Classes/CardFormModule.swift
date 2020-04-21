@@ -16,7 +16,7 @@ protocol CardFormModuleType {
     func showTokenProcessingError(_ result: FlutterResult, with message: String)
 
     func completeCardForm(_ result: FlutterResult)
-    
+
     func setFormStyle(_ result: FlutterResult, with style: FormStyle)
 }
 
@@ -67,7 +67,7 @@ class CardFormModule: CardFormModuleType {
         }
         result(nil)
     }
-    
+
     func setFormStyle(_ result: FlutterResult, with style: FormStyle) {
         self.style = style
         result(nil)

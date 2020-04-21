@@ -63,7 +63,7 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
             var tintColor: UIColor?
             var inputFieldBackgroundColor: UIColor?
             var submitButtonColor: UIColor?
-            
+
             if let labelText = argsDictionary?["labelTextColor"] as? NSNumber {
                 labelTextColor = self.color(with: labelText.uintValue)
             }
@@ -121,7 +121,7 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
             break
         }
     }
-    
+
     private func color(with hex: UInt) -> UIColor {
         let a = CGFloat((hex & 0xFF000000) >> 24) / 255.0
         let r = CGFloat((hex & 0x00FF0000) >> 16) / 255.0
