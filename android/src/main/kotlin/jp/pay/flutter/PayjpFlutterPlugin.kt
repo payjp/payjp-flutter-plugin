@@ -114,6 +114,7 @@ class PayjpFlutterPlugin: MethodCallHandler, FlutterPlugin, ActivityAware {
         .setPlugin("jp.pay.flutter/${BuildConfig.VERSION_NAME}")
         .setPublisher("payjp")
         .build()
+      val tdsRedirectKey = call.argument<String>("threeDSecureRedirectKey")
       activateModernTls(debugEnabled)
       Payjp.init(PayjpConfiguration.Builder(publicKey = publicKey)
         .setDebugEnabled(debugEnabled)
@@ -121,6 +122,7 @@ class PayjpFlutterPlugin: MethodCallHandler, FlutterPlugin, ActivityAware {
         .setLocale(locale)
         .setCardScannerPlugin(PayjpCardScannerPlugin)
         .setClientInfo(clientInfo)
+        .setThreeDSecureRedirectName(tdsRedirectKey)
         .build())
       result.success(null)
     }
