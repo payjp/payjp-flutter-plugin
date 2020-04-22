@@ -1,3 +1,12 @@
+## 0.2.0
+
+- Update payjp-ios to [1.2.0](https://github.com/payjp/payjp-ios/releases/tag/1.2.0).
+- Update payjp-android to [1.2.0](https://github.com/payjp/payjp-android/releases/tag/1.2.0).
+- Add field `threeDSecureStatus` to `Card`.
+- Add option `threeDSecureRedirect` to Payjp.init. It is only for 3D Secure.
+- In iOS platform, Add [GoogleUtilities/AppDelegateSwizzler](https://github.com/firebase/firebase-ios-sdk/tree/master/GoogleUtilities/AppDelegateSwizzler) to hook `(BOOL)application:openURL:options:`.
+- Fix onCardFormCanceledCallback not called on iOS 13 after dismiss by swipe down the modal.
+
 ## 0.1.7
 
 - Update payjp-ios to [1.1.6](https://github.com/payjp/payjp-ios/releases/tag/1.1.6).
