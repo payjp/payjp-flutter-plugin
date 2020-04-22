@@ -42,7 +42,11 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _initPayjp() async {
-    await Payjp.init(publicKey: payjpPublicKey, debugEnabled: true);
+    await Payjp.init(
+        publicKey: payjpPublicKey,
+        debugEnabled: true,
+        threeDSecureRedirect: PayjpThreeDSecureRedirect(
+            url: 'jp.pay.example://tds/finish', key: 'mobileapp'));
     var isApplePayAvailable = false;
     if (Platform.isIOS) {
       await Payjp.setIOSCardFormStyle(

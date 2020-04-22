@@ -14,6 +14,7 @@ import 'package:payjp_flutter/src/callback_result.dart';
 import 'package:payjp_flutter/src/error_info.dart';
 import 'package:payjp_flutter/src/models.dart';
 import 'package:payjp_flutter/src/serializers.dart';
+import 'package:payjp_flutter/src/three_d_secure.dart';
 
 typedef OnCardFormCompletedCallback = void Function();
 typedef OnCardFormCanceledCallback = void Function();
@@ -126,13 +127,19 @@ class Payjp {
   /// ```
   /// If you'd like to enable debugging, set [debugEnabled] to true (Android Only).
   /// You can also set [locale] manually, which is following the device setting
-  /// by default.
+  /// by default. [threeDSecureRedirect] is required only if you support 3D Secure.
+  /// You can register key and url in [PAY.JP dashboard](https://pay.jp/d/settings) if activated.
   static Future init(
-      {@required String publicKey, bool debugEnabled, Locale locale}) async {
+      {@required String publicKey,
+      bool debugEnabled,
+      Locale locale,
+      PayjpThreeDSecureRedirect threeDSecureRedirect}) async {
     final params = <String, dynamic>{
       'publicKey': publicKey,
       'debugEnabled': debugEnabled ?? false,
       'locale': locale?.toLanguageTag(),
+      'threeDSecureRedirectUrl': threeDSecureRedirect?.url,
+      'threeDSecureRedirectKey': threeDSecureRedirect?.key
     };
     await channel.invokeMethod('initialize', params);
   }

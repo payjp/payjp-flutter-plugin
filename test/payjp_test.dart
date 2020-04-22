@@ -30,7 +30,11 @@ void main() {
     test('init with all params', () async {
       final publicKey = 'pk_test_123';
       await Payjp.init(
-          publicKey: publicKey, debugEnabled: true, locale: Locale('ja'));
+          publicKey: publicKey,
+          debugEnabled: true,
+          locale: Locale('ja'),
+          threeDSecureRedirect: PayjpThreeDSecureRedirect(
+              url: 'https://example.com/foo', key: 'example'));
       expect(
         log,
         <Matcher>[
@@ -40,6 +44,8 @@ void main() {
               'publicKey': publicKey,
               'debugEnabled': true,
               'locale': 'ja',
+              'threeDSecureRedirectUrl': 'https://example.com/foo',
+              'threeDSecureRedirectKey': 'example'
             },
           ),
         ],
@@ -57,6 +63,8 @@ void main() {
               'publicKey': publicKey,
               'debugEnabled': false,
               'locale': null,
+              'threeDSecureRedirectUrl': null,
+              'threeDSecureRedirectKey': null
             },
           ),
         ],

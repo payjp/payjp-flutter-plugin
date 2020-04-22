@@ -41,6 +41,17 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="jp.pay.android.verifier.ui.PayjpThreeDSecureStepActivity"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="jp.pay.example" android:host="tds" android:path="/finish" />
+            </intent-filter>
+        </activity>
+
         <meta-data
                 android:name="flutterEmbedding"
                 android:value="2" />

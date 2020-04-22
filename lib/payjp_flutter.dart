@@ -8,3 +8,4 @@ export 'src/callback_result.dart';
 export 'src/error_info.dart';
 export 'src/models.dart';
 export 'src/payjp.dart';
+export 'src/three_d_secure.dart';

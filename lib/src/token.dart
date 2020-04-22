@@ -3,16 +3,17 @@
 part of 'models.dart';
 
 class Token {
+  /* tok_で始まる一意なオブジェクトを示す文字列 */
   String id = null;
 
   Card card = null;
-
+  /* このトークン作成時のタイムスタンプ */
   int created = null;
-
+  /* 本番環境かどうか */
   bool livemode = null;
-
+  /* \\\"token\\\"の固定文字列 */
   String object = null;
-
+  /* このトークンが使用済みかどうか */
   bool used = null;
   Token();
 

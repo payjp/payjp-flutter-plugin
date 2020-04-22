@@ -3,49 +3,52 @@
 part of 'models.dart';
 
 class Card {
+  /* car_で始まり一意なオブジェクトを示す、最大32桁の文字列 */
   String id = null;
-
+  /* \\\"card\\\"の固定文字列 */
   String object = null;
-
+  /* カード作成時のタイムスタンプ */
   int created = null;
-
+  /* カード保有者名 */
   String name = null;
-
+  /* カード番号の下四桁 */
   String last4 = null;
-
+  /* 有効期限月 */
   int expMonth = null;
-
+  /* 有効期限年 */
   int expYear = null;
 
   CardBrand brand = null;
   //enum brandEnum {  Visa,  MasterCard,  JCB,  American Express,  Diners Club,  Discover,  };{
-
+  /* CVCコードチェックの結果 */
   String cvcCheck = null;
-
+  /* 3Dセキュアの実施結果。 加盟店において3Dセキュアが有効でない等未実施の場合null。  */
+  String threeDSecureStatus = null;
+  /* このクレジットカード番号に紐づく値。 同一番号のカードからは同一の値が生成されることが保証されており、 トークン化の度にトークンIDは変わりますが、この値は変わりません。  */
   String fingerprint = null;
-
+  /* 都道府県 */
   String addressState = null;
-
+  /* 市区町村 */
   String addressCity = null;
-
+  /* 番地など */
   String addressLine1 = null;
-
+  /* 建物名など */
   String addressLine2 = null;
-
+  /* 2桁のISOコード(e.g. JP) */
   String country = null;
-
+  /* 郵便番号 */
   String addressZip = null;
-
+  /* 郵便番号存在チェックの結果 */
   String addressZipCheck = null;
-
+  /* 顧客オブジェクトのID */
   String customer = null;
-
+  /* キーバリューの任意データ */
   Object metadata = null;
   Card();
 
   @override
   String toString() {
-    return 'Card[id=$id, object=$object, created=$created, name=$name, last4=$last4, expMonth=$expMonth, expYear=$expYear, brand=$brand, cvcCheck=$cvcCheck, fingerprint=$fingerprint, addressState=$addressState, addressCity=$addressCity, addressLine1=$addressLine1, addressLine2=$addressLine2, country=$country, addressZip=$addressZip, addressZipCheck=$addressZipCheck, customer=$customer, metadata=$metadata, ]';
+    return 'Card[id=$id, object=$object, created=$created, name=$name, last4=$last4, expMonth=$expMonth, expYear=$expYear, brand=$brand, cvcCheck=$cvcCheck, threeDSecureStatus=$threeDSecureStatus, fingerprint=$fingerprint, addressState=$addressState, addressCity=$addressCity, addressLine1=$addressLine1, addressLine2=$addressLine2, country=$country, addressZip=$addressZip, addressZipCheck=$addressZipCheck, customer=$customer, metadata=$metadata, ]';
   }
 
   Card.fromJson(Map<dynamic, dynamic> json) {
@@ -59,6 +62,7 @@ class Card {
     expYear = json['exp_year'];
     brand = (json['brand'] == null) ? null : CardBrand.fromJson(json['brand']);
     cvcCheck = json['cvc_check'];
+    threeDSecureStatus = json['three_d_secure_status'];
     fingerprint = json['fingerprint'];
     addressState = json['address_state'];
     addressCity = json['address_city'];
@@ -82,6 +86,8 @@ class Card {
     if (expYear != null) json['exp_year'] = expYear;
     if (brand != null) json['brand'] = brand;
     if (cvcCheck != null) json['cvc_check'] = cvcCheck;
+    if (threeDSecureStatus != null)
+      json['three_d_secure_status'] = threeDSecureStatus;
     if (fingerprint != null) json['fingerprint'] = fingerprint;
     json['address_state'] = addressState;
     json['address_city'] = addressCity;
