@@ -16,7 +16,7 @@ A Flutter plugin for PAY.JP Mobile SDK.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.static_framework = true
-  s.dependency 'PAYJP', '~> 1.2.0'
+  s.dependency 'PAYJP', '~> 1.2.1'
   s.dependency 'CardIO', '~> 5.4.1'
   s.dependency 'GoogleUtilities/AppDelegateSwizzler', '~> 6.5.2'
   s.dependency 'Flutter'
