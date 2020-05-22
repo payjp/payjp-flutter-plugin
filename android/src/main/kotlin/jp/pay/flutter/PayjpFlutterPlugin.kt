@@ -131,11 +131,9 @@ class PayjpFlutterPlugin: MethodCallHandler, FlutterPlugin, ActivityAware {
       val tenantId = call.argument<String>("tenantId")?.let { TenantId(it) }
       var face = PayjpCardForm.FACE_MULTI_LINE
       call.argument<String>("cardFormType")?.let {
-          when (it) {
-            "cardDisplay" -> {
-              face = PayjpCardForm.FACE_CARD_DISPLAY
-            }
-          }
+        if (it == "cardDisplay") {
+          face = PayjpCardForm.FACE_CARD_DISPLAY
+        }
       }
       cardFormModule?.startCardForm(result, tenantId, face) ?: result.pluginError("plugin not attached.")
     }
