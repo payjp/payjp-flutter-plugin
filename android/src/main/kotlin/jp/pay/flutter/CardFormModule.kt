@@ -31,6 +31,7 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.PluginRegistry
 import jp.pay.android.Payjp
+import jp.pay.android.PayjpCardForm
 import jp.pay.android.PayjpTokenBackgroundHandler
 import jp.pay.android.PayjpTokenBackgroundHandler.CardFormStatus
 import jp.pay.android.model.TenantId
@@ -63,9 +64,9 @@ internal class CardFormModule(
 
     // handle MethodCall
 
-    fun startCardForm(result: MethodChannel.Result, tenantId: TenantId?) {
+    fun startCardForm(result: MethodChannel.Result, tenantId: TenantId?, @PayjpCardForm.CardFormFace face: Int) {
         currentActivity()?.let { activity ->
-            Payjp.cardForm().start(activity, tenant = tenantId)
+            Payjp.cardForm().start(activity, tenant = tenantId, face = face)
             result.success(null)
         } ?: result.pluginError("Activity not found.")
     }

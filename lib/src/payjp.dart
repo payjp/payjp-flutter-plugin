@@ -150,6 +150,7 @@ class Payjp {
   /// All callback parameters are optional, but you should use [onCardFormProducedTokenCallback]
   /// to send PAY.JP token to your server.
   /// [tenantId] is a parameter only for platform API.
+  /// [cardFormType] is type of CardForm.(default MultiLine)
   static Future startCardForm(
       {OnCardFormCanceledCallback onCardFormCanceledCallback,
       OnCardFormCompletedCallback onCardFormCompletedCallback,

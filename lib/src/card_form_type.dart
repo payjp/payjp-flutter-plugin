@@ -5,8 +5,7 @@
  */
 
 /// View type of CardForm.
-/// tableStyled is iOS only.
-enum CardFormType { multiLine, cardDisplay, tableStyled }
+enum CardFormType { multiLine, cardDisplay }
 
 class CardFormTypeTransformer {
   static dynamic enumToString(dynamic value) {
@@ -18,10 +17,6 @@ class CardFormTypeTransformer {
       case CardFormType.cardDisplay:
         {
           return "cardDisplay";
-        }
-      case CardFormType.tableStyled:
-        {
-          return "tableStyled";
         }
     }
   }

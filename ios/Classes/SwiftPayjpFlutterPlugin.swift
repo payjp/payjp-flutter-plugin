@@ -51,8 +51,6 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
                 switch formType {
                 case "cardDisplay":
                     viewType = .displayStyled
-                case "tableStyled":
-                    viewType = .tableStyled
                 default:
                     break
                 }
