@@ -17,12 +17,12 @@ PODS:
   - "GoogleUtilities/NSData+zlib (6.5.2)"
   - GoogleUtilities/Reachability (6.5.2):
     - GoogleUtilities/Logger
-  - PAYJP (1.2.1)
+  - PAYJP (1.2.2)
   - payjp_flutter (0.2.0):
     - CardIO (~> 5.4.1)
     - Flutter
     - GoogleUtilities/AppDelegateSwizzler (~> 6.5.2)
-    - PAYJP (~> 1.2.1)
+    - PAYJP (~> 1.2.2)
 
 DEPENDENCIES:
   - e2e (from `.symlinks/plugins/e2e/ios`)
@@ -48,8 +48,8 @@ SPEC CHECKSUMS:
   e2e: 967b9b1fc533b7636a3b7a719f840c27f301fe1f
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   GoogleUtilities: ad0f3b691c67909d03a3327cc205222ab8f42e0e
-  PAYJP: c5a8c0f470498a26a26082ff879661d23db2dcbd
-  payjp_flutter: cb1837fd64743fa6c82a25db9cc5a9705df8f97c
+  PAYJP: 11409ed8465538810c30789e8cfa597f89498031
+  payjp_flutter: 41f2b64e2a5ebbdbe27f4369feb24071a5a17358
 
 PODFILE CHECKSUM: ec772da7ab1c0a8ddb7a5d925888232063b9b7cc
 
