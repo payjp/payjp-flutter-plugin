@@ -1,3 +1,9 @@
+## 0.2.1
+
+- Update payjp-ios to [1.2.2](https://github.com/payjp/payjp-ios/releases/tag/1.2.2).
+- Update payjp-android to [1.2.1](https://github.com/payjp/payjp-android/releases/tag/1.2.1).
+- Add option `cardFormType` to Payjp.startCardForm. 
+
 ## 0.2.0
 
 - Update payjp-ios to [1.2.0](https://github.com/payjp/payjp-ios/releases/tag/1.2.0).

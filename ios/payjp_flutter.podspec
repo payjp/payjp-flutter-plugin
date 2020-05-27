@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'payjp_flutter'
-  s.version          = '0.2.0'
+  s.version          = '0.2.1'
   s.summary          = 'A Flutter plugin for PAY.JP Mobile SDK.'
   s.description      = <<-DESC
 A Flutter plugin for PAY.JP Mobile SDK.
