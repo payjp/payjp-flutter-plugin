@@ -11,6 +11,7 @@ import 'package:built_value/standard_json_plugin.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'package:payjp_flutter/src/callback_result.dart';
+import 'package:payjp_flutter/src/card_form_type.dart';
 import 'package:payjp_flutter/src/error_info.dart';
 import 'package:payjp_flutter/src/models.dart';
 import 'package:payjp_flutter/src/serializers.dart';
@@ -149,16 +150,19 @@ class Payjp {
   /// All callback parameters are optional, but you should use [onCardFormProducedTokenCallback]
   /// to send PAY.JP token to your server.
   /// [tenantId] is a parameter only for platform API.
+  /// [cardFormType] is type of CardForm.(default MultiLine)
   static Future startCardForm(
       {OnCardFormCanceledCallback onCardFormCanceledCallback,
       OnCardFormCompletedCallback onCardFormCompletedCallback,
       OnCardFormProducedTokenCallback onCardFormProducedTokenCallback,
-      String tenantId}) async {
+      String tenantId,
+      CardFormType cardFormType}) async {
     _onCardFormCanceledCallback = onCardFormCanceledCallback;
     _onCardFormCompletedCallback = onCardFormCompletedCallback;
     _onCardFormProducedTokenCallback = onCardFormProducedTokenCallback;
     final params = <String, dynamic>{
       'tenantId': tenantId,
+      'cardFormType': CardFormTypeTransformer.enumToString(cardFormType)
     };
     await channel.invokeMethod('startCardForm', params);
   }
@@ -183,7 +187,8 @@ class Payjp {
       Color errorTextColor,
       Color tintColor,
       Color inputFieldBackgroundColor,
-      Color submitButtonColor}) async {
+      Color submitButtonColor,
+      Color highlightColor}) async {
     final params = <String, dynamic>{
       'labelTextColor': labelTextColor?.value,
       'inputTextColor': inputTextColor?.value,
@@ -191,6 +196,7 @@ class Payjp {
       'tintColor': tintColor?.value,
       'inputFieldBackgroundColor': inputFieldBackgroundColor?.value,
       'submitButtonColor': submitButtonColor?.value,
+      'highlightColor': highlightColor?.value,
     };
     await channel.invokeMethod('setFormStyle', params);
   }

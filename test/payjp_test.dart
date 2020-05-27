@@ -82,6 +82,7 @@ void main() {
             'startCardForm',
             arguments: <String, dynamic>{
               'tenantId': null,
+              'cardFormType': null,
             },
           ),
         ],
@@ -97,6 +98,23 @@ void main() {
             'startCardForm',
             arguments: <String, dynamic>{
               'tenantId': tenantId,
+              'cardFormType': null,
+            },
+          ),
+        ],
+      );
+    });
+    test('start card form with cardFormType', () async {
+      const cardFormType = CardFormType.cardDisplay;
+      await Payjp.startCardForm(cardFormType: cardFormType);
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'startCardForm',
+            arguments: <String, dynamic>{
+              'tenantId': null,
+              'cardFormType': "cardDisplay",
             },
           ),
         ],
@@ -136,7 +154,8 @@ void main() {
           errorTextColor: Color(0xFFFFFFF2),
           tintColor: Color(0xFFFFFFF3),
           inputFieldBackgroundColor: Color(0xFFFFFFF4),
-          submitButtonColor: Color(0xFFFFFFF5));
+          submitButtonColor: Color(0xFFFFFFF5),
+          highlightColor: Color(0xFFFFFFF6));
       expect(
         log,
         <Matcher>[
@@ -149,6 +168,7 @@ void main() {
               'tintColor': 0xFFFFFFF3,
               'inputFieldBackgroundColor': 0xFFFFFFF4,
               'submitButtonColor': 0xFFFFFFF5,
+              'highlightColor': 0xFFFFFFF6,
             },
           ),
         ],
@@ -168,6 +188,7 @@ void main() {
               'tintColor': null,
               'inputFieldBackgroundColor': null,
               'submitButtonColor': null,
+              'highlightColor': null,
             },
           ),
         ],
@@ -398,6 +419,20 @@ void main() {
           ),
         ],
       );
+    });
+  });
+  group('card form type', () {
+    test('transform multiLine', () async {
+      var type = CardFormTypeTransformer.enumToString(CardFormType.multiLine);
+      expect(type, "multiLine");
+    });
+    test('transform cardDisplay', () async {
+      var type = CardFormTypeTransformer.enumToString(CardFormType.cardDisplay);
+      expect(type, "cardDisplay");
+    });
+    test('transform null', () async {
+      var type = CardFormTypeTransformer.enumToString(null);
+      expect(type, null);
     });
   });
 }

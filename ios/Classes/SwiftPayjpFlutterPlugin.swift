@@ -46,7 +46,16 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
             break
         case .startCardForm:
             let tenantId = argsDictionary?["tenantId"] as? String
-            self.cardFormModule.startCardForm(result, with: tenantId)
+            var viewType: CardFormViewType = .labelStyled
+            if let formType = argsDictionary?["cardFormType"] as? String {
+                switch formType {
+                case "cardDisplay":
+                    viewType = .displayStyled
+                default:
+                    break
+                }
+            }
+            self.cardFormModule.startCardForm(result, with: tenantId, viewType: viewType)
             break
         case .showTokenProcessingError:
             if let message = argsDictionary?["message"] as? String {
@@ -63,6 +72,7 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
             var tintColor: UIColor?
             var inputFieldBackgroundColor: UIColor?
             var submitButtonColor: UIColor?
+            var highlightColor: UIColor?
 
             if let labelText = argsDictionary?["labelTextColor"] as? NSNumber {
                 labelTextColor = self.color(with: labelText.uintValue)
@@ -82,12 +92,16 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
             if let submitButton = argsDictionary?["submitButtonColor"] as? NSNumber {
                 submitButtonColor = self.color(with: submitButton.uintValue)
             }
+            if let highlight = argsDictionary?["highlightColor"] as? NSNumber {
+                highlightColor = self.color(with: highlight.uintValue)
+            }
             let style = FormStyle(labelTextColor: labelTextColor,
                                   inputTextColor: inputTextColor,
                                   errorTextColor: errorTextColor,
                                   tintColor: tintColor,
                                   inputFieldBackgroundColor: inputFieldBackgroundColor,
-                                  submitButtonColor: submitButtonColor)
+                                  submitButtonColor: submitButtonColor,
+                                  highlightColor: highlightColor)
             self.cardFormModule.setFormStyle(result, with: style)
             break
         case .isApplePayAvailable:

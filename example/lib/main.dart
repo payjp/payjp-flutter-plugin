@@ -63,12 +63,12 @@ class HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _onStartCardForm() async {
+  void _onStartCardForm({CardFormType formType}) async {
     await Payjp.startCardForm(
-      onCardFormCanceledCallback: _onCardFormCanceled,
-      onCardFormCompletedCallback: _onCardFormCompleted,
-      onCardFormProducedTokenCallback: _onCardFormProducedToken,
-    );
+        onCardFormCanceledCallback: _onCardFormCanceled,
+        onCardFormCompletedCallback: _onCardFormCompleted,
+        onCardFormProducedTokenCallback: _onCardFormProducedToken,
+        cardFormType: formType);
   }
 
   void _onStartApplePay() async {
@@ -158,9 +158,17 @@ You can send token(${token.id}) to your own server to make Customer etc.
                   children: <Widget>[
                     material.Card(
                         child: ListTile(
-                      title: Text('CardForm Sample'),
+                      title: Text('CardForm Sample (MultiLine)'),
                       subtitle: Text('Tap here to start card form.'),
                       onTap: _onStartCardForm,
+                    )),
+                    material.Card(
+                        child: ListTile(
+                      title: Text('CardForm Sample (CardDisplay)'),
+                      subtitle: Text('Tap here to start card form.'),
+                      onTap: () {
+                        _onStartCardForm(formType: CardFormType.cardDisplay);
+                      },
                     )),
                     material.Card(
                         child: ListTile(

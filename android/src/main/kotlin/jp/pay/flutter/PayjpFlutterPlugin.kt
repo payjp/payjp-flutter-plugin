@@ -40,6 +40,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 import jp.pay.android.Payjp
+import jp.pay.android.PayjpCardForm
 import jp.pay.android.PayjpConfiguration
 import jp.pay.android.cardio.PayjpCardScannerPlugin
 import jp.pay.android.model.ClientInfo
@@ -128,7 +129,13 @@ class PayjpFlutterPlugin: MethodCallHandler, FlutterPlugin, ActivityAware {
     }
     ChannelContracts.START_CARD_FORM -> {
       val tenantId = call.argument<String>("tenantId")?.let { TenantId(it) }
-      cardFormModule?.startCardForm(result, tenantId) ?: result.pluginError("plugin not attached.")
+      var face = PayjpCardForm.FACE_MULTI_LINE
+      call.argument<String>("cardFormType")?.let {
+        if (it == "cardDisplay") {
+          face = PayjpCardForm.FACE_CARD_DISPLAY
+        }
+      }
+      cardFormModule?.startCardForm(result, tenantId, face) ?: result.pluginError("plugin not attached.")
     }
     ChannelContracts.SHOW_TOKEN_PROCESSING_ERROR -> {
       val message = checkNotNull(call.argument<String>("message"))
