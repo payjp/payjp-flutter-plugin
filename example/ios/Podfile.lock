@@ -18,7 +18,7 @@ PODS:
   - GoogleUtilities/Reachability (6.5.2):
     - GoogleUtilities/Logger
   - PAYJP (1.2.3)
-  - payjp_flutter (0.2.1):
+  - payjp_flutter (0.2.2):
     - CardIO (~> 5.4.1)
     - Flutter
     - GoogleUtilities/AppDelegateSwizzler (~> 6.5.2)
@@ -49,7 +49,7 @@ SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   GoogleUtilities: ad0f3b691c67909d03a3327cc205222ab8f42e0e
   PAYJP: c04d2a78d617ef7575edd41478eb843be53cec19
-  payjp_flutter: 89d6f742ec8147b00ddeaa7bd5ad045ead3af96d
+  payjp_flutter: 887abfd2e55dbaee037769b58ef2abfcdace4ed8
 
 PODFILE CHECKSUM: ec772da7ab1c0a8ddb7a5d925888232063b9b7cc
 
