@@ -11,7 +11,7 @@ A Flutter plugin for PAY.JP Mobile SDK.
 - クレジットカード決済のためのカードフォーム
 - Apple Payアプリ内決済（iOSのみ）
 
-詳細は[公式オンラインドキュメント](https://pay.jp/docs/)を確認ください。
+詳細は[公式オンラインドキュメント](https://pay.jp/docs/mobileapp-flutter)を確認ください。
 
 ## Compatible Platforms
 
