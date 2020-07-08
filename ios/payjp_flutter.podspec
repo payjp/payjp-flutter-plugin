@@ -16,10 +16,12 @@ A Flutter plugin for PAY.JP Mobile SDK.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.static_framework = true
-  s.dependency 'PAYJP', '~> 1.2.3'
+  s.dependency 'PAYJPFlutterCore', '~> 1.2.5'
   s.dependency 'CardIO', '~> 5.4.1'
   s.dependency 'GoogleUtilities/AppDelegateSwizzler', '~> 6.5.2'
   s.dependency 'Flutter'
+  # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
 
   s.ios.deployment_target = '10.0'
 end
