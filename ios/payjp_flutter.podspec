@@ -1,6 +1,10 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
 #
+require 'json'
+
+payjp_sdk = JSON.parse(File.read(File.join(__dir__, '../sdkconfig.json')))
+
 Pod::Spec.new do |s|
   s.name             = 'payjp_flutter'
   s.version          = '0.2.3'
@@ -16,7 +20,7 @@ A Flutter plugin for PAY.JP Mobile SDK.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.static_framework = true
-  s.dependency 'PAYJPFlutterCore', '~> 1.2.5'
+  s.dependency 'PAYJPFlutterCore', "~> #{payjp_sdk['ios']}"
   s.dependency 'CardIO', '~> 5.4.1'
   s.dependency 'GoogleUtilities/AppDelegateSwizzler', '~> 6.5.2'
   s.dependency 'Flutter'
