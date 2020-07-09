@@ -1,3 +1,10 @@
+## 0.2.3
+
+- Update payjp-ios to [1.2.5](https://github.com/payjp/payjp-ios/releases/tag/1.2.5).
+- Update payjp-android to [1.2.2](https://github.com/payjp/payjp-android/releases/tag/1.2.2).
+- Update dependencies.
+- Fix images not displayed in Flutter v1.17.+ #18.
+
 ## 0.2.2
 
 - Update payjp-ios to [1.2.3](https://github.com/payjp/payjp-ios/releases/tag/1.2.3).
