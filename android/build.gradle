@@ -20,13 +20,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+import groovy.json.*
 
 group 'jp.pay.flutter'
 version VERSION_NAME
 
 buildscript {
     ext.kotlin_version = '1.3.71'
-    ext.payjpSdkVersion = '1.2.2'
 
     repositories {
         google()
@@ -45,6 +45,14 @@ rootProject.allprojects {
         jcenter()
     }
 }
+
+ext.readJson = { File file ->
+    def json = new JsonSlurper().parse(file)
+    return json
+}
+
+ext.payjpSdkVersion = readJson(project.file("../sdkconfig.json")).android
+
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'

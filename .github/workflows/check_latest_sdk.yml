@@ -1,0 +1,47 @@
+name: Check latest PAYJP.SDK
+
+on:
+  schedule:
+    - cron: 0 0 * * *
+
+jobs:
+  check_latest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: geertvdc/setup-hub@v1.0.0
+      - id: latest-ios
+        uses: oprypin/find-latest-tag@v1
+        with:
+          repository: payjp/payjp-ios
+          release-only: true
+      - id: latest-android
+        uses: oprypin/find-latest-tag@v1
+        with:
+          repository: payjp/payjp-android
+          release-only: true
+      - uses: actions/checkout@v2
+      - name: Update with latest sdk
+        run: |
+          jq '. + { ios: "${{ steps.latest-ios.outputs.tag }}", android: "${{ steps.latest-android.outputs.tag }}"}' sdkconfig.json > tmp.json && mv tmp.json sdkconfig.json 
+      - run: git diff --exit-code
+      - if: success()
+        run: echo "no update"
+      - id: create-branch
+        if: failure()
+        name: Create Branch
+        run: |
+          DATE=`date +"%Y%m%d"`
+          BRANCH_NAME="auto-update$DATE"
+          git config --global user.email "misc@pay.jp"
+          git config --global user.name "pay kun"
+          git checkout -b "$BRANCH_NAME"
+          git add sdkconfig.json
+          git commit -m "Bump up ios: ${{ steps.latest-ios.outputs.tag }}, android: ${{ steps.latest-android.outputs.tag }}"
+          git push origin "$BRANCH_NAME"
+          hub pull-request -b master -h $BRANCH_NAME -m "[Auto]Update SDK payjp-ios: ${{ steps.latest-ios.outputs.tag }}, payjp-android: ${{ steps.latest-android.outputs.tag }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+
