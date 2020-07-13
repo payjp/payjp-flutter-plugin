@@ -28,7 +28,6 @@ jobs:
       - name: Create PR
         if: failure()
         run: |
-          sudo gem install cocoapods
           cd example && yarn --frozen-lockfile && cd ../
           cd example/ios && pod update PAYJPFlutterCore && cd ../../
           DATE=`date +"%Y%m%d"`
