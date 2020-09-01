@@ -1,6 +1,8 @@
 name: Check dependencies outdated
 
-on: push
+on:
+  schedule:
+    - cron: 0 0 * * 1-5
 
 jobs:
   check_outdated:
@@ -18,7 +20,7 @@ jobs:
         with:
           project_directory: example/ios
           podspec: ios/payjp_flutter.podspec
-          exclude_pods: Flutter
+          exclude_pods: Flutter,PAYJPFlutterCore
       - name: Create Issue
         if: steps.outdated.outputs.has_any_outdated != 'false'
         run: |
