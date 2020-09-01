@@ -12,6 +12,7 @@ jobs:
           java-version: '12.x'
       - uses: subosito/flutter-action@v1
       - run: flutter pub get
+      - run: cd example/ios && pod install
       - uses: yatatsu/pod-outdated-check-action@v0.2.0
         id: outdated
         with:
