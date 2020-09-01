@@ -14,6 +14,14 @@ jobs:
           java-version: '12.x'
       - uses: subosito/flutter-action@v1
       - run: flutter pub get
+      - name: Cache Cocoapods
+        uses: actions/cache@v2
+        id: pods-cache
+        with:
+          path: example/ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('example/ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
       - run: cd example/ios && pod install
       - uses: yatatsu/pod-outdated-check-action@v0.3.0
         id: outdated
