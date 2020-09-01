@@ -1,0 +1,21 @@
+name: Check dependencies outdated
+
+on: push
+
+jobs:
+  check_outdated:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: yatatsu/pod-outdated-check-action@v0.2.0
+        id: outdated
+        with:
+          project_directory: example/ios
+          podspec: ios/payjp_flutter.podspec
+          exclude_pods: Flutter
+      - name: Create Issue
+        if: steps.outdated.outputs.has_any_outdated != 'false'
+        run: |
+          hub issue create -m "Found outdated dependencies." -m "${{ steps.outdated.outputs.outdated_pod_info }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
