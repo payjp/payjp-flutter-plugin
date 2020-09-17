@@ -98,7 +98,7 @@ packages:
       name: e2e
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.3"
+    version: "0.7.0"
   fake_async:
     dependency: transitive
     description:
