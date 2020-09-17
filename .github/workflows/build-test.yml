@@ -1,0 +1,143 @@
+name: build-test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+env:
+  FLUTTER_CHANNEL: stable
+  CACHE_NUMBER: 0 # increment to truncate cache
+  IOS_SIMULATOR_NAME: iPhone 11 Pro Max (13.7)
+  USER_JAVA_VERSION: 8.x
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # setup flutter
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ env.USER_JAVA_VERSION }}
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: ${{ env.FLUTTER_CHANNEL }}
+      # configure cache
+      - name: Cache Flutter
+        uses: actions/cache@v2
+        with:
+          path: |
+            /Users/runner/hostedtoolcache/flutter
+          key: ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-${{ hashFiles('**/*/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-
+            ${{ runner.os }}-pub-
+            ${{ runner.os }}-
+      # check
+      - run: make dependencies
+      - run: make check
+
+  build-android:
+    needs: build
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      # setup flutter
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ env.USER_JAVA_VERSION }}
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: ${{ env.FLUTTER_CHANNEL }}
+      # configure cache
+      - name: Cache Gradle
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/cache
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ env.CACHE_NUMBER }}-${{ hashFiles('**/*/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-${{ env.CACHE_NUMBER }}-
+            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-
+      - name: Cache Flutter
+        uses: actions/cache@v2
+        with:
+          path: |
+            /Users/runner/hostedtoolcache/flutter
+          key: ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-${{ hashFiles('**/*/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-
+            ${{ runner.os }}-pub-
+            ${{ runner.os }}-
+      # prepare flutter
+      - run: make dependencies
+      # build app
+      - uses: malinskiy/action-android/install-sdk@release/0.0.7
+      - name: Install android platform-tools
+        run: sdkmanager platform-tools
+      - name: Build android app
+        run: make build-android-example
+      - name: Run e2e test on Android Emulator
+        uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
+        with:
+          cmd: make driver-test
+          tag: default
+          api: 28
+          abi: x86
+          cmdOptions: -no-window
+
+  build-ios:
+    needs: build
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      # setup flutter
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: ${{ env.USER_JAVA_VERSION }}
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: ${{ env.FLUTTER_CHANNEL }}
+      # configure cache
+      - name: Cache CocoaPods
+        uses: actions/cache@v2
+        with:
+          path: example/ios/Pods
+          key: ${{ runner.os }}-pods-${{ env.CACHE_NUMBER }}-${{ hashFiles('example/ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-${{ env.CACHE_NUMBER }}-
+            ${{ runner.os }}-pods-
+            ${{ runner.os }}-
+      - name: Cache Flutter
+        uses: actions/cache@v2
+        with:
+          path: |
+            /Users/runner/hostedtoolcache/flutter
+          key: ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-${{ hashFiles('**/*/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-
+            ${{ runner.os }}-pub-
+            ${{ runner.os }}-
+      # prepare flutter
+      - run: make dependencies
+      # build app
+      - name: Build ios app
+        run: make build-ios-example
+      # connected check
+      - name: List all iPhone Simulator
+        run: xcrun instruments -s | grep iPhone
+      - name: Start iOS Simulator
+        run: |
+          UDID=$(xcrun instruments -s | awk -F ' *[][]' -v 'device=${{ env.IOS_SIMULATOR_NAME }}' '$1 == device { print $2 }')
+          xcrun simctl boot "${UDID}"
+      - name: Run e2e test
+        run: make driver-test
+
+          
