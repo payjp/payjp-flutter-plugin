@@ -3,6 +3,7 @@ name: Check latest PAYJP.SDK
 on:
   schedule:
     - cron: 0 0 * * 1-5
+  workflow_dispatch:
 
 jobs:
   check_latest:
@@ -28,8 +29,7 @@ jobs:
       - name: Create PR
         if: failure()
         run: |
-          cd example && yarn --frozen-lockfile && cd ../
-          cd example/ios && pod update PAYJPFlutterCore && cd ../../
+          pod update PAYJPFlutterCore --project-directory=./example/ios
           DATE=`date +"%Y%m%d"`
           BRANCH_NAME="auto-update$DATE"
           git config --global user.email "misc@pay.jp"
