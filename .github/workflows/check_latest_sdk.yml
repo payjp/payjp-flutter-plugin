@@ -29,7 +29,6 @@ jobs:
       - name: Create PR
         if: failure()
         run: |
-          pod update PAYJPFlutterCore --project-directory=./example/ios
           DATE=`date +"%Y%m%d"`
           BRANCH_NAME="auto-update$DATE"
           git config --global user.email "misc@pay.jp"
