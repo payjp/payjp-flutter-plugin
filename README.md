@@ -1,7 +1,7 @@
 # Flutter Plugin for PAY.JP SDK
 
 [![pub package](https://img.shields.io/pub/v/payjp_flutter.svg)](https://pub.dartlang.org/packages/payjp_flutter)
-![build-test](https://github.com/payjp/payjp-flutter-plugin/workflows/build-test/badge.svg?branch=master&event=push)
+![build-test](https://github.com/payjp/payjp-flutter-plugin/workflows/build-test/badge.svg?branch=master)
 
 A Flutter plugin for PAY.JP Mobile SDK.
 
