@@ -37,6 +37,7 @@ import jp.pay.android.PayjpTokenBackgroundHandler.CardFormStatus
 import jp.pay.android.model.TenantId
 import jp.pay.android.model.Token
 import jp.pay.android.model.toJsonValue
+import jp.pay.android.ui.PayjpCardFormResult
 import jp.pay.android.ui.PayjpCardFormResultCallback
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.atomic.AtomicReference
@@ -86,11 +87,13 @@ internal class CardFormModule(
     // PluginRegistry.ActivityResultListener
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
-        Payjp.cardForm().handleResult(data, PayjpCardFormResultCallback { result ->
-            if (result.isSuccess()) {
-                channel.invokeMethod(ChannelContracts.ON_CARD_FORM_COMPLETED, null)
-            } else if (result.isCanceled()) {
-                channel.invokeMethod(ChannelContracts.ON_CARD_FORM_CANCELED, null)
+        Payjp.cardForm().handleResult(data, object: PayjpCardFormResultCallback {
+            override fun onResult(result: PayjpCardFormResult) {
+                if (result.isSuccess()) {
+                    channel.invokeMethod(ChannelContracts.ON_CARD_FORM_COMPLETED, null)
+                } else if (result.isCanceled()) {
+                    channel.invokeMethod(ChannelContracts.ON_CARD_FORM_CANCELED, null)
+                }
             }
         })
         return false
