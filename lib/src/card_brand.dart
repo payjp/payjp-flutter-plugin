@@ -19,6 +19,12 @@ class CardBrand {
   static CardBrand fromJson(String value) {
     return new CardBrandTypeTransformer().decode(value);
   }
+
+  static List<CardBrand> listFromJson(List<dynamic> json) {
+    return json == null
+        ? new List<CardBrand>()
+        : json.map((value) => CardBrand.fromJson(value)).toList();
+  }
 }
 
 class CardBrandTypeTransformer {
