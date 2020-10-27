@@ -11,7 +11,7 @@ dependencies:
   payjp_flutter:
     path: ../
   http: ^0.12.0
-  cupertino_icons: ^0.1.2
+  cupertino_icons: 1.0.0
 
 dev_dependencies:
   flutter_driver:
