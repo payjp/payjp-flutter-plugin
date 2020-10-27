@@ -19,6 +19,7 @@ dev_dependencies:
   built_value_generator:
   flutter_test:
     sdk: flutter
+  pedantic:
 
 flutter:
   plugin:
