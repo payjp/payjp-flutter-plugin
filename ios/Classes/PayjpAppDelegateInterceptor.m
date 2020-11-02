@@ -38,11 +38,25 @@
 }
 
 - (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)URL
+            openURL:(NSURL *)url
             options:(NSDictionary<NSString *, id> *)options {
-  BOOL result =
-      [[PAYJPThreeDSecureProcessHandler sharedHandler] completeThreeDSecureProcessWithUrl:URL];
-  return result;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+  return [self application:application
+                   openURL:url
+         sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+#pragma clang diagnostic pop
 }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
+- (BOOL)application:(UIApplication *)application
+              openURL:(NSURL *)url
+    sourceApplication:(NSString *)sourceApplication
+           annotation:(id)annotation {
+  return [[PAYJPThreeDSecureProcessHandler sharedHandler] completeThreeDSecureProcessWithUrl:url];
+}
+#pragma clang diagnostic pop
 
 @end
