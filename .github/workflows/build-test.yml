@@ -137,8 +137,8 @@ jobs:
         run: xcrun simctl list devices available | grep "iPhone"
       - name: Start iOS Simulator
         run: |
-          UDID=$(xcrun simctl list devices available --json | jq '.devices."com.apple.CoreSimulator.SimRuntime.${{ env.IOS_SIMULATOR_RUNTIME }}"[] | select(.name == "${{ env.IOS_SIMULATOR_DEVICE }}").udid')
-          xcrun simctl boot ${UDID}
+          UDID=$(xcrun simctl list devices available --json | jq -r '.devices."com.apple.CoreSimulator.SimRuntime.${{ env.IOS_SIMULATOR_RUNTIME }}"[] | select(.name == "${{ env.IOS_SIMULATOR_DEVICE }}").udid')
+          xcrun simctl boot "${UDID}"
       - name: Run e2e test
         run: make driver-test
 
