@@ -10,7 +10,8 @@ on:
 env:
   FLUTTER_CHANNEL: stable
   CACHE_NUMBER: 0 # increment to truncate cache
-  IOS_SIMULATOR_NAME: iPhone 11 Pro Max (13.7)
+  IOS_SIMULATOR_DEVICE: iPhone 11 Pro Max
+  IOS_SIMULATOR_RUNTIME: iOS-14-0
   USER_JAVA_VERSION: 8.x
 
 jobs:
@@ -133,10 +134,10 @@ jobs:
         run: make build-ios-example
       # connected check
       - name: List all iPhone Simulator
-        run: xcrun instruments -s | grep iPhone
+        run: xcrun simctl list devices available | grep "iPhone"
       - name: Start iOS Simulator
         run: |
-          UDID=$(xcrun instruments -s | awk -F ' *[][]' -v 'device=${{ env.IOS_SIMULATOR_NAME }}' '$1 == device { print $2 }')
+          UDID=$(xcrun simctl list devices available --json | jq -r '.devices."com.apple.CoreSimulator.SimRuntime.${{ env.IOS_SIMULATOR_RUNTIME }}"[] | select(.name == "${{ env.IOS_SIMULATOR_DEVICE }}").udid')
           xcrun simctl boot "${UDID}"
       - name: Run e2e test
         run: make driver-test
