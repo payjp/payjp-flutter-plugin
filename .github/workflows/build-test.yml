@@ -77,19 +77,15 @@ jobs:
       # prepare flutter
       - run: make dependencies
       # build app
-      - uses: malinskiy/action-android/install-sdk@release/0.0.7
-      - name: Install android platform-tools
-        run: sdkmanager platform-tools
       - name: Build android app
         run: make build-android-example
       - name: Run e2e test on Android Emulator
-        uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
+        uses: reactivecircus/android-emulator-runner@v2
         with:
-          cmd: make driver-test
-          tag: default
-          api: 28
-          abi: x86
-          cmdOptions: -no-window
+          api-level: 28
+          arch: x86_64
+          profile: pixel
+          script: make driver-test
 
   build-ios:
     needs: build
