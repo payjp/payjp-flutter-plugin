@@ -37,7 +37,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-
             ${{ runner.os }}-pub-
-            ${{ runner.os }}-
       # check
       - run: make dependencies
       - run: make check
@@ -66,7 +65,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-${{ env.CACHE_NUMBER }}-
             ${{ runner.os }}-gradle-
-            ${{ runner.os }}-
       - name: Cache Flutter
         uses: actions/cache@v2
         with:
@@ -76,7 +74,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-
             ${{ runner.os }}-pub-
-            ${{ runner.os }}-
       # prepare flutter
       - run: make dependencies
       # build app
@@ -116,7 +113,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pods-${{ env.CACHE_NUMBER }}-
             ${{ runner.os }}-pods-
-            ${{ runner.os }}-
       - name: Cache Flutter
         uses: actions/cache@v2
         with:
@@ -126,7 +122,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-
             ${{ runner.os }}-pub-
-            ${{ runner.os }}-
       # prepare flutter
       - run: make dependencies
       # build app
