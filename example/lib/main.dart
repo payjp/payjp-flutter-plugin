@@ -63,7 +63,7 @@ class HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _onStartCardForm({CardFormType formType}) async {
+  void _onStartCardForm({required CardFormType formType}) async {
     await Payjp.startCardForm(
         onCardFormCanceledCallback: _onCardFormCanceled,
         onCardFormCompletedCallback: _onCardFormCompleted,
@@ -92,7 +92,7 @@ class HomeScreenState extends State<HomeScreen> {
   void _onCardFormCompleted() {
     print('_onCardFormCompleted');
     showAlertDialog(
-        context: HomeScreen.scaffoldKey.currentContext,
+        context: HomeScreen.scaffoldKey.currentContext!,
         title: 'カード登録',
         message: 'カードを登録しました。');
   }
@@ -160,7 +160,9 @@ You can send token(${token.id}) to your own server to make Customer etc.
                         child: ListTile(
                       title: Text('CardForm Sample (MultiLine)'),
                       subtitle: Text('Tap here to start card form.'),
-                      onTap: _onStartCardForm,
+                      onTap: () {
+                        _onStartCardForm(formType: CardFormType.multiLine);
+                      },
                     )),
                     material.Card(
                         child: ListTile(

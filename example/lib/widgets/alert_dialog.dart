@@ -10,9 +10,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Future<void> showAlertDialog(
-    {BuildContext context,
-    String title,
-    String message,
+    {required BuildContext context,
+    required String title,
+    required String message,
     String button = "OK"}) {
   final titleText = Text(title);
   final content = SingleChildScrollView(
@@ -28,7 +28,7 @@ Future<void> showAlertDialog(
               actions: <Widget>[
                 CupertinoDialogAction(
                   child: buttonText,
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () => Navigator.of(context)?.pop(),
                 )
               ],
             ));
@@ -42,7 +42,7 @@ Future<void> showAlertDialog(
               actions: <Widget>[
                 FlatButton(
                   child: buttonText,
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () => Navigator.of(context)?.pop(),
                 ),
               ],
             ));
