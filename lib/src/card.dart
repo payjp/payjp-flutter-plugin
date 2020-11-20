@@ -2,57 +2,42 @@
 
 part of 'models.dart';
 
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: avoid_init_to_null, prefer_expression_function_bodies
+// ignore_for_file: omit_local_variable_types, prefer_collection_literals,
+// ignore_for_file: curly_braces_in_flow_control_structures, avoid_types_on_closure_parameters,
+// ignore_for_file: unnecessary_const, constant_identifier_names, unnecessary_new
+
 class Card {
-  /* car_で始まり一意なオブジェクトを示す、最大32桁の文字列 */
-  String id = null;
-  /* \\\"card\\\"の固定文字列 */
-  String object = null;
-  /* カード作成時のタイムスタンプ */
-  int created = null;
-  /* カード保有者名 */
-  String name = null;
-  /* カード番号の下四桁 */
-  String last4 = null;
-  /* 有効期限月 */
-  int expMonth = null;
-  /* 有効期限年 */
-  int expYear = null;
+  /// Returns a new [Card] instance.
+  Card({
+    required this.id,
+    required this.object,
+    required this.created,
+    this.name,
+    required this.last4,
+    required this.expMonth,
+    required this.expYear,
+    required this.brand,
+    required this.cvcCheck,
+    required this.threeDSecureStatus,
+    required this.fingerprint,
+    this.addressState,
+    this.addressCity,
+    this.addressLine1,
+    this.addressLine2,
+    this.country,
+    this.addressZip,
+    required this.addressZipCheck,
+    this.customer,
+    required this.metadata,
+  });
 
-  CardBrand brand = null;
-  //enum brandEnum {  Visa,  MasterCard,  JCB,  American Express,  Diners Club,  Discover,  };{
-  /* CVCコードチェックの結果 */
-  String cvcCheck = null;
-  /* 3Dセキュアの実施結果。 加盟店において3Dセキュアが有効でない等未実施の場合null。  */
-  String threeDSecureStatus = null;
-  /* このクレジットカード番号に紐づく値。 同一番号のカードからは同一の値が生成されることが保証されており、 トークン化の度にトークンIDは変わりますが、この値は変わりません。  */
-  String fingerprint = null;
-  /* 都道府県 */
-  String addressState = null;
-  /* 市区町村 */
-  String addressCity = null;
-  /* 番地など */
-  String addressLine1 = null;
-  /* 建物名など */
-  String addressLine2 = null;
-  /* 2桁のISOコード(e.g. JP) */
-  String country = null;
-  /* 郵便番号 */
-  String addressZip = null;
-  /* 郵便番号存在チェックの結果 */
-  String addressZipCheck = null;
-  /* 顧客オブジェクトのID */
-  String customer = null;
-  /* キーバリューの任意データ */
-  Object metadata = null;
-  Card();
-
-  @override
-  String toString() {
-    return 'Card[id=$id, object=$object, created=$created, name=$name, last4=$last4, expMonth=$expMonth, expYear=$expYear, brand=$brand, cvcCheck=$cvcCheck, threeDSecureStatus=$threeDSecureStatus, fingerprint=$fingerprint, addressState=$addressState, addressCity=$addressCity, addressLine1=$addressLine1, addressLine2=$addressLine2, country=$country, addressZip=$addressZip, addressZipCheck=$addressZipCheck, customer=$customer, metadata=$metadata, ]';
-  }
-
-  Card.fromJson(Map<dynamic, dynamic> json) {
-    if (json == null) return;
+  /// Returns a new [Card] instance and optionally import its values from
+  /// [json] if it's non-null.
+  Card.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     object = json['object'];
     created = json['created'];
@@ -60,7 +45,7 @@ class Card {
     last4 = json['last4'];
     expMonth = json['exp_month'];
     expYear = json['exp_year'];
-    brand = (json['brand'] == null) ? null : CardBrand.fromJson(json['brand']);
+    brand = CardBrand.fromJson(json['brand']);
     cvcCheck = json['cvc_check'];
     threeDSecureStatus = json['three_d_secure_status'];
     fingerprint = json['fingerprint'];
@@ -75,57 +60,192 @@ class Card {
     metadata = json['metadata'];
   }
 
+  /// car_で始まり一意なオブジェクトを示す、最大32桁の文字列
+  late String id;
+
+  /// \\\"card\\\"の固定文字列
+  late String object;
+
+  /// カード作成時のタイムスタンプ
+  late int created;
+
+  /// カード保有者名
+  late String? name;
+
+  /// カード番号の下四桁
+  late String last4;
+
+  /// 有効期限月
+  late int expMonth;
+
+  /// 有効期限年
+  late int expYear;
+
+  late CardBrand brand;
+
+  /// CVCコードチェックの結果
+  late String cvcCheck;
+
+  /// 3Dセキュアの実施結果。 加盟店において3Dセキュアが有効でない等未実施の場合null。
+  late String threeDSecureStatus;
+
+  /// このクレジットカード番号に紐づく値。 同一番号のカードからは同一の値が生成されることが保証されており、 トークン化の度にトークンIDは変わりますが、この値は変わりません。
+  late String fingerprint;
+
+  /// 都道府県
+  late String? addressState;
+
+  /// 市区町村
+  late String? addressCity;
+
+  /// 番地など
+  late String? addressLine1;
+
+  /// 建物名など
+  late String? addressLine2;
+
+  /// 2桁のISOコード(e.g. JP)
+  late String? country;
+
+  /// 郵便番号
+  late String? addressZip;
+
+  /// 郵便番号存在チェックの結果
+  late String addressZipCheck;
+
+  /// 顧客オブジェクトのID
+  late String? customer;
+
+  /// キーバリューの任意データ
+  late Object metadata;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Card &&
+          other.id == id &&
+          other.object == object &&
+          other.created == created &&
+          other.name == name &&
+          other.last4 == last4 &&
+          other.expMonth == expMonth &&
+          other.expYear == expYear &&
+          other.brand == brand &&
+          other.cvcCheck == cvcCheck &&
+          other.threeDSecureStatus == threeDSecureStatus &&
+          other.fingerprint == fingerprint &&
+          other.addressState == addressState &&
+          other.addressCity == addressCity &&
+          other.addressLine1 == addressLine1 &&
+          other.addressLine2 == addressLine2 &&
+          other.country == country &&
+          other.addressZip == addressZip &&
+          other.addressZipCheck == addressZipCheck &&
+          other.customer == customer &&
+          other.metadata == metadata;
+
+  @override
+  int get hashCode =>
+      id.hashCode +
+      object.hashCode +
+      created.hashCode +
+      (name?.hashCode ?? 0) +
+      last4.hashCode +
+      expMonth.hashCode +
+      expYear.hashCode +
+      brand.hashCode +
+      cvcCheck.hashCode +
+      threeDSecureStatus.hashCode +
+      fingerprint.hashCode +
+      (addressState?.hashCode ?? 0) +
+      (addressCity?.hashCode ?? 0) +
+      (addressLine1?.hashCode ?? 0) +
+      (addressLine2?.hashCode ?? 0) +
+      (country?.hashCode ?? 0) +
+      (addressZip?.hashCode ?? 0) +
+      addressZipCheck.hashCode +
+      (customer?.hashCode ?? 0) +
+      metadata.hashCode;
+
+  @override
+  String toString() =>
+      'Card[id=$id, object=$object, created=$created, name=$name, last4=$last4, expMonth=$expMonth, expYear=$expYear, brand=$brand, cvcCheck=$cvcCheck, threeDSecureStatus=$threeDSecureStatus, fingerprint=$fingerprint, addressState=$addressState, addressCity=$addressCity, addressLine1=$addressLine1, addressLine2=$addressLine2, country=$country, addressZip=$addressZip, addressZipCheck=$addressZipCheck, customer=$customer, metadata=$metadata]';
+
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (id != null) json['id'] = id;
-    if (object != null) json['object'] = object;
-    if (created != null) json['created'] = created;
-    json['name'] = name;
-    if (last4 != null) json['last4'] = last4;
-    if (expMonth != null) json['exp_month'] = expMonth;
-    if (expYear != null) json['exp_year'] = expYear;
-    if (brand != null) json['brand'] = brand;
-    if (cvcCheck != null) json['cvc_check'] = cvcCheck;
-    if (threeDSecureStatus != null)
-      json['three_d_secure_status'] = threeDSecureStatus;
-    if (fingerprint != null) json['fingerprint'] = fingerprint;
-    json['address_state'] = addressState;
-    json['address_city'] = addressCity;
-    json['address_line1'] = addressLine1;
-    json['address_line2'] = addressLine2;
-    json['country'] = country;
-    json['address_zip'] = addressZip;
-    if (addressZipCheck != null) json['address_zip_check'] = addressZipCheck;
-    json['customer'] = customer;
-    if (metadata != null) json['metadata'] = metadata;
+    final json = <String, dynamic>{};
+    json['id'] = id;
+    json['object'] = object;
+    json['created'] = created;
+    if (name != null) {
+      json['name'] = name;
+    }
+    json['last4'] = last4;
+    json['exp_month'] = expMonth;
+    json['exp_year'] = expYear;
+    json['brand'] = brand;
+    json['cvc_check'] = cvcCheck;
+    json['three_d_secure_status'] = threeDSecureStatus;
+    json['fingerprint'] = fingerprint;
+    if (addressState != null) {
+      json['address_state'] = addressState;
+    }
+    if (addressCity != null) {
+      json['address_city'] = addressCity;
+    }
+    if (addressLine1 != null) {
+      json['address_line1'] = addressLine1;
+    }
+    if (addressLine2 != null) {
+      json['address_line2'] = addressLine2;
+    }
+    if (country != null) {
+      json['country'] = country;
+    }
+    if (addressZip != null) {
+      json['address_zip'] = addressZip;
+    }
+    json['address_zip_check'] = addressZipCheck;
+    if (customer != null) {
+      json['customer'] = customer;
+    }
+    json['metadata'] = metadata;
     return json;
   }
 
-  static List<Card> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<Card>()
-        : json.map((value) => Card.fromJson(value)).toList();
-  }
+  static List<Card>? listFromJson(
+    List<dynamic> json, {
+    bool emptyIsNull = false,
+    bool growable = false,
+  }) =>
+      json.isEmpty
+          ? true == emptyIsNull
+              ? null
+              : <Card>[]
+          : json
+              .map((v) => Card.fromJson(v))
+              .toList(growable: true == growable);
 
   static Map<String, Card> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, Card>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach(
-          (String key, dynamic value) => map[key] = Card.fromJson(value));
+    final map = <String, Card>{};
+    if (json.isNotEmpty) {
+      json.forEach((String key, dynamic v) => map[key] = Card.fromJson(v));
     }
     return map;
   }
 
   // maps a json object with a list of Card-objects as value to a dart map
-  static Map<String, List<Card>> mapListFromJson(Map<String, dynamic> json) {
-    var map = Map<String, List<Card>>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) {
-        map[key] = Card.listFromJson(value);
+  static Map<String, List<Card>?> mapListFromJson(
+    Map<String, dynamic> json, {
+    bool emptyIsNull = false,
+    bool growable = false,
+  }) {
+    final map = <String, List<Card>?>{};
+    if (json.isNotEmpty) {
+      json.forEach((String key, dynamic v) {
+        map[key] =
+            Card.listFromJson(v, emptyIsNull: emptyIsNull, growable: growable);
       });
     }
     return map;
   }
 }
-
-// ignore_for_file: avoid_init_to_null, prefer_expression_function_bodies, omit_local_variable_types, prefer_collection_literals, curly_braces_in_flow_control_structures, avoid_types_on_closure_parameters, unnecessary_const, constant_identifier_names, unnecessary_new

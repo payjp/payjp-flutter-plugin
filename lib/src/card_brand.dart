@@ -2,6 +2,14 @@
 
 part of 'models.dart';
 
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: avoid_init_to_null, prefer_expression_function_bodies
+// ignore_for_file: omit_local_variable_types, prefer_collection_literals,
+// ignore_for_file: curly_braces_in_flow_control_structures, avoid_types_on_closure_parameters,
+// ignore_for_file: unnecessary_const, constant_identifier_names, unnecessary_new
+
 class CardBrand {
   /// The underlying value of this enum member.
   final String value;
@@ -18,6 +26,10 @@ class CardBrand {
 
   static CardBrand fromJson(String value) {
     return new CardBrandTypeTransformer().decode(value);
+  }
+
+  static List<CardBrand> listFromJson(List<dynamic> json) {
+    return json.map((value) => CardBrand.fromJson(value as String)).toList();
   }
 }
 
@@ -45,5 +57,3 @@ class CardBrandTypeTransformer {
     }
   }
 }
-
-// ignore_for_file: avoid_init_to_null, prefer_expression_function_bodies, omit_local_variable_types, prefer_collection_literals, curly_braces_in_flow_control_structures, avoid_types_on_closure_parameters, unnecessary_const, constant_identifier_names, unnecessary_new

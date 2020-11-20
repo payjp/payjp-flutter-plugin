@@ -2,72 +2,122 @@
 
 part of 'models.dart';
 
+// ignore_for_file: unused_element, unused_import
+// ignore_for_file: always_put_required_named_parameters_first
+// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: avoid_init_to_null, prefer_expression_function_bodies
+// ignore_for_file: omit_local_variable_types, prefer_collection_literals,
+// ignore_for_file: curly_braces_in_flow_control_structures, avoid_types_on_closure_parameters,
+// ignore_for_file: unnecessary_const, constant_identifier_names, unnecessary_new
+
 class Token {
-  /* tok_で始まる一意なオブジェクトを示す文字列 */
-  String id = null;
+  /// Returns a new [Token] instance.
+  Token({
+    required this.id,
+    required this.card,
+    required this.created,
+    required this.livemode,
+    required this.object,
+    required this.used,
+  });
 
-  Card card = null;
-  /* このトークン作成時のタイムスタンプ */
-  int created = null;
-  /* 本番環境かどうか */
-  bool livemode = null;
-  /* \\\"token\\\"の固定文字列 */
-  String object = null;
-  /* このトークンが使用済みかどうか */
-  bool used = null;
-  Token();
-
-  @override
-  String toString() {
-    return 'Token[id=$id, card=$card, created=$created, livemode=$livemode, object=$object, used=$used, ]';
-  }
-
-  Token.fromJson(Map<dynamic, dynamic> json) {
-    if (json == null) return;
+  /// Returns a new [Token] instance and optionally import its values from
+  /// [json] if it's non-null.
+  Token.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    card = (json['card'] == null) ? null : Card.fromJson(json['card']);
+    card = Card.fromJson(json['card']);
     created = json['created'];
     livemode = json['livemode'];
     object = json['object'];
     used = json['used'];
   }
 
+  /// tok_で始まる一意なオブジェクトを示す文字列
+  late String id;
+
+  late Card card;
+
+  /// このトークン作成時のタイムスタンプ
+  late int created;
+
+  /// 本番環境かどうか
+  late bool livemode;
+
+  /// \\\"token\\\"の固定文字列
+  late String object;
+
+  /// このトークンが使用済みかどうか
+  late bool used;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Token &&
+          other.id == id &&
+          other.card == card &&
+          other.created == created &&
+          other.livemode == livemode &&
+          other.object == object &&
+          other.used == used;
+
+  @override
+  int get hashCode =>
+      id.hashCode +
+      card.hashCode +
+      created.hashCode +
+      livemode.hashCode +
+      object.hashCode +
+      used.hashCode;
+
+  @override
+  String toString() =>
+      'Token[id=$id, card=$card, created=$created, livemode=$livemode, object=$object, used=$used]';
+
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (id != null) json['id'] = id;
-    if (card != null) json['card'] = card;
-    if (created != null) json['created'] = created;
-    if (livemode != null) json['livemode'] = livemode;
-    if (object != null) json['object'] = object;
-    if (used != null) json['used'] = used;
+    final json = <String, dynamic>{};
+    json['id'] = id;
+    json['card'] = card;
+    json['created'] = created;
+    json['livemode'] = livemode;
+    json['object'] = object;
+    json['used'] = used;
     return json;
   }
 
-  static List<Token> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<Token>()
-        : json.map((value) => Token.fromJson(value)).toList();
-  }
+  static List<Token>? listFromJson(
+    List<dynamic> json, {
+    bool emptyIsNull = false,
+    bool growable = false,
+  }) =>
+      json.isEmpty
+          ? true == emptyIsNull
+              ? null
+              : <Token>[]
+          : json
+              .map((v) => Token.fromJson(v))
+              .toList(growable: true == growable);
 
   static Map<String, Token> mapFromJson(Map<String, dynamic> json) {
-    var map = Map<String, Token>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach(
-          (String key, dynamic value) => map[key] = Token.fromJson(value));
+    final map = <String, Token>{};
+    if (json.isNotEmpty) {
+      json.forEach((String key, dynamic v) => map[key] = Token.fromJson(v));
     }
     return map;
   }
 
   // maps a json object with a list of Token-objects as value to a dart map
-  static Map<String, List<Token>> mapListFromJson(Map<String, dynamic> json) {
-    var map = Map<String, List<Token>>();
-    if (json != null && json.isNotEmpty) {
-      json.forEach((String key, dynamic value) {
-        map[key] = Token.listFromJson(value);
+  static Map<String, List<Token>?> mapListFromJson(
+    Map<String, dynamic> json, {
+    bool emptyIsNull = false,
+    bool growable = false,
+  }) {
+    final map = <String, List<Token>?>{};
+    if (json.isNotEmpty) {
+      json.forEach((String key, dynamic v) {
+        map[key] =
+            Token.listFromJson(v, emptyIsNull: emptyIsNull, growable: growable);
       });
     }
     return map;
   }
 }
-
-// ignore_for_file: avoid_init_to_null, prefer_expression_function_bodies, omit_local_variable_types, prefer_collection_literals, curly_braces_in_flow_control_structures, avoid_types_on_closure_parameters, unnecessary_const, constant_identifier_names, unnecessary_new
