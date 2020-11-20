@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "pull": "git submodule update",
     "bootstrap": "npm run generate && npm run fmt && npm run copy",
-    "validate": "openapi-generator validate -i openapi/token-api.yaml",
+    "validate": "openapi-generator-cli validate -i openapi/token-api.yaml",
     "generate": "./generate.sh",
     "fmt": "flutter format lib",
     "copy": "cp -r lib/model/* ../../lib/src",
@@ -17,6 +17,6 @@
   "author": "PAY.JP <support@pay.jp>",
   "license": "MIT",
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^1.0.8-4.2.2"
+    "@openapitools/openapi-generator-cli": "^2.1.5"
   }
 }

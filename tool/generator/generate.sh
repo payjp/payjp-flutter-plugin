@@ -1,5 +1,5 @@
 #!/bin/bash -eux
-openapi-generator generate \
+openapi-generator-cli generate \
 -i openapi/token-api.yaml \
 -g dart \
 -t templates \
