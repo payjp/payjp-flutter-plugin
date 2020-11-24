@@ -1,3 +1,6 @@
+analyzer:
+  exclude:
+    - tool/generator/**
 linter:
   rules:
     # --- STYLE
