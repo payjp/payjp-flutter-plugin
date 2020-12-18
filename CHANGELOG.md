@@ -1,6 +1,10 @@
+## 0.2.8
+
+- Fix android build with Android Gradle Plugin 4.1.0.
+
 ## 0.2.7
 
-- - Update dependency of [GoogleUtilities/AppDelegateSwizzler](https://github.com/firebase/firebase-ios-sdk/tree/master/GoogleUtilities/AppDelegateSwizzler) to 7.1.
+- Update dependency of [GoogleUtilities/AppDelegateSwizzler](https://github.com/firebase/firebase-ios-sdk/tree/master/GoogleUtilities/AppDelegateSwizzler) to 7.1.
 
 ## 0.2.6
 
