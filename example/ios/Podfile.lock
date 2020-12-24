@@ -18,12 +18,12 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.1.1)"
   - GoogleUtilities/Reachability (7.1.1):
     - GoogleUtilities/Logger
-  - payjp_flutter (0.2.8):
+  - payjp_flutter (0.3.0):
     - CardIO (~> 5.4.1)
     - Flutter
     - GoogleUtilities/AppDelegateSwizzler (~> 7.1)
-    - PAYJPFlutterCore (~> 1.4.0)
-  - PAYJPFlutterCore (1.4.0)
+    - PAYJPFlutterCore (~> 1.5.0)
+  - PAYJPFlutterCore (1.5.0)
   - PromisesObjC (1.2.11)
 
 DEPENDENCIES:
@@ -51,8 +51,8 @@ SPEC CHECKSUMS:
   e2e: d0c9f8c832b4cc7ab386d0c0f0af67fe5ac0c3bd
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   GoogleUtilities: 3dc4ff0d5e4840e2fa8eef0889620e8c33d4218c
-  payjp_flutter: f8c354bc946f21d73a7be00bf9ed7e415fa4f055
-  PAYJPFlutterCore: aa87cc78a69fee5598bc2a294c2ca0e5ec7d856f
+  payjp_flutter: 407ebae9c7b73ba753a7923906a6532f906e0ca2
+  PAYJPFlutterCore: c22d305d30f3157d67e4d4d4004658febee102e0
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
 
 PODFILE CHECKSUM: 33f74cf6f4e5775ad35ae5df4008ad34eb3f5e59

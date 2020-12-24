@@ -1,3 +1,8 @@
+## 0.3.0
+
+- Update payjp-ios to [1.5.0](https://github.com/payjp/payjp-ios/releases/tag/1.5.0).
+- Update payjp-android to [1.4.0](https://github.com/payjp/payjp-android/releases/tag/1.4.0).
+
 ## 0.2.8
 
 - Fix android build with Android Gradle Plugin 4.1.0.
