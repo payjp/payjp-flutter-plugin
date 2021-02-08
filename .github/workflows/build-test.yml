@@ -11,7 +11,7 @@ env:
   FLUTTER_CHANNEL: stable
   CACHE_NUMBER: 0 # increment to truncate cache
   IOS_SIMULATOR_DEVICE: iPhone 12 Pro Max
-  IOS_SIMULATOR_RUNTIME: iOS-14-2
+  IOS_SIMULATOR_RUNTIME: iOS-14-3
   USER_JAVA_VERSION: 8.x
 
 jobs:
@@ -125,7 +125,7 @@ jobs:
         run: make build-ios-example
       # connected check
       - name: List all iPhone Simulator
-        run: xcrun simctl list devices available | grep "iPhone"
+        run: xcrun simctl list devices available
       - name: Start iOS Simulator
         run: |
           UDID=$(xcrun simctl list devices available --json | jq -r '.devices."com.apple.CoreSimulator.SimRuntime.${{ env.IOS_SIMULATOR_RUNTIME }}"[] | select(.name == "${{ env.IOS_SIMULATOR_DEVICE }}").udid')
