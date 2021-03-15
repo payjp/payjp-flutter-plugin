@@ -1,3 +1,8 @@
+## 0.3.2
+
+- Update payjp-ios to [1.5.1](https://github.com/payjp/payjp-ios/releases/tag/1.5.1).
+- Update payjp-android to [1.4.1](https://github.com/payjp/payjp-android/releases/tag/1.4.1).
+
 ## 0.3.1
 
 - Update dependency of [GoogleUtilities/AppDelegateSwizzler](https://github.com/firebase/firebase-ios-sdk/tree/master/GoogleUtilities/AppDelegateSwizzler) to 7.2.
