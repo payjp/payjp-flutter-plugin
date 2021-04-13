@@ -1,3 +1,6 @@
+## 0.3.3
+
+- Fix token error message in iOS.
 ## 0.3.2
 
 - Update payjp-ios to [1.5.1](https://github.com/payjp/payjp-ios/releases/tag/1.5.1).
