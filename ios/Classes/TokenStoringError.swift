@@ -8,5 +8,5 @@
 import Foundation
 
 struct TokenStoringError: LocalizedError {
-    let errorDescription: String
+    let errorDescription: String?
 }
