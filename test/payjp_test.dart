@@ -441,7 +441,7 @@ class FakeNativeMessenger {
   static Future<void> sendMessage(MethodCall methodCall) async {
     final codec = const StandardMethodCodec();
     final data = codec.encodeMethodCall(methodCall);
-    await ServicesBinding.instance.defaultBinaryMessenger
+    await ServicesBinding.instance!.defaultBinaryMessenger
         .handlePlatformMessage(Payjp.channel.name, data, (data) {});
   }
 }
