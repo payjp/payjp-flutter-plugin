@@ -63,12 +63,12 @@ class HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _onStartCardForm({CardFormType formType}) async {
+  void _onStartCardForm({CardFormType? formType}) async {
     await Payjp.startCardForm(
         onCardFormCanceledCallback: _onCardFormCanceled,
         onCardFormCompletedCallback: _onCardFormCompleted,
         onCardFormProducedTokenCallback: _onCardFormProducedToken,
-        cardFormType: formType);
+        cardFormType: formType!);
   }
 
   void _onStartApplePay() async {
@@ -92,21 +92,13 @@ class HomeScreenState extends State<HomeScreen> {
   void _onCardFormCompleted() {
     print('_onCardFormCompleted');
     showAlertDialog(
-        context: HomeScreen.scaffoldKey.currentContext,
+        context: HomeScreen.scaffoldKey.currentContext!,
         title: 'カード登録',
         message: 'カードを登録しました。');
   }
 
   FutureOr<CallbackResult> _onCardFormProducedToken(Token token) async {
     print('_onCardFormProducedToken');
-    if (backendUrl.isEmpty) {
-      final message = """
-`backendUrl` is not replaced yet.
-You can send token(${token.id}) to your own server to make Customer etc.
-       """;
-      print(message);
-      return CallbackResultOk();
-    }
     try {
       await saveCard(token);
     } on ApiException catch (e) {
