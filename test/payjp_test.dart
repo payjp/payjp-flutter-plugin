@@ -82,7 +82,7 @@ void main() {
             'startCardForm',
             arguments: <String, dynamic>{
               'tenantId': null,
-              'cardFormType': null,
+              'cardFormType': 'multiLine',
             },
           ),
         ],
@@ -98,7 +98,7 @@ void main() {
             'startCardForm',
             arguments: <String, dynamic>{
               'tenantId': tenantId,
-              'cardFormType': null,
+              'cardFormType': 'multiLine',
             },
           ),
         ],
