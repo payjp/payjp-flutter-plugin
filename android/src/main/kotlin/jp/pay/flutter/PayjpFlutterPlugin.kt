@@ -112,7 +112,7 @@ class PayjpFlutterPlugin: MethodCallHandler, FlutterPlugin, ActivityAware {
         LocaleListCompat.forLanguageTags(tag).takeIf { it.size() > 0 }?.get(0)
       } ?: Locale.getDefault()
       val clientInfo = ClientInfo.Builder()
-        .setPlugin("jp.pay.flutter/${BuildConfig.VERSION_NAME}")
+        .setPlugin("jp.pay.flutter/${BuildConfig.LIBRARY_VERSION_NAME}")
         .setPublisher("payjp")
         .build()
       val tdsRedirectKey = call.argument<String>("threeDSecureRedirectKey")
