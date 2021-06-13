@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2020 PAY, Inc.
- *
- * Use of this source code is governed by a MIT License that can by found in the LICENSE file.
- */
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'error_info.dart';
@@ -21,9 +15,9 @@ class _$ErrorInfoSerializer implements StructuredSerializer<ErrorInfo> {
   final String wireName = 'ErrorInfo';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ErrorInfo object,
+  Iterable<Object?> serialize(Serializers serializers, ErrorInfo object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'errorType',
       serializers.serialize(object.errorType,
           specifiedType: const FullType(String)),
@@ -39,7 +33,7 @@ class _$ErrorInfoSerializer implements StructuredSerializer<ErrorInfo> {
   }
 
   @override
-  ErrorInfo deserialize(Serializers serializers, Iterable<Object> serialized,
+  ErrorInfo deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ErrorInfoBuilder();
 
@@ -47,7 +41,7 @@ class _$ErrorInfoSerializer implements StructuredSerializer<ErrorInfo> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'errorType':
           result.errorType = serializers.deserialize(value,
@@ -76,20 +70,18 @@ class _$ErrorInfo extends ErrorInfo {
   @override
   final String errorMessage;
 
-  factory _$ErrorInfo([void Function(ErrorInfoBuilder) updates]) =>
+  factory _$ErrorInfo([void Function(ErrorInfoBuilder)? updates]) =>
       (new ErrorInfoBuilder()..update(updates)).build();
 
-  _$ErrorInfo._({this.errorType, this.errorCode, this.errorMessage})
+  _$ErrorInfo._(
+      {required this.errorType,
+      required this.errorCode,
+      required this.errorMessage})
       : super._() {
-    if (errorType == null) {
-      throw new BuiltValueNullFieldError('ErrorInfo', 'errorType');
-    }
-    if (errorCode == null) {
-      throw new BuiltValueNullFieldError('ErrorInfo', 'errorCode');
-    }
-    if (errorMessage == null) {
-      throw new BuiltValueNullFieldError('ErrorInfo', 'errorMessage');
-    }
+    BuiltValueNullFieldError.checkNotNull(errorType, 'ErrorInfo', 'errorType');
+    BuiltValueNullFieldError.checkNotNull(errorCode, 'ErrorInfo', 'errorCode');
+    BuiltValueNullFieldError.checkNotNull(
+        errorMessage, 'ErrorInfo', 'errorMessage');
   }
 
   @override
@@ -125,27 +117,28 @@ class _$ErrorInfo extends ErrorInfo {
 }
 
 class ErrorInfoBuilder implements Builder<ErrorInfo, ErrorInfoBuilder> {
-  _$ErrorInfo _$v;
+  _$ErrorInfo? _$v;
 
-  String _errorType;
-  String get errorType => _$this._errorType;
-  set errorType(String errorType) => _$this._errorType = errorType;
+  String? _errorType;
+  String? get errorType => _$this._errorType;
+  set errorType(String? errorType) => _$this._errorType = errorType;
 
-  int _errorCode;
-  int get errorCode => _$this._errorCode;
-  set errorCode(int errorCode) => _$this._errorCode = errorCode;
+  int? _errorCode;
+  int? get errorCode => _$this._errorCode;
+  set errorCode(int? errorCode) => _$this._errorCode = errorCode;
 
-  String _errorMessage;
-  String get errorMessage => _$this._errorMessage;
-  set errorMessage(String errorMessage) => _$this._errorMessage = errorMessage;
+  String? _errorMessage;
+  String? get errorMessage => _$this._errorMessage;
+  set errorMessage(String? errorMessage) => _$this._errorMessage = errorMessage;
 
   ErrorInfoBuilder();
 
   ErrorInfoBuilder get _$this {
-    if (_$v != null) {
-      _errorType = _$v.errorType;
-      _errorCode = _$v.errorCode;
-      _errorMessage = _$v.errorMessage;
+    final $v = _$v;
+    if ($v != null) {
+      _errorType = $v.errorType;
+      _errorCode = $v.errorCode;
+      _errorMessage = $v.errorMessage;
       _$v = null;
     }
     return this;
@@ -153,14 +146,12 @@ class ErrorInfoBuilder implements Builder<ErrorInfo, ErrorInfoBuilder> {
 
   @override
   void replace(ErrorInfo other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ErrorInfo;
   }
 
   @override
-  void update(void Function(ErrorInfoBuilder) updates) {
+  void update(void Function(ErrorInfoBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -168,9 +159,12 @@ class ErrorInfoBuilder implements Builder<ErrorInfo, ErrorInfoBuilder> {
   _$ErrorInfo build() {
     final _$result = _$v ??
         new _$ErrorInfo._(
-            errorType: errorType,
-            errorCode: errorCode,
-            errorMessage: errorMessage);
+            errorType: BuiltValueNullFieldError.checkNotNull(
+                errorType, 'ErrorInfo', 'errorType'),
+            errorCode: BuiltValueNullFieldError.checkNotNull(
+                errorCode, 'ErrorInfo', 'errorCode'),
+            errorMessage: BuiltValueNullFieldError.checkNotNull(
+                errorMessage, 'ErrorInfo', 'errorMessage'));
     replace(_$result);
     return _$result;
   }

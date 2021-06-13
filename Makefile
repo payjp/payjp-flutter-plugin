@@ -18,4 +18,4 @@ build-android-example:
 
 .PHONY: driver-test
 driver-test:
-	cd example && flutter drive test_driver/payjp_e2e.dart
+	cd example && flutter drive --driver=test_driver/integration_test.dart --target=integration_test/payjp_test.dart

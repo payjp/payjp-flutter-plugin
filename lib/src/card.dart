@@ -4,46 +4,46 @@ part of 'models.dart';
 
 class Card {
   /* car_で始まり一意なオブジェクトを示す、最大32桁の文字列 */
-  String id = null;
+  late String id;
   /* \\\"card\\\"の固定文字列 */
-  String object = null;
+  late String object;
   /* カード作成時のタイムスタンプ */
-  int created = null;
+  late int created;
   /* カード保有者名 */
-  String name = null;
+  String? name = null;
   /* カード番号の下四桁 */
-  String last4 = null;
+  late String last4;
   /* 有効期限月 */
-  int expMonth = null;
+  late int expMonth;
   /* 有効期限年 */
-  int expYear = null;
+  late int expYear;
 
-  CardBrand brand = null;
+  late CardBrand brand;
   //enum brandEnum {  Visa,  MasterCard,  JCB,  American Express,  Diners Club,  Discover,  };{
   /* CVCコードチェックの結果 */
-  String cvcCheck = null;
+  String? cvcCheck = null;
   /* 3Dセキュアの実施結果。 加盟店において3Dセキュアが有効でない等未実施の場合null。  */
-  String threeDSecureStatus = null;
+  String? threeDSecureStatus = null;
   /* このクレジットカード番号に紐づく値。 同一番号のカードからは同一の値が生成されることが保証されており、 トークン化の度にトークンIDは変わりますが、この値は変わりません。  */
-  String fingerprint = null;
+  late String fingerprint;
   /* 都道府県 */
-  String addressState = null;
+  String? addressState = null;
   /* 市区町村 */
-  String addressCity = null;
+  String? addressCity = null;
   /* 番地など */
-  String addressLine1 = null;
+  String? addressLine1 = null;
   /* 建物名など */
-  String addressLine2 = null;
+  String? addressLine2 = null;
   /* 2桁のISOコード(e.g. JP) */
-  String country = null;
+  String? country = null;
   /* 郵便番号 */
-  String addressZip = null;
+  String? addressZip = null;
   /* 郵便番号存在チェックの結果 */
-  String addressZipCheck = null;
+  String? addressZipCheck = null;
   /* 顧客オブジェクトのID */
-  String customer = null;
+  String? customer = null;
   /* キーバリューの任意データ */
-  Object metadata = null;
+  late Object metadata;
   Card();
 
   @override
@@ -52,7 +52,6 @@ class Card {
   }
 
   Card.fromJson(Map<dynamic, dynamic> json) {
-    if (json == null) return;
     id = json['id'];
     object = json['object'];
     created = json['created'];
@@ -60,7 +59,7 @@ class Card {
     last4 = json['last4'];
     expMonth = json['exp_month'];
     expYear = json['exp_year'];
-    brand = (json['brand'] == null) ? null : CardBrand.fromJson(json['brand']);
+    brand = CardBrand.fromJson(json['brand']);
     cvcCheck = json['cvc_check'];
     threeDSecureStatus = json['three_d_secure_status'];
     fingerprint = json['fingerprint'];
@@ -77,18 +76,18 @@ class Card {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
-    if (id != null) json['id'] = id;
-    if (object != null) json['object'] = object;
-    if (created != null) json['created'] = created;
+    json['id'] = id;
+    json['object'] = object;
+    json['created'] = created;
     json['name'] = name;
-    if (last4 != null) json['last4'] = last4;
-    if (expMonth != null) json['exp_month'] = expMonth;
-    if (expYear != null) json['exp_year'] = expYear;
-    if (brand != null) json['brand'] = brand;
+    json['last4'] = last4;
+    json['exp_month'] = expMonth;
+    json['exp_year'] = expYear;
+    json['brand'] = brand;
     if (cvcCheck != null) json['cvc_check'] = cvcCheck;
     if (threeDSecureStatus != null)
       json['three_d_secure_status'] = threeDSecureStatus;
-    if (fingerprint != null) json['fingerprint'] = fingerprint;
+    json['fingerprint'] = fingerprint;
     json['address_state'] = addressState;
     json['address_city'] = addressCity;
     json['address_line1'] = addressLine1;
@@ -97,19 +96,17 @@ class Card {
     json['address_zip'] = addressZip;
     if (addressZipCheck != null) json['address_zip_check'] = addressZipCheck;
     json['customer'] = customer;
-    if (metadata != null) json['metadata'] = metadata;
+    json['metadata'] = metadata;
     return json;
   }
 
   static List<Card> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<Card>()
-        : json.map((value) => Card.fromJson(value)).toList();
+    return json.map((value) => Card.fromJson(value)).toList();
   }
 
   static Map<String, Card> mapFromJson(Map<String, dynamic> json) {
     var map = Map<String, Card>();
-    if (json != null && json.isNotEmpty) {
+    if (json.isNotEmpty) {
       json.forEach(
           (String key, dynamic value) => map[key] = Card.fromJson(value));
     }
@@ -119,7 +116,7 @@ class Card {
   // maps a json object with a list of Card-objects as value to a dart map
   static Map<String, List<Card>> mapListFromJson(Map<String, dynamic> json) {
     var map = Map<String, List<Card>>();
-    if (json != null && json.isNotEmpty) {
+    if (json.isNotEmpty) {
       json.forEach((String key, dynamic value) {
         map[key] = Card.listFromJson(value);
       });

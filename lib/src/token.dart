@@ -4,17 +4,17 @@ part of 'models.dart';
 
 class Token {
   /* tok_で始まる一意なオブジェクトを示す文字列 */
-  String id = null;
+  late String id;
 
-  Card card = null;
+  late Card card;
   /* このトークン作成時のタイムスタンプ */
-  int created = null;
+  late int created;
   /* 本番環境かどうか */
-  bool livemode = null;
+  late bool livemode;
   /* \\\"token\\\"の固定文字列 */
-  String object = null;
+  late String object;
   /* このトークンが使用済みかどうか */
-  bool used = null;
+  late bool used;
   Token();
 
   @override
@@ -23,9 +23,8 @@ class Token {
   }
 
   Token.fromJson(Map<dynamic, dynamic> json) {
-    if (json == null) return;
     id = json['id'];
-    card = (json['card'] == null) ? null : Card.fromJson(json['card']);
+    card = Card.fromJson(json['card']);
     created = json['created'];
     livemode = json['livemode'];
     object = json['object'];
@@ -34,24 +33,22 @@ class Token {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
-    if (id != null) json['id'] = id;
-    if (card != null) json['card'] = card;
-    if (created != null) json['created'] = created;
-    if (livemode != null) json['livemode'] = livemode;
-    if (object != null) json['object'] = object;
-    if (used != null) json['used'] = used;
+    json['id'] = id;
+    json['card'] = card;
+    json['created'] = created;
+    json['livemode'] = livemode;
+    json['object'] = object;
+    json['used'] = used;
     return json;
   }
 
   static List<Token> listFromJson(List<dynamic> json) {
-    return json == null
-        ? List<Token>()
-        : json.map((value) => Token.fromJson(value)).toList();
+    return json.map((value) => Token.fromJson(value)).toList();
   }
 
   static Map<String, Token> mapFromJson(Map<String, dynamic> json) {
     var map = Map<String, Token>();
-    if (json != null && json.isNotEmpty) {
+    if (json.isNotEmpty) {
       json.forEach(
           (String key, dynamic value) => map[key] = Token.fromJson(value));
     }
@@ -61,7 +58,7 @@ class Token {
   // maps a json object with a list of Token-objects as value to a dart map
   static Map<String, List<Token>> mapListFromJson(Map<String, dynamic> json) {
     var map = Map<String, List<Token>>();
-    if (json != null && json.isNotEmpty) {
+    if (json.isNotEmpty) {
       json.forEach((String key, dynamic value) {
         map[key] = Token.listFromJson(value);
       });

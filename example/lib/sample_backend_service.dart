@@ -28,9 +28,17 @@ class ApiException implements Exception {
 }
 
 Future<void> saveCard(Token token) async {
+  if (backendUrl.isEmpty) {
+    final message = """
+`backendUrl` is not replaced yet.
+You can send token(${token.id}) to your own server to make Customer etc.
+       """;
+    print(message);
+    return;
+  }
   try {
     final formData = {"card": token.id};
-    var response = await http.post(backendUrl, body: formData);
+    var response = await http.post(Uri.parse(backendUrl), body: formData);
     final body = json.decode(response.body);
     print(body);
     if (response.statusCode >= 400) {
