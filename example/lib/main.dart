@@ -63,7 +63,8 @@ class HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _onStartCardForm({CardFormType formType = CardFormType.multiLine}) async {
+  void _onStartCardForm(
+      {CardFormType formType = CardFormType.multiLine}) async {
     await Payjp.startCardForm(
         onCardFormCanceledCallback: _onCardFormCanceled,
         onCardFormCompletedCallback: _onCardFormCompleted,
