@@ -22,8 +22,8 @@ PODS:
     - CardIO (~> 5.4.1)
     - Flutter
     - GoogleUtilities/AppDelegateSwizzler (~> 7.2)
-    - PAYJPFlutterCore (~> 1.5.1)
-  - PAYJPFlutterCore (1.5.1)
+    - PAYJPFlutterCore (~> 1.6.0)
+  - PAYJPFlutterCore (1.6.0)
   - PromisesObjC (1.2.12)
 
 DEPENDENCIES:
@@ -51,8 +51,8 @@ SPEC CHECKSUMS:
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   GoogleUtilities: 31c5b01f978a70c6cff2afc6272b3f1921614b43
   integration_test: 6eb66a19f7104200dcfdd62bc0077e1b09686e4f
-  payjp_flutter: fd305dba7941acff4a81125a8068bd4add577958
-  PAYJPFlutterCore: 7276b7ba41ef8a4bcdb7ccd879616c768c610d98
+  payjp_flutter: 68e70b468c9d2d69e4ce0f891946c2cdd1694536
+  PAYJPFlutterCore: 823a0c617bd569018ab95f093cb159b420a4f128
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
 
 PODFILE CHECKSUM: 33f74cf6f4e5775ad35ae5df4008ad34eb3f5e59
