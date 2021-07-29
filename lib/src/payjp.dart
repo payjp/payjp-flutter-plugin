@@ -13,7 +13,7 @@ import 'package:meta/meta.dart';
 import 'package:payjp_flutter/src/callback_result.dart';
 import 'package:payjp_flutter/src/card_form_type.dart';
 import 'package:payjp_flutter/src/error_info.dart';
-import 'package:payjp_flutter/src/models.dart';
+import 'package:payjp_flutter/src/token.dart';
 import 'package:payjp_flutter/src/serializers.dart';
 import 'package:payjp_flutter/src/three_d_secure.dart';
 
@@ -55,7 +55,9 @@ class Payjp {
         break;
       case 'onCardFormProducedToken':
         CallbackResult result = CallbackResultOk();
-        final token = Token.fromJson(call.arguments);
+        print("hohohohoho");
+        final token = _serializers.deserializeWith(Token.serializer, call.arguments)!;
+        print(token);
         final resultFutureOr = _onCardFormProducedTokenCallback?.call(token);
         if (resultFutureOr != null) {
           if (resultFutureOr is Future<CallbackResult>) {
@@ -72,7 +74,7 @@ class Payjp {
         break;
       case 'onApplePayProducedToken':
         CallbackResult result = CallbackResultOk();
-        final token = Token.fromJson(call.arguments);
+        final token = _serializers.deserializeWith(Token.serializer, call.arguments)!;
         final resultFutureOr = _onApplePayProducedTokenCallback?.call(token);
         if (resultFutureOr != null) {
           if (resultFutureOr is Future<CallbackResult>) {

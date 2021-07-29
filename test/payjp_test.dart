@@ -14,6 +14,24 @@ import 'package:payjp_flutter/payjp_flutter.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final log = <MethodCall>[];
+  const tokenId = "tok_xxx";
+  const tokenJson = {
+    'id': tokenId,
+    'livemode': true,
+    'used': false,
+    'created': 0,
+    'object': 'token',
+    'card': {
+      'id': 'car_123',
+      'brand': 'visa',
+      'last4': '4242',
+      'fingerprint': 'a',
+      'exp_month': 12,
+      'exp_year': 2022,
+      'created': 0,
+    }
+  };
+
   setUp(() {
     Payjp.channel.setMockMethodCallHandler((methodCall) async {
       log.add(methodCall);
@@ -218,11 +236,10 @@ void main() {
         handler.complete(token.id);
         return CallbackResultOk();
       });
-      const tokenId = "tok_xxx";
-      final token = Token()..id = tokenId;
+
       await FakeNativeMessenger.sendMessage(MethodCall(
         'onCardFormProducedToken',
-        token.toJson(),
+        tokenJson,
       ));
       expect(handler.future, completion(equals(tokenId)));
     });
@@ -344,11 +361,9 @@ void main() {
             handler.complete(token.id);
             return CallbackResultOk();
           });
-      const tokenId = "tok_xxx";
-      final token = Token()..id = tokenId;
       await FakeNativeMessenger.sendMessage(MethodCall(
         'onApplePayProducedToken',
-        token.toJson(),
+        tokenJson,
       ));
       expect(handler.future, completion(equals(tokenId)));
       expect(
@@ -389,11 +404,9 @@ void main() {
             handler.complete(token.id);
             return CallbackResultError(message);
           });
-      const tokenId = "tok_xxx";
-      final token = Token()..id = tokenId;
       await FakeNativeMessenger.sendMessage(MethodCall(
         'onApplePayProducedToken',
-        token.toJson(),
+        tokenJson,
       ));
       expect(handler.future, completion(equals(tokenId)));
       expect(
