@@ -5,7 +5,7 @@ dependencies:
 .PHONY: check
 check:
 	flutter format --set-exit-if-changed --dry-run lib/ example/lib
-	flutter analyze lib/ example/lib
+	flutter analyze
 	flutter test
 
 .PHONY: build-ios-example
