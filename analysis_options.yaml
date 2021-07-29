@@ -1,3 +1,10 @@
+analyzer:
+  exclude:
+    - "ios"
+    - "android"
+    - "tool"
+    - "build"
+
 linter:
   rules:
     # --- STYLE

@@ -98,6 +98,7 @@ class _$TokenSerializer implements StructuredSerializer<Token> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
+      // ignore: omit_local_variable_types
       final Object? value = iterator.current;
       switch (key) {
         case r'id':

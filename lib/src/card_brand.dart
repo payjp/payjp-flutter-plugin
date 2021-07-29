@@ -37,3 +37,5 @@ class CardBrand extends EnumClass {
 ///
 /// Trigger mixin generation by writing a line like this one next to your enum.
 abstract class CardBrandMixin = Object with _$CardBrandMixin;
+
+// ignore_for_file: constant_identifier_names,non_constant_identifier_names
