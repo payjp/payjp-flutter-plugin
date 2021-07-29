@@ -12,10 +12,5 @@ import 'package:payjp_flutter/src/token.dart';
 
 part 'serializers.g.dart';
 
-@SerializersFor([
-  ErrorInfo,
-  Card,
-  CardBrand,
-  Token
-])
+@SerializersFor([ErrorInfo, Card, CardBrand, Token])
 final Serializers serializers = _$serializers;

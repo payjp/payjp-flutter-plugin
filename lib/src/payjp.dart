@@ -56,7 +56,8 @@ class Payjp {
       case 'onCardFormProducedToken':
         CallbackResult result = CallbackResultOk();
         print("hohohohoho");
-        final token = _serializers.deserializeWith(Token.serializer, call.arguments)!;
+        final token =
+            _serializers.deserializeWith(Token.serializer, call.arguments)!;
         print(token);
         final resultFutureOr = _onCardFormProducedTokenCallback?.call(token);
         if (resultFutureOr != null) {
@@ -74,7 +75,8 @@ class Payjp {
         break;
       case 'onApplePayProducedToken':
         CallbackResult result = CallbackResultOk();
-        final token = _serializers.deserializeWith(Token.serializer, call.arguments)!;
+        final token =
+            _serializers.deserializeWith(Token.serializer, call.arguments)!;
         final resultFutureOr = _onApplePayProducedTokenCallback?.call(token);
         if (resultFutureOr != null) {
           if (resultFutureOr is Future<CallbackResult>) {
