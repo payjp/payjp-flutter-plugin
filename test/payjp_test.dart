@@ -23,7 +23,7 @@ void main() {
     'object': 'token',
     'card': {
       'id': 'car_123',
-      'brand': 'visa',
+      'brand': 'Visa',
       'last4': '4242',
       'fingerprint': 'a',
       'exp_month': 12,
