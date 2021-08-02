@@ -1,3 +1,6 @@
+## 0.4.0
+
+- Support sound-null-safety.
 ## 0.3.4
 
 - Update payjp-ios to [1.6.0](https://github.com/payjp/payjp-ios/releases/tag/1.6.0).
