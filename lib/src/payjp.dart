@@ -13,7 +13,7 @@ import 'package:meta/meta.dart';
 import 'package:payjp_flutter/src/callback_result.dart';
 import 'package:payjp_flutter/src/card_form_type.dart';
 import 'package:payjp_flutter/src/error_info.dart';
-import 'package:payjp_flutter/src/models.dart';
+import 'package:payjp_flutter/src/token.dart';
 import 'package:payjp_flutter/src/serializers.dart';
 import 'package:payjp_flutter/src/three_d_secure.dart';
 
@@ -30,13 +30,13 @@ typedef OnApplePayCompletedCallback = void Function();
 // ignore: avoid_classes_with_only_static_members
 /// Provides flutter bridge for PAY.JP.
 class Payjp {
-  static OnCardFormCanceledCallback _onCardFormCanceledCallback;
-  static OnCardFormCompletedCallback _onCardFormCompletedCallback;
-  static OnCardFormProducedTokenCallback _onCardFormProducedTokenCallback;
-  static OnApplePayProducedTokenCallback _onApplePayProducedTokenCallback;
-  static OnApplePayFailedRequestTokenCallback
+  static OnCardFormCanceledCallback? _onCardFormCanceledCallback;
+  static OnCardFormCompletedCallback? _onCardFormCompletedCallback;
+  static OnCardFormProducedTokenCallback? _onCardFormProducedTokenCallback;
+  static OnApplePayProducedTokenCallback? _onApplePayProducedTokenCallback;
+  static OnApplePayFailedRequestTokenCallback?
       _onApplePayFailedRequestTokenCallback;
-  static OnApplePayCompletedCallback _onApplePayCompletedCallback;
+  static OnApplePayCompletedCallback? _onApplePayCompletedCallback;
 
   @visibleForTesting
   static final MethodChannel channel = const MethodChannel('payjp')
@@ -48,74 +48,71 @@ class Payjp {
   static Future<dynamic> _nativeCallHandler(MethodCall call) async {
     switch (call.method) {
       case 'onCardFormCanceled':
-        if (_onCardFormCanceledCallback != null) {
-          _onCardFormCanceledCallback();
-        }
+        _onCardFormCanceledCallback?.call();
         break;
       case 'onCardFormCompleted':
-        if (_onCardFormCompletedCallback != null) {
-          _onCardFormCompletedCallback();
-        }
+        _onCardFormCompletedCallback?.call();
         break;
       case 'onCardFormProducedToken':
         CallbackResult result = CallbackResultOk();
-        if (_onCardFormProducedTokenCallback != null) {
-          final token = Token.fromJson(call.arguments);
-          final resultFutureOr = _onCardFormProducedTokenCallback(token);
+        final token =
+            _serializers.deserializeWith(Token.serializer, call.arguments)!;
+        final resultFutureOr = _onCardFormProducedTokenCallback?.call(token);
+        if (resultFutureOr != null) {
           if (resultFutureOr is Future<CallbackResult>) {
             result = await resultFutureOr;
           } else {
-            result = resultFutureOr as CallbackResult;
+            result = resultFutureOr;
           }
-        }
-        if (result is CallbackResultOk) {
-          await completeCardForm();
-        } else if (result is CallbackResultError) {
-          await showTokenProcessingError(result.message);
+          if (result is CallbackResultOk) {
+            await completeCardForm();
+          } else if (result is CallbackResultError) {
+            await showTokenProcessingError(result.message);
+          }
         }
         break;
       case 'onApplePayProducedToken':
         CallbackResult result = CallbackResultOk();
-        if (_onApplePayProducedTokenCallback != null) {
-          final token = Token.fromJson(call.arguments);
-          final resultFutureOr = _onApplePayProducedTokenCallback(token);
+        final token =
+            _serializers.deserializeWith(Token.serializer, call.arguments)!;
+        final resultFutureOr = _onApplePayProducedTokenCallback?.call(token);
+        if (resultFutureOr != null) {
           if (resultFutureOr is Future<CallbackResult>) {
             result = await resultFutureOr;
           } else {
-            result = resultFutureOr as CallbackResult;
+            result = resultFutureOr;
           }
+          final params = <String, dynamic>{
+            'isSuccess': result.isOk(),
+            'errorMessage':
+                result is CallbackResultError ? result.message : null,
+          };
+          await channel.invokeMethod('completeApplePay', params);
         }
-        final params = <String, dynamic>{
-          'isSuccess': result.isOk(),
-          'errorMessage': result is CallbackResultError ? result.message : null,
-        };
-        await channel.invokeMethod('completeApplePay', params);
         break;
       case 'onApplePayFailedRequestToken':
         final errorInfo =
-            _serializers.deserializeWith(ErrorInfo.serializer, call.arguments);
+            _serializers.deserializeWith(ErrorInfo.serializer, call.arguments)!;
         var message = errorInfo.errorMessage;
-        if (_onApplePayFailedRequestTokenCallback != null) {
-          CallbackResultError result;
-          final resultFutureOr =
-              _onApplePayFailedRequestTokenCallback(errorInfo);
+        CallbackResultError result;
+        final resultFutureOr =
+            _onApplePayFailedRequestTokenCallback?.call(errorInfo);
+        if (resultFutureOr != null) {
           if (resultFutureOr is Future<CallbackResultError>) {
             result = await resultFutureOr;
           } else {
-            result = resultFutureOr as CallbackResultError;
+            result = resultFutureOr;
           }
           message = result.message;
+          final params = <String, dynamic>{
+            'isSuccess': false,
+            'errorMessage': message,
+          };
+          await channel.invokeMethod('completeApplePay', params);
         }
-        final params = <String, dynamic>{
-          'isSuccess': false,
-          'errorMessage': message,
-        };
-        await channel.invokeMethod('completeApplePay', params);
         break;
       case 'onApplePayCompleted':
-        if (_onApplePayCompletedCallback != null) {
-          _onApplePayCompletedCallback();
-        }
+        _onApplePayCompletedCallback?.call();
         break;
     }
     return null;
@@ -131,13 +128,13 @@ class Payjp {
   /// by default. [threeDSecureRedirect] is required only if you support 3D Secure.
   /// You can register key and url in [PAY.JP dashboard](https://pay.jp/d/settings) if activated.
   static Future init(
-      {@required String publicKey,
-      bool debugEnabled,
-      Locale locale,
-      PayjpThreeDSecureRedirect threeDSecureRedirect}) async {
+      {required String publicKey,
+      bool debugEnabled = false,
+      Locale? locale,
+      PayjpThreeDSecureRedirect? threeDSecureRedirect}) async {
     final params = <String, dynamic>{
       'publicKey': publicKey,
-      'debugEnabled': debugEnabled ?? false,
+      'debugEnabled': debugEnabled,
       'locale': locale?.toLanguageTag(),
       'threeDSecureRedirectUrl': threeDSecureRedirect?.url,
       'threeDSecureRedirectKey': threeDSecureRedirect?.key
@@ -152,11 +149,11 @@ class Payjp {
   /// [tenantId] is a parameter only for platform API.
   /// [cardFormType] is type of CardForm.(default MultiLine)
   static Future startCardForm(
-      {OnCardFormCanceledCallback onCardFormCanceledCallback,
-      OnCardFormCompletedCallback onCardFormCompletedCallback,
-      OnCardFormProducedTokenCallback onCardFormProducedTokenCallback,
-      String tenantId,
-      CardFormType cardFormType}) async {
+      {OnCardFormCanceledCallback? onCardFormCanceledCallback,
+      OnCardFormCompletedCallback? onCardFormCompletedCallback,
+      OnCardFormProducedTokenCallback? onCardFormProducedTokenCallback,
+      String? tenantId,
+      CardFormType cardFormType = CardFormType.multiLine}) async {
     _onCardFormCanceledCallback = onCardFormCanceledCallback;
     _onCardFormCompletedCallback = onCardFormCompletedCallback;
     _onCardFormProducedTokenCallback = onCardFormProducedTokenCallback;
@@ -182,13 +179,13 @@ class Payjp {
 
   /// Set CardForm Style for iOS.
   static Future setIOSCardFormStyle(
-      {Color labelTextColor,
-      Color inputTextColor,
-      Color errorTextColor,
-      Color tintColor,
-      Color inputFieldBackgroundColor,
-      Color submitButtonColor,
-      Color highlightColor}) async {
+      {Color? labelTextColor,
+      Color? inputTextColor,
+      Color? errorTextColor,
+      Color? tintColor,
+      Color? inputFieldBackgroundColor,
+      Color? submitButtonColor,
+      Color? highlightColor}) async {
     final params = <String, dynamic>{
       'labelTextColor': labelTextColor?.value,
       'inputTextColor': inputTextColor?.value,
@@ -205,7 +202,7 @@ class Payjp {
   /// You should call in only iOS.
   /// See https://developer.apple.com/documentation/passkit/pkpaymentauthorizationviewcontroller/1616192-canmakepayments
   static Future<bool> isApplePayAvailable() async =>
-      channel.invokeMethod('isApplePayAvailable');
+      await channel.invokeMethod('isApplePayAvailable');
 
   /// Start Apple Pay payment authorization flow.
   /// You have to set your own merchant id provided by Apple into [appleMerchantId].
@@ -214,15 +211,16 @@ class Payjp {
   ///
   /// [requiredBillingAddress] flag is false by default.
   static Future makeApplePayToken(
-      {@required String appleMerchantId,
-      @required String currencyCode,
-      @required String countryCode,
-      @required String summaryItemLabel,
-      @required String summaryItemAmount,
-      bool requiredBillingAddress,
-      OnApplePayProducedTokenCallback onApplePayProducedTokenCallback,
-      OnApplePayFailedRequestTokenCallback onApplePayFailedRequestTokenCallback,
-      OnApplePayCompletedCallback onApplePayCompletedCallback}) async {
+      {required String appleMerchantId,
+      required String currencyCode,
+      required String countryCode,
+      required String summaryItemLabel,
+      required String summaryItemAmount,
+      bool? requiredBillingAddress,
+      OnApplePayProducedTokenCallback? onApplePayProducedTokenCallback,
+      OnApplePayFailedRequestTokenCallback?
+          onApplePayFailedRequestTokenCallback,
+      OnApplePayCompletedCallback? onApplePayCompletedCallback}) async {
     _onApplePayProducedTokenCallback = onApplePayProducedTokenCallback;
     _onApplePayFailedRequestTokenCallback =
         onApplePayFailedRequestTokenCallback;

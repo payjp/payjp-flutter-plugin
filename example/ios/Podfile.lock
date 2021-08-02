@@ -1,7 +1,5 @@
 PODS:
   - CardIO (5.4.1)
-  - e2e (0.0.1):
-    - Flutter
   - Flutter (1.0.0)
   - GoogleUtilities/AppDelegateSwizzler (7.2.2):
     - GoogleUtilities/Environment
@@ -18,7 +16,9 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.2.2)"
   - GoogleUtilities/Reachability (7.2.2):
     - GoogleUtilities/Logger
-  - payjp_flutter (0.3.3):
+  - integration_test (0.0.1):
+    - Flutter
+  - payjp_flutter (0.3.4):
     - CardIO (~> 5.4.1)
     - Flutter
     - GoogleUtilities/AppDelegateSwizzler (~> 7.2)
@@ -27,8 +27,8 @@ PODS:
   - PromisesObjC (1.2.12)
 
 DEPENDENCIES:
-  - e2e (from `.symlinks/plugins/e2e/ios`)
   - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - payjp_flutter (from `.symlinks/plugins/payjp_flutter/ios`)
 
 SPEC REPOS:
@@ -39,19 +39,19 @@ SPEC REPOS:
     - PromisesObjC
 
 EXTERNAL SOURCES:
-  e2e:
-    :path: ".symlinks/plugins/e2e/ios"
   Flutter:
     :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
   payjp_flutter:
     :path: ".symlinks/plugins/payjp_flutter/ios"
 
 SPEC CHECKSUMS:
   CardIO: 56983b39b62f495fc6dae9ad7cf875143df06443
-  e2e: d0c9f8c832b4cc7ab386d0c0f0af67fe5ac0c3bd
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   GoogleUtilities: 31c5b01f978a70c6cff2afc6272b3f1921614b43
-  payjp_flutter: 68e70b468c9d2d69e4ce0f891946c2cdd1694536
+  integration_test: 6eb66a19f7104200dcfdd62bc0077e1b09686e4f
+  payjp_flutter: 2ce9d779822cf540fa94484eec8bfb17497403c8
   PAYJPFlutterCore: 823a0c617bd569018ab95f093cb159b420a4f128
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
 

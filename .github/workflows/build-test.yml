@@ -11,7 +11,7 @@ env:
   FLUTTER_CHANNEL: stable
   CACHE_NUMBER: 0 # increment to truncate cache
   IOS_SIMULATOR_DEVICE: iPhone 12 Pro Max
-  IOS_SIMULATOR_RUNTIME: iOS-14-3
+  IOS_SIMULATOR_RUNTIME: iOS-14-4
   USER_JAVA_VERSION: 8.x
 
 jobs:
