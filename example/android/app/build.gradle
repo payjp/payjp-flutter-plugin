@@ -49,19 +49,14 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 33
 
-    lintOptions {
-        disable 'InvalidPackage'
-        // FIXME: workaround for https://github.com/flutter/flutter/issues/58247
-        checkReleaseBuilds false
-    }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "jp.pay.flutter.example"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -73,12 +68,13 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    lint {
+        checkReleaseBuilds false
+        disable 'InvalidPackage'
+    }
+    namespace 'jp.pay.flutter.example'
 }
 
 flutter {
     source '../..'
-}
-
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
