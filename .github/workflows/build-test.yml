@@ -82,7 +82,7 @@ jobs:
       - name: Run e2e test on Android Emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 33
+          api-level: 29
           arch: x86_64
           profile: pixel
           script: make driver-test
