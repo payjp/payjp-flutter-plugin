@@ -435,26 +435,21 @@ void main() {
     });
   });
   group('card form type', () {
-    test('transform multiLine', () async {
-      var type = CardFormTypeTransformer.enumToString(CardFormType.multiLine);
-      expect(type, "multiLine");
+    test('name of multiLine', () async {
+      expect(CardFormType.multiLine.name, "multiLine");
     });
-    test('transform cardDisplay', () async {
-      var type = CardFormTypeTransformer.enumToString(CardFormType.cardDisplay);
-      expect(type, "cardDisplay");
-    });
-    test('transform null', () async {
-      var type = CardFormTypeTransformer.enumToString(null);
-      expect(type, null);
+    test('name of cardDisplay', () async {
+      expect(CardFormType.cardDisplay.name, "cardDisplay");
     });
   });
 }
 
+// ignore: avoid_classes_with_only_static_members
 class FakeNativeMessenger {
   static Future<void> sendMessage(MethodCall methodCall) async {
     final codec = const StandardMethodCodec();
     final data = codec.encodeMethodCall(methodCall);
-    await ServicesBinding.instance!.defaultBinaryMessenger
+    await ServicesBinding.instance.defaultBinaryMessenger
         .handlePlatformMessage(Payjp.channel.name, data, (data) {});
   }
 }

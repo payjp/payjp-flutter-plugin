@@ -6,18 +6,3 @@
 
 /// View type of CardForm.
 enum CardFormType { multiLine, cardDisplay }
-
-class CardFormTypeTransformer {
-  static dynamic enumToString(dynamic value) {
-    switch (value) {
-      case CardFormType.multiLine:
-        {
-          return "multiLine";
-        }
-      case CardFormType.cardDisplay:
-        {
-          return "cardDisplay";
-        }
-    }
-  }
-}

@@ -13,9 +13,9 @@ import 'package:meta/meta.dart';
 import 'package:payjp_flutter/src/callback_result.dart';
 import 'package:payjp_flutter/src/card_form_type.dart';
 import 'package:payjp_flutter/src/error_info.dart';
-import 'package:payjp_flutter/src/token.dart';
 import 'package:payjp_flutter/src/serializers.dart';
 import 'package:payjp_flutter/src/three_d_secure.dart';
+import 'package:payjp_flutter/src/token.dart';
 
 typedef OnCardFormCompletedCallback = void Function();
 typedef OnCardFormCanceledCallback = void Function();
@@ -159,7 +159,7 @@ class Payjp {
     _onCardFormProducedTokenCallback = onCardFormProducedTokenCallback;
     final params = <String, dynamic>{
       'tenantId': tenantId,
-      'cardFormType': CardFormTypeTransformer.enumToString(cardFormType)
+      'cardFormType': cardFormType.name
     };
     await channel.invokeMethod('startCardForm', params);
   }
