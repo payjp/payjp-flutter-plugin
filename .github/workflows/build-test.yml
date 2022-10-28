@@ -10,8 +10,8 @@ on:
 env:
   FLUTTER_CHANNEL: stable
   CACHE_NUMBER: 0 # increment to truncate cache
-  IOS_SIMULATOR_DEVICE: iPhone 12 Pro Max
-  IOS_SIMULATOR_RUNTIME: iOS-14-4
+  IOS_SIMULATOR_DEVICE: iPhone 13 Pro Max
+  IOS_SIMULATOR_RUNTIME: iOS-15-2
   USER_JAVA_VERSION: 11.x
 
 jobs:
@@ -82,7 +82,7 @@ jobs:
       - name: Run e2e test on Android Emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 28
+          api-level: 33
           arch: x86_64
           profile: pixel
           script: make driver-test
