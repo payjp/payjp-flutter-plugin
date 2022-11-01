@@ -47,6 +47,7 @@ internal class CardFormModule(
     private val register: PluginRegistry.Registrar?
 ) : PayjpTokenBackgroundHandler, PluginRegistry.ActivityResultListener {
 
+    private val requestCodeCardForm = 13015
     private val mainThreadHandler = Handler(Looper.getMainLooper())
     private val reference: AtomicReference<CardFormStatus> = AtomicReference()
     @Volatile
@@ -67,7 +68,12 @@ internal class CardFormModule(
 
     fun startCardForm(result: MethodChannel.Result, tenantId: TenantId?, @PayjpCardForm.CardFormFace face: Int) {
         currentActivity()?.let { activity ->
-            Payjp.cardForm().start(activity, tenant = tenantId, face = face)
+            Payjp.cardForm().start(
+                activity = activity,
+                requestCode = requestCodeCardForm,
+                tenant = tenantId,
+                face = face
+            )
             result.success(null)
         } ?: result.pluginError("Activity not found.")
     }
@@ -87,6 +93,9 @@ internal class CardFormModule(
     // PluginRegistry.ActivityResultListener
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
+        if (requestCode != requestCodeCardForm) {
+            return false
+        }
         Payjp.cardForm().handleResult(data, object: PayjpCardFormResultCallback {
             override fun onResult(result: PayjpCardFormResult) {
                 if (result.isSuccess()) {
@@ -96,7 +105,7 @@ internal class CardFormModule(
                 }
             }
         })
-        return false
+        return true
     }
 
     // PayjpTokenBackgroundHandler
