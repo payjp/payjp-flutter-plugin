@@ -1,3 +1,8 @@
+## 0.5.0
+
+- Fix unexpected response to another activity result on Android. #74
+- Update payjp-ios to [1.6.2](https://github.com/payjp/payjp-ios/releases/tag/1.6.2).
+
 ## 0.4.1
 
 - Fix hanging in creating token on Android.

@@ -18,7 +18,7 @@ PODS:
     - GoogleUtilities/Logger
   - integration_test (0.0.1):
     - Flutter
-  - payjp_flutter (0.4.1):
+  - payjp_flutter (0.5.0):
     - CardIO (~> 5.4.1)
     - Flutter
     - GoogleUtilities/AppDelegateSwizzler (~> 7.2)
@@ -51,7 +51,7 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   GoogleUtilities: 31c5b01f978a70c6cff2afc6272b3f1921614b43
   integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
-  payjp_flutter: b1879b3d9319cc63fb3b3d0e91d06adc41a13874
+  payjp_flutter: 86d86fff061a94c9470d1e63d8ae29ae182b6439
   PAYJPFlutterCore: 7ac9d0d8bb9166d62c4ffeb81e119ca4094d4636
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
 
