@@ -39,21 +39,21 @@ class _$ErrorInfoSerializer implements StructuredSerializer<ErrorInfo> {
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
         case 'errorType':
           result.errorType = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'errorCode':
           result.errorCode = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'errorMessage':
           result.errorMessage = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -71,17 +71,17 @@ class _$ErrorInfo extends ErrorInfo {
   final String errorMessage;
 
   factory _$ErrorInfo([void Function(ErrorInfoBuilder)? updates]) =>
-      (new ErrorInfoBuilder()..update(updates)).build();
+      (new ErrorInfoBuilder()..update(updates))._build();
 
   _$ErrorInfo._(
       {required this.errorType,
       required this.errorCode,
       required this.errorMessage})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(errorType, 'ErrorInfo', 'errorType');
-    BuiltValueNullFieldError.checkNotNull(errorCode, 'ErrorInfo', 'errorCode');
+    BuiltValueNullFieldError.checkNotNull(errorType, r'ErrorInfo', 'errorType');
+    BuiltValueNullFieldError.checkNotNull(errorCode, r'ErrorInfo', 'errorCode');
     BuiltValueNullFieldError.checkNotNull(
-        errorMessage, 'ErrorInfo', 'errorMessage');
+        errorMessage, r'ErrorInfo', 'errorMessage');
   }
 
   @override
@@ -102,13 +102,17 @@ class _$ErrorInfo extends ErrorInfo {
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, errorType.hashCode), errorCode.hashCode),
-        errorMessage.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, errorType.hashCode);
+    _$hash = $jc(_$hash, errorCode.hashCode);
+    _$hash = $jc(_$hash, errorMessage.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ErrorInfo')
+    return (newBuiltValueToStringHelper(r'ErrorInfo')
           ..add('errorType', errorType)
           ..add('errorCode', errorCode)
           ..add('errorMessage', errorMessage))
@@ -156,18 +160,20 @@ class ErrorInfoBuilder implements Builder<ErrorInfo, ErrorInfoBuilder> {
   }
 
   @override
-  _$ErrorInfo build() {
+  ErrorInfo build() => _build();
+
+  _$ErrorInfo _build() {
     final _$result = _$v ??
         new _$ErrorInfo._(
             errorType: BuiltValueNullFieldError.checkNotNull(
-                errorType, 'ErrorInfo', 'errorType'),
+                errorType, r'ErrorInfo', 'errorType'),
             errorCode: BuiltValueNullFieldError.checkNotNull(
-                errorCode, 'ErrorInfo', 'errorCode'),
+                errorCode, r'ErrorInfo', 'errorCode'),
             errorMessage: BuiltValueNullFieldError.checkNotNull(
-                errorMessage, 'ErrorInfo', 'errorMessage'));
+                errorMessage, r'ErrorInfo', 'errorMessage'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

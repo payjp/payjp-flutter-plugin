@@ -21,7 +21,7 @@ class _$Token extends Token {
   final bool used;
 
   factory _$Token([void Function(TokenBuilder)? updates]) =>
-      (new TokenBuilder()..update(updates)).build();
+      (new TokenBuilder()..update(updates))._build();
 
   _$Token._(
       {required this.id,
@@ -31,12 +31,12 @@ class _$Token extends Token {
       required this.object,
       required this.used})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, 'Token', 'id');
-    BuiltValueNullFieldError.checkNotNull(card, 'Token', 'card');
-    BuiltValueNullFieldError.checkNotNull(created, 'Token', 'created');
-    BuiltValueNullFieldError.checkNotNull(livemode, 'Token', 'livemode');
-    BuiltValueNullFieldError.checkNotNull(object, 'Token', 'object');
-    BuiltValueNullFieldError.checkNotNull(used, 'Token', 'used');
+    BuiltValueNullFieldError.checkNotNull(id, r'Token', 'id');
+    BuiltValueNullFieldError.checkNotNull(card, r'Token', 'card');
+    BuiltValueNullFieldError.checkNotNull(created, r'Token', 'created');
+    BuiltValueNullFieldError.checkNotNull(livemode, r'Token', 'livemode');
+    BuiltValueNullFieldError.checkNotNull(object, r'Token', 'object');
+    BuiltValueNullFieldError.checkNotNull(used, r'Token', 'used');
   }
 
   @override
@@ -60,17 +60,20 @@ class _$Token extends Token {
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc($jc($jc($jc(0, id.hashCode), card.hashCode), created.hashCode),
-                livemode.hashCode),
-            object.hashCode),
-        used.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, card.hashCode);
+    _$hash = $jc(_$hash, created.hashCode);
+    _$hash = $jc(_$hash, livemode.hashCode);
+    _$hash = $jc(_$hash, object.hashCode);
+    _$hash = $jc(_$hash, used.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Token')
+    return (newBuiltValueToStringHelper(r'Token')
           ..add('id', id)
           ..add('card', card)
           ..add('created', created)
@@ -138,21 +141,23 @@ class TokenBuilder implements Builder<Token, TokenBuilder> {
   }
 
   @override
-  _$Token build() {
+  Token build() => _build();
+
+  _$Token _build() {
     _$Token _$result;
     try {
       _$result = _$v ??
           new _$Token._(
-              id: BuiltValueNullFieldError.checkNotNull(id, 'Token', 'id'),
+              id: BuiltValueNullFieldError.checkNotNull(id, r'Token', 'id'),
               card: card.build(),
               created: BuiltValueNullFieldError.checkNotNull(
-                  created, 'Token', 'created'),
+                  created, r'Token', 'created'),
               livemode: BuiltValueNullFieldError.checkNotNull(
-                  livemode, 'Token', 'livemode'),
+                  livemode, r'Token', 'livemode'),
               object: BuiltValueNullFieldError.checkNotNull(
-                  object, 'Token', 'object'),
-              used:
-                  BuiltValueNullFieldError.checkNotNull(used, 'Token', 'used'));
+                  object, r'Token', 'object'),
+              used: BuiltValueNullFieldError.checkNotNull(
+                  used, r'Token', 'used'));
     } catch (_) {
       late String _$failedField;
       try {
@@ -160,7 +165,7 @@ class TokenBuilder implements Builder<Token, TokenBuilder> {
         card.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'Token', _$failedField, e.toString());
+            r'Token', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -169,4 +174,4 @@ class TokenBuilder implements Builder<Token, TokenBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint
