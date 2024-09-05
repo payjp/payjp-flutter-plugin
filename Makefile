@@ -4,7 +4,7 @@ dependencies:
 
 .PHONY: check
 check:
-	flutter format --set-exit-if-changed --dry-run lib/ example/lib
+	dart format --set-exit-if-changed -o none lib/ example/lib
 	flutter analyze
 	flutter test
 

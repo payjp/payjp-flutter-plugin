@@ -10,13 +10,13 @@
     "bootstrap": "npm run generate && npm run fmt && npm run copy",
     "validate": "openapi-generator-cli validate -i openapi/token-api.yaml",
     "generate": "./generate.sh",
-    "fmt": "flutter format project/lib",
+    "fmt": "dart format project/lib",
     "copy": "cp -r project/lib/src/model/* ../../lib/src",
     "postinstall": "npm run pull"
   },
   "author": "PAY.JP <support@pay.jp>",
   "license": "MIT",
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.3.7"
+    "@openapitools/openapi-generator-cli": "^2.13.5"
   }
 }
