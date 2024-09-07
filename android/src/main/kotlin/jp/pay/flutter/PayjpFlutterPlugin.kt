@@ -24,12 +24,7 @@
 package jp.pay.flutter
 
 import android.content.Context
-import android.os.Build
-import android.util.Log
 import androidx.core.os.LocaleListCompat
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
-import com.google.android.gms.common.GooglePlayServicesRepairableException
-import com.google.android.gms.security.ProviderInstaller
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -44,6 +39,7 @@ import jp.pay.android.PayjpCardForm
 import jp.pay.android.PayjpConfiguration
 import jp.pay.android.cardio.PayjpCardScannerPlugin
 import jp.pay.android.model.ClientInfo
+import jp.pay.android.model.ExtraAttribute
 import jp.pay.android.model.TenantId
 import java.util.Locale
 
@@ -116,7 +112,6 @@ class PayjpFlutterPlugin: MethodCallHandler, FlutterPlugin, ActivityAware {
         .setPublisher("payjp")
         .build()
       val tdsRedirectKey = call.argument<String>("threeDSecureRedirectKey")
-      activateModernTls(debugEnabled)
       Payjp.init(PayjpConfiguration.Builder(publicKey = publicKey)
         .setDebugEnabled(debugEnabled)
         .setTokenBackgroundHandler(cardFormModule)
@@ -135,7 +130,20 @@ class PayjpFlutterPlugin: MethodCallHandler, FlutterPlugin, ActivityAware {
           face = PayjpCardForm.FACE_CARD_DISPLAY
         }
       }
-      cardFormModule?.startCardForm(result, tenantId, face) ?: result.pluginError("plugin not attached.")
+      val extraAttributes: Array<ExtraAttribute<*>> = listOfNotNull(
+        ExtraAttribute.Email(call.argument<String>("extraAttributesEmailPreset"))
+          .takeIf { call.argument<Boolean>("extraAttributesEmailEnabled") ?: false },
+        ExtraAttribute.Phone(
+          region = call.argument<String>("extraAttributesPhonePresetRegion") ?: "JP",
+          number = call.argument<String>("extraAttributesPhonePresetNumber")
+        ).takeIf { call.argument<Boolean>("extraAttributesPhoneEnabled") ?: false }
+      ).toTypedArray()
+      cardFormModule?.startCardForm(
+        result = result,
+        tenantId = tenantId,
+        face = face,
+        extraAttributes = extraAttributes
+      ) ?: result.pluginError("plugin not attached.")
     }
     ChannelContracts.SHOW_TOKEN_PROCESSING_ERROR -> {
       val message = checkNotNull(call.argument<String>("message"))
@@ -145,19 +153,5 @@ class PayjpFlutterPlugin: MethodCallHandler, FlutterPlugin, ActivityAware {
       cardFormModule?.completeCardForm(result) ?: result.pluginError("plugin not attached.")
     }
     else -> result.notImplemented()
-  }
-
-  private fun activateModernTls(debugEnabled: Boolean) {
-    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-      try {
-        applicationContext?.let {
-          ProviderInstaller.installIfNeeded(it)
-        }
-      } catch (e: GooglePlayServicesRepairableException) {
-        if (debugEnabled) Log.e("payjp-android", "error ssl setup", e)
-      } catch (e: GooglePlayServicesNotAvailableException) {
-        if (debugEnabled) Log.e("payjp-android", "error ssl setup", e)
-      }
-    }
   }
 }
