@@ -69,7 +69,7 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
     defaultConfig {
-        minSdk 16
+        minSdk 21
         buildConfigField "String", "VERSION_NAME", "\"$VERSION_NAME\""
     }
     lintOptions {
