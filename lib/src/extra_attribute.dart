@@ -1,4 +1,3 @@
-
 /// Extra attributes for card form.
 /// For now it is mainly used for 3-D Secure.
 /// see [https://help.pay.jp/ja/articles/9556161]

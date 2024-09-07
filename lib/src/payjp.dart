@@ -150,24 +150,21 @@ class Payjp {
   /// [tenantId] is a parameter only for platform API.
   /// [cardFormType] is type of CardForm.(default MultiLine)
   /// [extraAttributes] is a list of extra attributes for card form. (default Email and Phone)
-  static Future startCardForm({
-    OnCardFormCanceledCallback? onCardFormCanceledCallback,
-    OnCardFormCompletedCallback? onCardFormCompletedCallback,
-    OnCardFormProducedTokenCallback? onCardFormProducedTokenCallback,
-    String? tenantId,
-    CardFormType cardFormType = CardFormType.multiLine,
-    List<ExtraAttribute>? extraAttributes
-  }) async {
+  static Future startCardForm(
+      {OnCardFormCanceledCallback? onCardFormCanceledCallback,
+      OnCardFormCompletedCallback? onCardFormCompletedCallback,
+      OnCardFormProducedTokenCallback? onCardFormProducedTokenCallback,
+      String? tenantId,
+      CardFormType cardFormType = CardFormType.multiLine,
+      List<ExtraAttribute>? extraAttributes}) async {
     _onCardFormCanceledCallback = onCardFormCanceledCallback;
     _onCardFormCompletedCallback = onCardFormCompletedCallback;
     _onCardFormProducedTokenCallback = onCardFormProducedTokenCallback;
     extraAttributes ??= [ExtraAttributeEmail(), ExtraAttributePhone()];
-    final extraAttributesEmail = extraAttributes
-        .whereType<ExtraAttributeEmail>()
-        .firstOrNull;
-    final extraAttributesPhone = extraAttributes
-        .whereType<ExtraAttributePhone>()
-        .firstOrNull;
+    final extraAttributesEmail =
+        extraAttributes.whereType<ExtraAttributeEmail>().firstOrNull;
+    final extraAttributesPhone =
+        extraAttributes.whereType<ExtraAttributePhone>().firstOrNull;
     final params = <String, dynamic>{
       'tenantId': tenantId,
       'cardFormType': cardFormType.name,
