@@ -3,7 +3,7 @@ description: Demonstrates how to use the payjp_flutter plugin.
 publish_to: 'none'
 
 environment:
-  sdk: '>=2.15.0 <3.0.0'
+  sdk: '>=2.15.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -11,7 +11,7 @@ dependencies:
   payjp_flutter:
     path: ../
   http: ^1.2.2
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.8
 
 dev_dependencies:
   integration_test:

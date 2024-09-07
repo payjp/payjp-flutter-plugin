@@ -41,23 +41,6 @@ final BuiltSet<CardBrand> _$values = new BuiltSet<CardBrand>(const <CardBrand>[
   _$discover,
 ]);
 
-class _$CardBrandMeta {
-  const _$CardBrandMeta();
-  CardBrand get visa => _$visa;
-  CardBrand get masterCard => _$masterCard;
-  CardBrand get JCB => _$JCB;
-  CardBrand get americanExpress => _$americanExpress;
-  CardBrand get dinersClub => _$dinersClub;
-  CardBrand get discover => _$discover;
-  CardBrand valueOf(String name) => _$valueOf(name);
-  BuiltSet<CardBrand> get values => _$values;
-}
-
-abstract class _$CardBrandMixin {
-  // ignore: non_constant_identifier_names
-  _$CardBrandMeta get CardBrand => const _$CardBrandMeta();
-}
-
 Serializer<CardBrand> _$cardBrandSerializer = new _$CardBrandSerializer();
 
 class _$CardBrandSerializer implements PrimitiveSerializer<CardBrand> {
