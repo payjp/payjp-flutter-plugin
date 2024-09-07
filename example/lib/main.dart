@@ -63,13 +63,70 @@ class HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _showSheetToStartCardForm({required CardFormType formType}) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) => ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                ListTile(
+                  title: Text('Email And Phone'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _onStartCardForm(formType: formType, extraAttributes: [
+                      ExtraAttributeEmail(),
+                      ExtraAttributePhone()
+                    ]);
+                  },
+                ),
+                ListTile(
+                  title: Text('Email'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _onStartCardForm(
+                        formType: formType,
+                        extraAttributes: [ExtraAttributeEmail()]);
+                  },
+                ),
+                ListTile(
+                  title: Text('Phone'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _onStartCardForm(
+                        formType: formType,
+                        extraAttributes: [ExtraAttributePhone()]);
+                  },
+                ),
+                ListTile(
+                  title: Text('Email And Phone (Preset)'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _onStartCardForm(formType: formType, extraAttributes: [
+                      ExtraAttributeEmail("test@example.com"),
+                      ExtraAttributePhone("JP", "09012345678")
+                    ]);
+                  },
+                ),
+                ListTile(
+                  title: Text('None'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _onStartCardForm(formType: formType, extraAttributes: []);
+                  },
+                ),
+              ],
+            ));
+  }
+
   void _onStartCardForm(
-      {CardFormType formType = CardFormType.multiLine}) async {
+      {required CardFormType formType,
+      required List<ExtraAttribute> extraAttributes}) async {
     await Payjp.startCardForm(
         onCardFormCanceledCallback: _onCardFormCanceled,
         onCardFormCompletedCallback: _onCardFormCompleted,
         onCardFormProducedTokenCallback: _onCardFormProducedToken,
-        cardFormType: formType);
+        cardFormType: formType,
+        extraAttributes: extraAttributes);
   }
 
   void _onStartApplePay() async {
@@ -153,14 +210,18 @@ You can send token(${token.id}) to your own server to make Customer etc.
                         child: ListTile(
                       title: Text('CardForm Sample (MultiLine)'),
                       subtitle: Text('Tap here to start card form.'),
-                      onTap: _onStartCardForm,
+                      onTap: () {
+                        _showSheetToStartCardForm(
+                            formType: CardFormType.multiLine);
+                      },
                     )),
                     material.Card(
                         child: ListTile(
                       title: Text('CardForm Sample (CardDisplay)'),
                       subtitle: Text('Tap here to start card form.'),
                       onTap: () {
-                        _onStartCardForm(formType: CardFormType.cardDisplay);
+                        _showSheetToStartCardForm(
+                            formType: CardFormType.cardDisplay);
                       },
                     )),
                     material.Card(
