@@ -13,6 +13,7 @@ import 'package:meta/meta.dart';
 import 'package:payjp_flutter/src/callback_result.dart';
 import 'package:payjp_flutter/src/card_form_type.dart';
 import 'package:payjp_flutter/src/error_info.dart';
+import 'package:payjp_flutter/src/extra_attribute.dart';
 import 'package:payjp_flutter/src/serializers.dart';
 import 'package:payjp_flutter/src/three_d_secure.dart';
 import 'package:payjp_flutter/src/token.dart';
@@ -148,18 +149,33 @@ class Payjp {
   /// to send PAY.JP token to your server.
   /// [tenantId] is a parameter only for platform API.
   /// [cardFormType] is type of CardForm.(default MultiLine)
-  static Future startCardForm(
-      {OnCardFormCanceledCallback? onCardFormCanceledCallback,
-      OnCardFormCompletedCallback? onCardFormCompletedCallback,
-      OnCardFormProducedTokenCallback? onCardFormProducedTokenCallback,
-      String? tenantId,
-      CardFormType cardFormType = CardFormType.multiLine}) async {
+  /// [extraAttributes] is a list of extra attributes for card form. (default Email and Phone)
+  static Future startCardForm({
+    OnCardFormCanceledCallback? onCardFormCanceledCallback,
+    OnCardFormCompletedCallback? onCardFormCompletedCallback,
+    OnCardFormProducedTokenCallback? onCardFormProducedTokenCallback,
+    String? tenantId,
+    CardFormType cardFormType = CardFormType.multiLine,
+    List<ExtraAttribute>? extraAttributes
+  }) async {
     _onCardFormCanceledCallback = onCardFormCanceledCallback;
     _onCardFormCompletedCallback = onCardFormCompletedCallback;
     _onCardFormProducedTokenCallback = onCardFormProducedTokenCallback;
+    extraAttributes ??= [ExtraAttributeEmail(), ExtraAttributePhone()];
+    final extraAttributesEmail = extraAttributes
+        .whereType<ExtraAttributeEmail>()
+        .firstOrNull;
+    final extraAttributesPhone = extraAttributes
+        .whereType<ExtraAttributePhone>()
+        .firstOrNull;
     final params = <String, dynamic>{
       'tenantId': tenantId,
-      'cardFormType': cardFormType.name
+      'cardFormType': cardFormType.name,
+      'extraAttributesEmailEnabled': extraAttributesEmail != null,
+      'extraAttributesEmailPreset': extraAttributesEmail?.preset,
+      'extraAttributesPhoneEnabled': extraAttributesPhone != null,
+      'extraAttributesPhonePresetRegion': extraAttributesPhone?.presetRegion,
+      'extraAttributesPhonePresetNumber': extraAttributesPhone?.presetNumber,
     };
     await channel.invokeMethod('startCardForm', params);
   }

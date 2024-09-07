@@ -9,6 +9,7 @@ export 'src/card.dart';
 export 'src/card_brand.dart';
 export 'src/card_form_type.dart';
 export 'src/error_info.dart';
+export 'src/extra_attribute.dart';
 export 'src/payjp.dart';
 export 'src/three_d_secure.dart';
 export 'src/token.dart';
