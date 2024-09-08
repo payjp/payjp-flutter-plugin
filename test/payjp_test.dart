@@ -33,7 +33,8 @@ void main() {
   };
 
   setUp(() {
-    Payjp.channel.setMockMethodCallHandler((methodCall) async {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(Payjp.channel, (methodCall) async {
       log.add(methodCall);
       switch (methodCall.method) {
         case 'isApplePayAvailable':
@@ -101,6 +102,11 @@ void main() {
             arguments: <String, dynamic>{
               'tenantId': null,
               'cardFormType': 'multiLine',
+              'extraAttributesEmailEnabled': true,
+              'extraAttributesEmailPreset': null,
+              'extraAttributesPhoneEnabled': true,
+              'extraAttributesPhonePresetRegion': null,
+              'extraAttributesPhonePresetNumber': null,
             },
           ),
         ],
@@ -117,6 +123,11 @@ void main() {
             arguments: <String, dynamic>{
               'tenantId': tenantId,
               'cardFormType': 'multiLine',
+              'extraAttributesEmailEnabled': true,
+              'extraAttributesEmailPreset': null,
+              'extraAttributesPhoneEnabled': true,
+              'extraAttributesPhonePresetRegion': null,
+              'extraAttributesPhonePresetNumber': null,
             },
           ),
         ],
@@ -133,6 +144,98 @@ void main() {
             arguments: <String, dynamic>{
               'tenantId': null,
               'cardFormType': "cardDisplay",
+              'extraAttributesEmailEnabled': true,
+              'extraAttributesEmailPreset': null,
+              'extraAttributesPhoneEnabled': true,
+              'extraAttributesPhonePresetRegion': null,
+              'extraAttributesPhonePresetNumber': null,
+            },
+          ),
+        ],
+      );
+    });
+    test('start card form with extra attributes (email and phone)', () async {
+      await Payjp.startCardForm(extraAttributes: [
+        ExtraAttributeEmail("test@example.com"),
+        ExtraAttributePhone("JP", "09012345678"),
+      ]);
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'startCardForm',
+            arguments: <String, dynamic>{
+              'tenantId': null,
+              'cardFormType': 'multiLine',
+              'extraAttributesEmailEnabled': true,
+              'extraAttributesEmailPreset': "test@example.com",
+              'extraAttributesPhoneEnabled': true,
+              'extraAttributesPhonePresetRegion': "JP",
+              'extraAttributesPhonePresetNumber': "09012345678",
+            },
+          ),
+        ],
+      );
+    });
+    test('start card form with extra attributes (email only)', () async {
+      await Payjp.startCardForm(extraAttributes: [
+        ExtraAttributeEmail(),
+      ]);
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'startCardForm',
+            arguments: <String, dynamic>{
+              'tenantId': null,
+              'cardFormType': 'multiLine',
+              'extraAttributesEmailEnabled': true,
+              'extraAttributesEmailPreset': null,
+              'extraAttributesPhoneEnabled': false,
+              'extraAttributesPhonePresetRegion': null,
+              'extraAttributesPhonePresetNumber': null,
+            },
+          ),
+        ],
+      );
+    });
+    test('start card form with extra attributes (phone only)', () async {
+      await Payjp.startCardForm(extraAttributes: [
+        ExtraAttributePhone(),
+      ]);
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'startCardForm',
+            arguments: <String, dynamic>{
+              'tenantId': null,
+              'cardFormType': 'multiLine',
+              'extraAttributesEmailEnabled': false,
+              'extraAttributesEmailPreset': null,
+              'extraAttributesPhoneEnabled': true,
+              'extraAttributesPhonePresetRegion': null,
+              'extraAttributesPhonePresetNumber': null,
+            },
+          ),
+        ],
+      );
+    });
+    test('start card form with extra attributes (none)', () async {
+      await Payjp.startCardForm(extraAttributes: []);
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'startCardForm',
+            arguments: <String, dynamic>{
+              'tenantId': null,
+              'cardFormType': 'multiLine',
+              'extraAttributesEmailEnabled': false,
+              'extraAttributesEmailPreset': null,
+              'extraAttributesPhoneEnabled': false,
+              'extraAttributesPhonePresetRegion': null,
+              'extraAttributesPhonePresetNumber': null,
             },
           ),
         ],
@@ -449,7 +552,7 @@ class FakeNativeMessenger {
   static Future<void> sendMessage(MethodCall methodCall) async {
     final codec = const StandardMethodCodec();
     final data = codec.encodeMethodCall(methodCall);
-    await ServicesBinding.instance.defaultBinaryMessenger
+    await TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .handlePlatformMessage(Payjp.channel.name, data, (data) {});
   }
 }
