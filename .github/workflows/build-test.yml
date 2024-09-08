@@ -30,7 +30,7 @@ jobs:
           channel: ${{ env.FLUTTER_CHANNEL }}
       # configure cache
       - name: Cache Flutter
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             /Users/runner/hostedtoolcache/flutter
@@ -58,7 +58,7 @@ jobs:
           channel: ${{ env.FLUTTER_CHANNEL }}
       - uses: gradle/actions/setup-gradle@v3
       - name: Cache Flutter
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             /Users/runner/hostedtoolcache/flutter
@@ -93,17 +93,8 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
-      # configure cache
-      - name: Cache CocoaPods
-        uses: actions/cache@v2
-        with:
-          path: example/ios/Pods
-          key: ${{ runner.os }}-pods-${{ env.CACHE_NUMBER }}-${{ hashFiles('example/ios/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-${{ env.CACHE_NUMBER }}-
-            ${{ runner.os }}-pods-
       - name: Cache Flutter
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             /Users/runner/hostedtoolcache/flutter
