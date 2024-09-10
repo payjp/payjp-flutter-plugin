@@ -41,22 +41,6 @@ final BuiltSet<CardBrand> _$values = new BuiltSet<CardBrand>(const <CardBrand>[
   _$discover,
 ]);
 
-class _$CardBrandMeta {
-  const _$CardBrandMeta();
-  CardBrand get visa => _$visa;
-  CardBrand get masterCard => _$masterCard;
-  CardBrand get JCB => _$JCB;
-  CardBrand get americanExpress => _$americanExpress;
-  CardBrand get dinersClub => _$dinersClub;
-  CardBrand get discover => _$discover;
-  CardBrand valueOf(String name) => _$valueOf(name);
-  BuiltSet<CardBrand> get values => _$values;
-}
-
-abstract class _$CardBrandMixin {
-  _$CardBrandMeta get CardBrand => const _$CardBrandMeta();
-}
-
 Serializer<CardBrand> _$cardBrandSerializer = new _$CardBrandSerializer();
 
 class _$CardBrandSerializer implements PrimitiveSerializer<CardBrand> {
@@ -94,4 +78,4 @@ class _$CardBrandSerializer implements PrimitiveSerializer<CardBrand> {
           _fromWire[serialized] ?? (serialized is String ? serialized : ''));
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,constant_identifier_names,non_constant_identifier_names
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

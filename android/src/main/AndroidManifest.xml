@@ -21,6 +21,5 @@
   ~ SOFTWARE.
   -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="jp.pay.flutter">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 </manifest>

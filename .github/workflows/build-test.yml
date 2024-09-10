@@ -10,9 +10,9 @@ on:
 env:
   FLUTTER_CHANNEL: stable
   CACHE_NUMBER: 0 # increment to truncate cache
-  IOS_SIMULATOR_DEVICE: iPhone 13 Pro Max
-  IOS_SIMULATOR_RUNTIME: iOS-15-2
-  USER_JAVA_VERSION: 11.x
+  IOS_SIMULATOR_DEVICE: iPhone 15 Pro
+  IOS_SIMULATOR_RUNTIME: iOS-17-5
+  USER_JAVA_VERSION: 17
 
 jobs:
   build:
@@ -20,16 +20,17 @@ jobs:
     timeout-minutes: 30
     steps:
       # setup flutter
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: ${{ env.USER_JAVA_VERSION }}
-      - uses: subosito/flutter-action@v1
+          distribution: "zulu"
+      - uses: subosito/flutter-action@v2
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
       # configure cache
       - name: Cache Flutter
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             /Users/runner/hostedtoolcache/flutter
@@ -43,30 +44,21 @@ jobs:
 
   build-android:
     needs: build
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       # setup flutter
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: ${{ env.USER_JAVA_VERSION }}
-      - uses: subosito/flutter-action@v1
+          distribution: "zulu"
+      - uses: subosito/flutter-action@v2
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
-      # configure cache
-      - name: Cache Gradle
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/cache
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ env.CACHE_NUMBER }}-${{ hashFiles('**/*/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-${{ env.CACHE_NUMBER }}-
-            ${{ runner.os }}-gradle-
+      - uses: gradle/actions/setup-gradle@v3
       - name: Cache Flutter
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             /Users/runner/hostedtoolcache/flutter
@@ -82,7 +74,7 @@ jobs:
       - name: Run e2e test on Android Emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 29
+          api-level: 34
           arch: x86_64
           profile: pixel
           script: make driver-test
@@ -93,24 +85,16 @@ jobs:
     timeout-minutes: 30
     steps:
       # setup flutter
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: ${{ env.USER_JAVA_VERSION }}
-      - uses: subosito/flutter-action@v1
+          distribution: "zulu"
+      - uses: subosito/flutter-action@v2
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
-      # configure cache
-      - name: Cache CocoaPods
-        uses: actions/cache@v2
-        with:
-          path: example/ios/Pods
-          key: ${{ runner.os }}-pods-${{ env.CACHE_NUMBER }}-${{ hashFiles('example/ios/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-${{ env.CACHE_NUMBER }}-
-            ${{ runner.os }}-pods-
       - name: Cache Flutter
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             /Users/runner/hostedtoolcache/flutter
@@ -132,5 +116,3 @@ jobs:
           xcrun simctl boot "${UDID}"
       - name: Run e2e test
         run: make driver-test
-
-          

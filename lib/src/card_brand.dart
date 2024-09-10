@@ -30,12 +30,4 @@ class CardBrand extends EnumClass {
   static CardBrand valueOf(String name) => _$valueOf(name);
 }
 
-/// Optionally, enum_class can generate a mixin to go with your enum for use
-/// with Angular. It exposes your enum constants as getters. So, if you mix it
-/// in to your Dart component class, the values become available to the
-/// corresponding Angular template.
-///
-/// Trigger mixin generation by writing a line like this one next to your enum.
-abstract class CardBrandMixin = Object with _$CardBrandMixin;
-
 // ignore_for_file: constant_identifier_names,non_constant_identifier_names

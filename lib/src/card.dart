@@ -23,6 +23,8 @@ part 'card.g.dart';
 /// * [cvcCheck] - CVCコードチェックの結果
 /// * [threeDSecureStatus] - 3Dセキュアの実施結果。 加盟店において3Dセキュアが有効でない等未実施の場合null。
 /// * [fingerprint] - このクレジットカード番号に紐づく値。 同一番号のカードからは同一の値が生成されることが保証されており、 トークン化の度にトークンIDは変わりますが、この値は変わりません。
+/// * [email] - メールアドレス 2024年8月以降、3Dセキュア認証の際にphoneまたはemailのデータ入力が求められます。
+/// * [phone] - E.164形式の電話番号 (e.g. 090-0123-4567（日本） => \"+819001234567\") 2024年8月以降、3Dセキュア認証の際にphoneまたはemailのデータ入力が求められます。
 /// * [addressState] - 都道府県
 /// * [addressCity] - 市区町村
 /// * [addressLine1] - 番地など
@@ -76,6 +78,14 @@ abstract class Card implements Built<Card, CardBuilder> {
   /// このクレジットカード番号に紐づく値。 同一番号のカードからは同一の値が生成されることが保証されており、 トークン化の度にトークンIDは変わりますが、この値は変わりません。
   @BuiltValueField(wireName: r'fingerprint')
   String? get fingerprint;
+
+  /// メールアドレス 2024年8月以降、3Dセキュア認証の際にphoneまたはemailのデータ入力が求められます。
+  @BuiltValueField(wireName: r'email')
+  String? get email;
+
+  /// E.164形式の電話番号 (e.g. 090-0123-4567（日本） => \"+819001234567\") 2024年8月以降、3Dセキュア認証の際にphoneまたはemailのデータ入力が求められます。
+  @BuiltValueField(wireName: r'phone')
+  String? get phone;
 
   /// 都道府県
   @BuiltValueField(wireName: r'address_state')
@@ -198,6 +208,18 @@ class _$CardSerializer implements StructuredSerializer<Card> {
         ..add(serializers.serialize(object.fingerprint,
             specifiedType: const FullType(String)));
     }
+    if (object.email != null) {
+      result
+        ..add(r'email')
+        ..add(serializers.serialize(object.email,
+            specifiedType: const FullType(String)));
+    }
+    if (object.phone != null) {
+      result
+        ..add(r'phone')
+        ..add(serializers.serialize(object.phone,
+            specifiedType: const FullType(String)));
+    }
     if (object.addressState != null) {
       result
         ..add(r'address_state')
@@ -309,6 +331,14 @@ class _$CardSerializer implements StructuredSerializer<Card> {
           break;
         case r'fingerprint':
           result.fingerprint = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case r'email':
+          result.email = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case r'phone':
+          result.phone = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case r'address_state':

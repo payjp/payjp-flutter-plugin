@@ -21,8 +21,10 @@ A Flutter plugin for PAY.JP Mobile SDK.
   s.public_header_files = 'Classes/**/*.h'
   s.static_framework = true
   s.dependency 'PAYJPFlutterCore', "~> #{payjp_sdk['ios']}"
-  s.dependency 'CardIO', '~> 5.4.1'
-  s.dependency 'GoogleUtilities/AppDelegateSwizzler', '~> 7.2'
+  # NOTE: If you need to scan card in your card form, please add the following dependency to your Podfile directly.
+  # as default, we don't include this dependency because it causes a issue in arm64 simulator build.
+  # s.dependency 'CardIO', '~> 5.4.1'7.2'
+  s.dependency 'GoogleUtilities/AppDelegateSwizzler', '~> 8'
   s.dependency 'Flutter'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
 

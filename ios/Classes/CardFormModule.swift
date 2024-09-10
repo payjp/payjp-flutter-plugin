@@ -11,7 +11,7 @@ import PAYJP
 // MARK: - CardFormModuleType
 
 protocol CardFormModuleType {
-    func startCardForm(_ result: FlutterResult, with tenantId: String?, viewType: CardFormViewType)
+    func startCardForm(_ result: FlutterResult, with tenantId: String?, viewType: CardFormViewType, extraAttributes: [ExtraAttribute])
 
     func showTokenProcessingError(_ result: FlutterResult, with message: String)
 
@@ -32,14 +32,15 @@ class CardFormModule: CardFormModuleType {
         self.completionHandler = nil
     }
 
-    func startCardForm(_ result: FlutterResult, with tenantId: String?, viewType: CardFormViewType) {
+    func startCardForm(_ result: FlutterResult, with tenantId: String?, viewType: CardFormViewType, extraAttributes: [ExtraAttribute]) {
         // validate Info.plist for scanner
         let description = Bundle.main.object(forInfoDictionaryKey: "NSCameraUsageDescription") as? String
         assert(description?.isEmpty == false, "The app's Info.plist must contain an NSCameraUsageDescription key to use scanner in card form.")
         let cardForm = CardFormViewController.createCardFormViewController(style: self.style,
                                                                            tenantId: tenantId,
                                                                            delegate: self,
-                                                                           viewType: viewType)
+                                                                           viewType: viewType,
+                                                                           extraAttributes: extraAttributes)
         // get host ViewController
         if let hostViewController = UIApplication.shared.keyWindow?.rootViewController {
             if let navigationController = hostViewController as? UINavigationController {

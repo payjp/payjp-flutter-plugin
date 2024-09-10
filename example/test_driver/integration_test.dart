@@ -4,7 +4,7 @@
  * Use of this source code is governed by a MIT License that can by found in the LICENSE file.
  */
 // TODO: integration_test is not sound null safety.
-// @dart = 2.8
+
 import 'dart:async';
 
 // ignore: import_of_legacy_library_into_null_safe

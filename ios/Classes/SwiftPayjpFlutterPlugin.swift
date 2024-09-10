@@ -55,7 +55,21 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
                     break
                 }
             }
-            self.cardFormModule.startCardForm(result, with: tenantId, viewType: viewType)
+            var extraAttributes: [ExtraAttribute] = []
+            if argsDictionary?["extraAttributesEmailEnabled"] as? Bool ?? false {
+                extraAttributes.append(
+                    ExtraAttributeEmail(preset: argsDictionary?["extraAttributesEmailPreset"] as? String)
+                )
+            }
+            if argsDictionary?["extraAttributesPhoneEnabled"] as? Bool ?? false {
+                extraAttributes.append(
+                    ExtraAttributePhone(
+                        presetNumber: argsDictionary?["extraAttributesPhonePresetNumber"] as? String,
+                        presetRegion: argsDictionary?["extraAttributesPhonePresetRegion"] as? String
+                    )
+                )
+            }
+            self.cardFormModule.startCardForm(result, with: tenantId, viewType: viewType, extraAttributes: extraAttributes)
             break
         case .showTokenProcessingError:
             if let message = argsDictionary?["message"] as? String {

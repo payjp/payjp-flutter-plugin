@@ -30,6 +30,10 @@ class _$Card extends Card {
   @override
   final String? fingerprint;
   @override
+  final String? email;
+  @override
+  final String? phone;
+  @override
   final String? addressState;
   @override
   final String? addressCity;
@@ -49,7 +53,7 @@ class _$Card extends Card {
   final JsonObject? metadata;
 
   factory _$Card([void Function(CardBuilder)? updates]) =>
-      (new CardBuilder()..update(updates)).build();
+      (new CardBuilder()..update(updates))._build();
 
   _$Card._(
       {required this.id,
@@ -63,6 +67,8 @@ class _$Card extends Card {
       this.cvcCheck,
       this.threeDSecureStatus,
       this.fingerprint,
+      this.email,
+      this.phone,
       this.addressState,
       this.addressCity,
       this.addressLine1,
@@ -73,7 +79,7 @@ class _$Card extends Card {
       this.customer,
       this.metadata})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, 'Card', 'id');
+    BuiltValueNullFieldError.checkNotNull(id, r'Card', 'id');
   }
 
   @override
@@ -98,6 +104,8 @@ class _$Card extends Card {
         cvcCheck == other.cvcCheck &&
         threeDSecureStatus == other.threeDSecureStatus &&
         fingerprint == other.fingerprint &&
+        email == other.email &&
+        phone == other.phone &&
         addressState == other.addressState &&
         addressCity == other.addressCity &&
         addressLine1 == other.addressLine1 &&
@@ -111,49 +119,36 @@ class _$Card extends Card {
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc(0, id.hashCode),
-                                                                                object.hashCode),
-                                                                            created.hashCode),
-                                                                        name.hashCode),
-                                                                    last4.hashCode),
-                                                                expMonth.hashCode),
-                                                            expYear.hashCode),
-                                                        brand.hashCode),
-                                                    cvcCheck.hashCode),
-                                                threeDSecureStatus.hashCode),
-                                            fingerprint.hashCode),
-                                        addressState.hashCode),
-                                    addressCity.hashCode),
-                                addressLine1.hashCode),
-                            addressLine2.hashCode),
-                        country.hashCode),
-                    addressZip.hashCode),
-                addressZipCheck.hashCode),
-            customer.hashCode),
-        metadata.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, object.hashCode);
+    _$hash = $jc(_$hash, created.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, last4.hashCode);
+    _$hash = $jc(_$hash, expMonth.hashCode);
+    _$hash = $jc(_$hash, expYear.hashCode);
+    _$hash = $jc(_$hash, brand.hashCode);
+    _$hash = $jc(_$hash, cvcCheck.hashCode);
+    _$hash = $jc(_$hash, threeDSecureStatus.hashCode);
+    _$hash = $jc(_$hash, fingerprint.hashCode);
+    _$hash = $jc(_$hash, email.hashCode);
+    _$hash = $jc(_$hash, phone.hashCode);
+    _$hash = $jc(_$hash, addressState.hashCode);
+    _$hash = $jc(_$hash, addressCity.hashCode);
+    _$hash = $jc(_$hash, addressLine1.hashCode);
+    _$hash = $jc(_$hash, addressLine2.hashCode);
+    _$hash = $jc(_$hash, country.hashCode);
+    _$hash = $jc(_$hash, addressZip.hashCode);
+    _$hash = $jc(_$hash, addressZipCheck.hashCode);
+    _$hash = $jc(_$hash, customer.hashCode);
+    _$hash = $jc(_$hash, metadata.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Card')
+    return (newBuiltValueToStringHelper(r'Card')
           ..add('id', id)
           ..add('object', object)
           ..add('created', created)
@@ -165,6 +160,8 @@ class _$Card extends Card {
           ..add('cvcCheck', cvcCheck)
           ..add('threeDSecureStatus', threeDSecureStatus)
           ..add('fingerprint', fingerprint)
+          ..add('email', email)
+          ..add('phone', phone)
           ..add('addressState', addressState)
           ..add('addressCity', addressCity)
           ..add('addressLine1', addressLine1)
@@ -226,6 +223,14 @@ class CardBuilder implements Builder<Card, CardBuilder> {
   String? get fingerprint => _$this._fingerprint;
   set fingerprint(String? fingerprint) => _$this._fingerprint = fingerprint;
 
+  String? _email;
+  String? get email => _$this._email;
+  set email(String? email) => _$this._email = email;
+
+  String? _phone;
+  String? get phone => _$this._phone;
+  set phone(String? phone) => _$this._phone = phone;
+
   String? _addressState;
   String? get addressState => _$this._addressState;
   set addressState(String? addressState) => _$this._addressState = addressState;
@@ -281,6 +286,8 @@ class CardBuilder implements Builder<Card, CardBuilder> {
       _cvcCheck = $v.cvcCheck;
       _threeDSecureStatus = $v.threeDSecureStatus;
       _fingerprint = $v.fingerprint;
+      _email = $v.email;
+      _phone = $v.phone;
       _addressState = $v.addressState;
       _addressCity = $v.addressCity;
       _addressLine1 = $v.addressLine1;
@@ -307,10 +314,12 @@ class CardBuilder implements Builder<Card, CardBuilder> {
   }
 
   @override
-  _$Card build() {
+  Card build() => _build();
+
+  _$Card _build() {
     final _$result = _$v ??
         new _$Card._(
-            id: BuiltValueNullFieldError.checkNotNull(id, 'Card', 'id'),
+            id: BuiltValueNullFieldError.checkNotNull(id, r'Card', 'id'),
             object: object,
             created: created,
             name: name,
@@ -321,6 +330,8 @@ class CardBuilder implements Builder<Card, CardBuilder> {
             cvcCheck: cvcCheck,
             threeDSecureStatus: threeDSecureStatus,
             fingerprint: fingerprint,
+            email: email,
+            phone: phone,
             addressState: addressState,
             addressCity: addressCity,
             addressLine1: addressLine1,
@@ -335,4 +346,4 @@ class CardBuilder implements Builder<Card, CardBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

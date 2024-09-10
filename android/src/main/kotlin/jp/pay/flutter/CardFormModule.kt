@@ -34,6 +34,7 @@ import jp.pay.android.Payjp
 import jp.pay.android.PayjpCardForm
 import jp.pay.android.PayjpTokenBackgroundHandler
 import jp.pay.android.PayjpTokenBackgroundHandler.CardFormStatus
+import jp.pay.android.model.ExtraAttribute
 import jp.pay.android.model.TenantId
 import jp.pay.android.model.Token
 import jp.pay.android.model.toJsonValue
@@ -66,13 +67,18 @@ internal class CardFormModule(
 
     // handle MethodCall
 
-    fun startCardForm(result: MethodChannel.Result, tenantId: TenantId?, @PayjpCardForm.CardFormFace face: Int) {
+    fun startCardForm(
+        result: MethodChannel.Result,
+        tenantId: TenantId?,
+        @PayjpCardForm.CardFormFace face: Int,
+        extraAttributes: Array<ExtraAttribute<*>>) {
         currentActivity()?.let { activity ->
             Payjp.cardForm().start(
                 activity = activity,
                 requestCode = requestCodeCardForm,
                 tenant = tenantId,
-                face = face
+                face = face,
+                extraAttributes = extraAttributes
             )
             result.success(null)
         } ?: result.pluginError("Activity not found.")
