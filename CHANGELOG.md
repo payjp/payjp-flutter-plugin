@@ -1,3 +1,10 @@
+## 0.6.0
+
+- Add `extraAttributes` to `Payjp.startCardForm`. #80
+- Update payjp-ios to [2.0.0](https://github.com/payjp/payjp-ios/releases/tag/2.0.0).
+- Update payjp-android to [2.0.0](https://github.com/payjp/payjp-android/releases/tag/2.0.0).
+- Update Dart sdk constraints to `">=3.0.0 <4.0.0"` from `>=2.12.0 <3.0.0`.
+
 ## 0.5.0
 
 - Fix unexpected response to another activity result on Android. #74
@@ -20,6 +27,7 @@
 ## 0.3.3
 
 - Fix token error message in iOS.
+
 ## 0.3.2
 
 - Update payjp-ios to [1.5.1](https://github.com/payjp/payjp-ios/releases/tag/1.5.1).
@@ -72,7 +80,7 @@
 
 - Update payjp-ios to [1.2.2](https://github.com/payjp/payjp-ios/releases/tag/1.2.2).
 - Update payjp-android to [1.2.1](https://github.com/payjp/payjp-android/releases/tag/1.2.1).
-- Add option `cardFormType` to Payjp.startCardForm. 
+- Add option `cardFormType` to Payjp.startCardForm.
 
 ## 0.2.0
 
