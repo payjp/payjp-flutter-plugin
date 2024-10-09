@@ -69,7 +69,8 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
                     )
                 )
             }
-            self.cardFormModule.startCardForm(result, with: tenantId, viewType: viewType, extraAttributes: extraAttributes)
+            let useThreeDSecure = argsDictionary?["useThreeDSecure"] as? Bool ?? false
+            self.cardFormModule.startCardForm(result, with: tenantId, viewType: viewType, extraAttributes: extraAttributes, useThreeDSecure: useThreeDSecure)
             break
         case .showTokenProcessingError:
             if let message = argsDictionary?["message"] as? String {

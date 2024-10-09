@@ -156,7 +156,8 @@ class Payjp {
       OnCardFormProducedTokenCallback? onCardFormProducedTokenCallback,
       String? tenantId,
       CardFormType cardFormType = CardFormType.multiLine,
-      List<ExtraAttribute>? extraAttributes}) async {
+      List<ExtraAttribute>? extraAttributes,
+      bool? useThreeDSecure}) async {
     _onCardFormCanceledCallback = onCardFormCanceledCallback;
     _onCardFormCompletedCallback = onCardFormCompletedCallback;
     _onCardFormProducedTokenCallback = onCardFormProducedTokenCallback;
@@ -173,6 +174,7 @@ class Payjp {
       'extraAttributesPhoneEnabled': extraAttributesPhone != null,
       'extraAttributesPhonePresetRegion': extraAttributesPhone?.presetRegion,
       'extraAttributesPhonePresetNumber': extraAttributesPhone?.presetNumber,
+      'useThreeDSecure': useThreeDSecure ?? false
     };
     await channel.invokeMethod('startCardForm', params);
   }

@@ -107,6 +107,7 @@ void main() {
               'extraAttributesPhoneEnabled': true,
               'extraAttributesPhonePresetRegion': null,
               'extraAttributesPhonePresetNumber': null,
+              'useThreeDSecure': false,
             },
           ),
         ],
@@ -128,6 +129,7 @@ void main() {
               'extraAttributesPhoneEnabled': true,
               'extraAttributesPhonePresetRegion': null,
               'extraAttributesPhonePresetNumber': null,
+              'useThreeDSecure': false,
             },
           ),
         ],
@@ -149,6 +151,7 @@ void main() {
               'extraAttributesPhoneEnabled': true,
               'extraAttributesPhonePresetRegion': null,
               'extraAttributesPhonePresetNumber': null,
+              'useThreeDSecure': false,
             },
           ),
         ],
@@ -172,6 +175,7 @@ void main() {
               'extraAttributesPhoneEnabled': true,
               'extraAttributesPhonePresetRegion': "JP",
               'extraAttributesPhonePresetNumber': "09012345678",
+              'useThreeDSecure': false,
             },
           ),
         ],
@@ -194,6 +198,7 @@ void main() {
               'extraAttributesPhoneEnabled': false,
               'extraAttributesPhonePresetRegion': null,
               'extraAttributesPhonePresetNumber': null,
+              'useThreeDSecure': false,
             },
           ),
         ],
@@ -216,6 +221,7 @@ void main() {
               'extraAttributesPhoneEnabled': true,
               'extraAttributesPhonePresetRegion': null,
               'extraAttributesPhonePresetNumber': null,
+              'useThreeDSecure': false,
             },
           ),
         ],
@@ -236,6 +242,28 @@ void main() {
               'extraAttributesPhoneEnabled': false,
               'extraAttributesPhonePresetRegion': null,
               'extraAttributesPhonePresetNumber': null,
+              'useThreeDSecure': false,
+            },
+          ),
+        ],
+      );
+    });
+    test('start card form with useThreeDSecure', () async {
+      await Payjp.startCardForm(useThreeDSecure: true);
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'startCardForm',
+            arguments: <String, dynamic>{
+              'tenantId': null,
+              'cardFormType': 'multiLine',
+              'extraAttributesEmailEnabled': true,
+              'extraAttributesEmailPreset': null,
+              'extraAttributesPhoneEnabled': true,
+              'extraAttributesPhonePresetRegion': null,
+              'extraAttributesPhonePresetNumber': null,
+              'useThreeDSecure': true,
             },
           ),
         ],

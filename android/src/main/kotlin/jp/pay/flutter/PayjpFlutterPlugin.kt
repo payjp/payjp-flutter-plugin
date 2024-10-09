@@ -138,11 +138,13 @@ class PayjpFlutterPlugin: MethodCallHandler, FlutterPlugin, ActivityAware {
           number = call.argument<String>("extraAttributesPhonePresetNumber")
         ).takeIf { call.argument<Boolean>("extraAttributesPhoneEnabled") ?: false }
       ).toTypedArray()
+      val useThreeDSecure = call.argument<Boolean>("useThreeDSecure") ?: false
       cardFormModule?.startCardForm(
         result = result,
         tenantId = tenantId,
         face = face,
-        extraAttributes = extraAttributes
+        extraAttributes = extraAttributes,
+        useThreeDSecure = useThreeDSecure,
       ) ?: result.pluginError("plugin not attached.")
     }
     ChannelContracts.SHOW_TOKEN_PROCESSING_ERROR -> {
