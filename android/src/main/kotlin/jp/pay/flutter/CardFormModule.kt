@@ -71,14 +71,16 @@ internal class CardFormModule(
         result: MethodChannel.Result,
         tenantId: TenantId?,
         @PayjpCardForm.CardFormFace face: Int,
-        extraAttributes: Array<ExtraAttribute<*>>) {
+        extraAttributes: Array<ExtraAttribute<*>>,
+        useThreeDSecure: Boolean) {
         currentActivity()?.let { activity ->
             Payjp.cardForm().start(
                 activity = activity,
                 requestCode = requestCodeCardForm,
                 tenant = tenantId,
                 face = face,
-                extraAttributes = extraAttributes
+                extraAttributes = extraAttributes,
+                useThreeDSecure = useThreeDSecure,
             )
             result.success(null)
         } ?: result.pluginError("Activity not found.")
