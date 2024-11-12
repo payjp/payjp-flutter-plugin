@@ -1,3 +1,9 @@
+## 0.7.0
+
+- Update payjp-ios to [2.1.0](https://github.com/payjp/payjp-ios/releases/tag/2.1.0).
+- Update payjp-android to [2.1.0](https://github.com/payjp/payjp-android/releases/tag/2.1.0).
+- Add `useThreeDSecure` to `Payjp.startCardForm`. #82
+
 ## 0.6.0
 
 - Add `extraAttributes` to `Payjp.startCardForm`. #80
