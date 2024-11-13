@@ -1,3 +1,8 @@
+## 0.7.1
+
+- Update payjp-ios to [2.1.3](https://github.com/payjp/payjp-ios/releases/tag/2.1.3).
+- Update payjp-android to [2.1.1](https://github.com/payjp/payjp-android/releases/tag/2.1.1).
+
 ## 0.7.0
 
 - Update payjp-ios to [2.1.0](https://github.com/payjp/payjp-ios/releases/tag/2.1.0).
