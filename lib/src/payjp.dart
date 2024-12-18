@@ -206,8 +206,10 @@ class Payjp {
       'inputTextColor': inputTextColor?.value, // ignore: deprecated_member_use
       'errorTextColor': errorTextColor?.value, // ignore: deprecated_member_use
       'tintColor': tintColor?.value, // ignore: deprecated_member_use
-      'inputFieldBackgroundColor': inputFieldBackgroundColor?.value, // ignore: deprecated_member_use
-      'submitButtonColor': submitButtonColor?.value, // ignore: deprecated_member_use
+      'inputFieldBackgroundColor':
+          inputFieldBackgroundColor?.value, // ignore: deprecated_member_use
+      'submitButtonColor':
+          submitButtonColor?.value, // ignore: deprecated_member_use
       'highlightColor': highlightColor?.value, // ignore: deprecated_member_use
     };
     await channel.invokeMethod('setFormStyle', params);
