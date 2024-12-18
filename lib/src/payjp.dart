@@ -202,13 +202,15 @@ class Payjp {
       Color? submitButtonColor,
       Color? highlightColor}) async {
     final params = <String, dynamic>{
-      'labelTextColor': labelTextColor?.value,
-      'inputTextColor': inputTextColor?.value,
-      'errorTextColor': errorTextColor?.value,
-      'tintColor': tintColor?.value,
-      'inputFieldBackgroundColor': inputFieldBackgroundColor?.value,
-      'submitButtonColor': submitButtonColor?.value,
-      'highlightColor': highlightColor?.value,
+      'labelTextColor': labelTextColor?.value, // ignore: deprecated_member_use
+      'inputTextColor': inputTextColor?.value, // ignore: deprecated_member_use
+      'errorTextColor': errorTextColor?.value, // ignore: deprecated_member_use
+      'tintColor': tintColor?.value, // ignore: deprecated_member_use
+      'inputFieldBackgroundColor':
+          inputFieldBackgroundColor?.value, // ignore: deprecated_member_use
+      'submitButtonColor':
+          submitButtonColor?.value, // ignore: deprecated_member_use
+      'highlightColor': highlightColor?.value, // ignore: deprecated_member_use
     };
     await channel.invokeMethod('setFormStyle', params);
   }
