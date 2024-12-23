@@ -7,7 +7,7 @@ payjp_sdk = JSON.parse(File.read(File.join(__dir__, '../sdkconfig.json')))
 
 Pod::Spec.new do |s|
   s.name             = 'payjp_flutter'
-  s.version          = '0.7.1'
+  s.version          = '0.7.2'
   s.summary          = 'A Flutter plugin for PAY.JP Mobile SDK.'
   s.description      = <<-DESC
 A Flutter plugin for PAY.JP Mobile SDK.
