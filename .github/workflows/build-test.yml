@@ -9,6 +9,7 @@ on:
 
 env:
   FLUTTER_CHANNEL: stable
+  FLUTTER_VERSION: 3.27.4
   CACHE_NUMBER: 0 # increment to truncate cache
   IOS_SIMULATOR_DEVICE: iPhone 15 Pro
   IOS_SIMULATOR_RUNTIME: iOS-17-5
@@ -56,7 +57,8 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: ${{ env.FLUTTER_CHANNEL }}
-      - uses: gradle/actions/setup-gradle@v3
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+      - uses: gradle/actions/setup-gradle@v4
       - name: Cache Flutter
         uses: actions/cache@v4
         with:
