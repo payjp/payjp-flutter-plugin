@@ -142,8 +142,14 @@ jobs:
           ${{ runner.OS }}-node-
           ${{ runner.OS }}-
     - name: Install dependencies
-      run: yarn --frozen-lockfile
+      run: |
+        pwd
+        ls -la
+        yarn --frozen-lockfile
     - name: yarn validate
-      run: yarn validate
+      run: |
+        pwd
+        ls -la
+        yarn validate
       env:
         CI: true
