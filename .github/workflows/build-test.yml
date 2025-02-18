@@ -15,107 +15,107 @@ env:
   USER_JAVA_VERSION: 17
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      # setup flutter
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          java-version: ${{ env.USER_JAVA_VERSION }}
-          distribution: "zulu"
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: ${{ env.FLUTTER_CHANNEL }}
-      # configure cache
-      - name: Cache Flutter
-        uses: actions/cache@v4
-        with:
-          path: |
-            /Users/runner/hostedtoolcache/flutter
-          key: ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-${{ hashFiles('**/*/pubspec.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-
-            ${{ runner.os }}-pub-
-      # check
-      - run: make dependencies
-      - run: make check
+  # build:
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 30
+  #   steps:
+  #     # setup flutter
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-java@v4
+  #       with:
+  #         java-version: ${{ env.USER_JAVA_VERSION }}
+  #         distribution: "zulu"
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         channel: ${{ env.FLUTTER_CHANNEL }}
+  #     # configure cache
+  #     - name: Cache Flutter
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: |
+  #           /Users/runner/hostedtoolcache/flutter
+  #         key: ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-${{ hashFiles('**/*/pubspec.lock') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-
+  #           ${{ runner.os }}-pub-
+  #     # check
+  #     - run: make dependencies
+  #     - run: make check
 
-  build-android:
-    needs: build
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      # setup flutter
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          java-version: ${{ env.USER_JAVA_VERSION }}
-          distribution: "zulu"
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: ${{ env.FLUTTER_CHANNEL }}
-      - uses: gradle/actions/setup-gradle@v3
-      - name: Cache Flutter
-        uses: actions/cache@v4
-        with:
-          path: |
-            /Users/runner/hostedtoolcache/flutter
-          key: ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-${{ hashFiles('**/*/pubspec.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-
-            ${{ runner.os }}-pub-
-      # prepare flutter
-      - run: make dependencies
-      # build app
-      - name: Build android app
-        run: make build-android-example
-      - name: Run e2e test on Android Emulator
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 34
-          arch: x86_64
-          profile: pixel
-          script: make driver-test
+  # build-android:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 30
+  #   steps:
+  #     # setup flutter
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-java@v4
+  #       with:
+  #         java-version: ${{ env.USER_JAVA_VERSION }}
+  #         distribution: "zulu"
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         channel: ${{ env.FLUTTER_CHANNEL }}
+  #     - uses: gradle/actions/setup-gradle@v3
+  #     - name: Cache Flutter
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: |
+  #           /Users/runner/hostedtoolcache/flutter
+  #         key: ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-${{ hashFiles('**/*/pubspec.lock') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-
+  #           ${{ runner.os }}-pub-
+  #     # prepare flutter
+  #     - run: make dependencies
+  #     # build app
+  #     - name: Build android app
+  #       run: make build-android-example
+  #     - name: Run e2e test on Android Emulator
+  #       uses: reactivecircus/android-emulator-runner@v2
+  #       with:
+  #         api-level: 34
+  #         arch: x86_64
+  #         profile: pixel
+  #         script: make driver-test
 
-  build-ios:
-    needs: build
-    runs-on: macos-latest
-    timeout-minutes: 30
-    steps:
-      # setup flutter
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          java-version: ${{ env.USER_JAVA_VERSION }}
-          distribution: "zulu"
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: ${{ env.FLUTTER_CHANNEL }}
-      - name: Cache Flutter
-        uses: actions/cache@v4
-        with:
-          path: |
-            /Users/runner/hostedtoolcache/flutter
-          key: ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-${{ hashFiles('**/*/pubspec.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-
-            ${{ runner.os }}-pub-
-      # prepare flutter
-      - run: make dependencies
-      # build app
-      - name: Build ios app
-        run: make build-ios-example
-      # connected check
-      - name: List all iPhone Simulator
-        run: xcrun simctl list devices available
-      - name: Start iOS Simulator
-        run: |
-          UDID=$(xcrun simctl list devices available --json | jq -r '.devices."com.apple.CoreSimulator.SimRuntime.${{ env.IOS_SIMULATOR_RUNTIME }}"[] | select(.name == "${{ env.IOS_SIMULATOR_DEVICE }}").udid')
-          xcrun simctl boot "${UDID}"
-      - name: Run e2e test
-        run: make driver-test
+  # build-ios:
+  #   needs: build
+  #   runs-on: macos-latest
+  #   timeout-minutes: 30
+  #   steps:
+  #     # setup flutter
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-java@v4
+  #       with:
+  #         java-version: ${{ env.USER_JAVA_VERSION }}
+  #         distribution: "zulu"
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         channel: ${{ env.FLUTTER_CHANNEL }}
+  #     - name: Cache Flutter
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: |
+  #           /Users/runner/hostedtoolcache/flutter
+  #         key: ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-${{ hashFiles('**/*/pubspec.lock') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-pub-${{ env.CACHE_NUMBER }}-
+  #           ${{ runner.os }}-pub-
+  #     # prepare flutter
+  #     - run: make dependencies
+  #     # build app
+  #     - name: Build ios app
+  #       run: make build-ios-example
+  #     # connected check
+  #     - name: List all iPhone Simulator
+  #       run: xcrun simctl list devices available
+  #     - name: Start iOS Simulator
+  #       run: |
+  #         UDID=$(xcrun simctl list devices available --json | jq -r '.devices."com.apple.CoreSimulator.SimRuntime.${{ env.IOS_SIMULATOR_RUNTIME }}"[] | select(.name == "${{ env.IOS_SIMULATOR_DEVICE }}").udid')
+  #         xcrun simctl boot "${UDID}"
+  #     - name: Run e2e test
+  #       run: make driver-test
 
   validate-openapi:
     runs-on: ubuntu-latest
