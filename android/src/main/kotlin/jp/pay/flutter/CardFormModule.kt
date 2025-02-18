@@ -44,8 +44,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.atomic.AtomicReference
 
 internal class CardFormModule(
-    private val channel: MethodChannel,
-    private val register: PluginRegistry.Registrar?
+    private val channel: MethodChannel
 ) : PayjpTokenBackgroundHandler, PluginRegistry.ActivityResultListener {
 
     private val requestCodeCardForm = 13015
@@ -59,11 +58,7 @@ internal class CardFormModule(
           value?.addActivityResultListener(this)
       }
 
-    init {
-        register?.addActivityResultListener(this)
-    }
-
-    private fun currentActivity(): Activity? = register?.activity() ?: binding?.activity
+    private fun currentActivity(): Activity? = binding?.activity
 
     // handle MethodCall
 
@@ -106,12 +101,12 @@ internal class CardFormModule(
         }
         Payjp.cardForm().handleResult(data, object: PayjpCardFormResultCallback {
             override fun onResult(result: PayjpCardFormResult) {
-                if (result.isSuccess()) {
-                    channel.invokeMethod(ChannelContracts.ON_CARD_FORM_COMPLETED, null)
-                } else if (result.isCanceled()) {
-                    channel.invokeMethod(ChannelContracts.ON_CARD_FORM_CANCELED, null)
-                }
+            if (result.isSuccess()) {
+                channel.invokeMethod(ChannelContracts.ON_CARD_FORM_COMPLETED, null)
+            } else if (result.isCanceled()) {
+                channel.invokeMethod(ChannelContracts.ON_CARD_FORM_CANCELED, null)
             }
+        }
         })
         return true
     }

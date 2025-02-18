@@ -33,7 +33,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry.Registrar
 import jp.pay.android.Payjp
 import jp.pay.android.PayjpCardForm
 import jp.pay.android.PayjpConfiguration
@@ -46,11 +45,6 @@ import java.util.Locale
 class PayjpFlutterPlugin: MethodCallHandler, FlutterPlugin, ActivityAware {
   companion object {
     private const val CHANNEL_NAME = "payjp"
-    @Suppress("unused")
-    @JvmStatic
-    fun registerWith(registrar: Registrar) {
-      PayjpFlutterPlugin().setUpChannel(registrar.context(), registrar.messenger(), registrar)
-    }
   }
 
   private var channel: MethodChannel? = null
@@ -58,7 +52,7 @@ class PayjpFlutterPlugin: MethodCallHandler, FlutterPlugin, ActivityAware {
   private var cardFormModule: CardFormModule? = null
 
   override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
-    setUpChannel(binding.applicationContext, binding.binaryMessenger, null)
+    setUpChannel(binding.applicationContext, binding.binaryMessenger)
   }
 
   override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
@@ -90,13 +84,12 @@ class PayjpFlutterPlugin: MethodCallHandler, FlutterPlugin, ActivityAware {
    */
   private fun setUpChannel(
     applicationContext: Context,
-    messenger: BinaryMessenger,
-    register: Registrar?
+    messenger: BinaryMessenger
   ) {
     this.applicationContext = applicationContext
     channel = MethodChannel(messenger, CHANNEL_NAME).also {
       it.setMethodCallHandler(this)
-      cardFormModule = CardFormModule(it, register)
+      cardFormModule = CardFormModule(it)
     }
   }
 
