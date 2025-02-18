@@ -116,3 +116,34 @@ jobs:
           xcrun simctl boot "${UDID}"
       - name: Run e2e test
         run: make driver-test
+
+  validate-openapi:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tool/generator
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Cache Node.js modules
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/yarn
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.OS }}-node-
+          ${{ runner.OS }}-
+    - name: Install dependencies
+      run: yarn --frozen-lockfile
+    - name: yarn validate
+      run: yarn validate
+      env:
+        CI: true
