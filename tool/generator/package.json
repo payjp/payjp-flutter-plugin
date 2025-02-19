@@ -6,13 +6,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pull": "git submodule update",
     "bootstrap": "npm run generate && npm run fmt && npm run copy",
-    "validate": "openapi-generator-cli validate -i openapi/token-api.yaml",
+    "validate": "openapi-generator-cli validate -i token-api.yaml",
     "generate": "./generate.sh",
     "fmt": "dart format project/lib",
-    "copy": "cp -r project/lib/src/model/* ../../lib/src",
-    "postinstall": "npm run pull"
+    "copy": "cp -r project/lib/src/model/* ../../lib/src"
   },
   "author": "PAY.JP <support@pay.jp>",
   "license": "MIT",
