@@ -573,6 +573,29 @@ void main() {
       expect(CardFormType.cardDisplay.name, "cardDisplay");
     });
   });
+
+  group('three d secure', () {
+    test('should handle successful 3D secure process', () async {
+      const resourceId = 'tok_xxx';
+      final handler = Completer<ThreeDSecureProcessStatus>();
+
+      await Payjp.startThreeDSecure(
+        resourceId: resourceId,
+        onThreeDSecureProcessFinished: (status) {
+          handler.complete(status);
+          return;
+        },
+      );
+
+      await FakeNativeMessenger.sendMessage(MethodCall(
+        'onThreeDSecureProcessFinished',
+        'completed',
+      ));
+
+      expect(handler.future,
+          completion(equals(ThreeDSecureProcessStatus.completed)));
+    });
+  });
 }
 
 // ignore: avoid_classes_with_only_static_members

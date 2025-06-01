@@ -13,10 +13,18 @@ Future<void> showAlertDialog(
     {required BuildContext context,
     required String title,
     required String message,
-    String button = "OK"}) {
-  final titleText = Text(title);
+    String button = "OK",
+    Color? backgroundColor,
+    Color? textColor}) {
+  final titleText = Text(
+    title,
+    style: textColor != null ? TextStyle(color: textColor) : null,
+  );
   final content = SingleChildScrollView(
-    child: Text(message),
+    child: Text(
+      message,
+      style: textColor != null ? TextStyle(color: textColor) : null,
+    ),
   );
   final buttonText = Text(button);
   if (Platform.isIOS) {
@@ -37,6 +45,7 @@ Future<void> showAlertDialog(
         context: context,
         barrierDismissible: true,
         builder: (context) => AlertDialog(
+              backgroundColor: backgroundColor,
               title: titleText,
               content: content,
               actions: <Widget>[

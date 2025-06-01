@@ -27,6 +27,8 @@ typedef OnApplePayProducedTokenCallback = FutureOr<CallbackResult> Function(
 typedef OnApplePayFailedRequestTokenCallback = FutureOr<CallbackResultError>
     Function(ErrorInfo errorInfo);
 typedef OnApplePayCompletedCallback = void Function();
+typedef OnThreeDSecureProcessFinished = void Function(
+    ThreeDSecureProcessStatus);
 
 // ignore: avoid_classes_with_only_static_members
 /// Provides flutter bridge for PAY.JP.
@@ -38,6 +40,7 @@ class Payjp {
   static OnApplePayFailedRequestTokenCallback?
       _onApplePayFailedRequestTokenCallback;
   static OnApplePayCompletedCallback? _onApplePayCompletedCallback;
+  static OnThreeDSecureProcessFinished? _onThreeDSecureProcessFinishedCallback;
 
   @visibleForTesting
   static final MethodChannel channel = const MethodChannel('payjp')
@@ -114,6 +117,24 @@ class Payjp {
         break;
       case 'onApplePayCompleted':
         _onApplePayCompletedCallback?.call();
+        break;
+      case 'onThreeDSecureProcessFinished':
+        final ThreeDSecureProcessStatus status;
+        switch (call.arguments) {
+          case 'completed':
+            status = ThreeDSecureProcessStatus.completed;
+            break;
+          case 'canceled':
+            status = ThreeDSecureProcessStatus.canceled;
+            break;
+          case 'failed':
+            status = ThreeDSecureProcessStatus.failed;
+            break;
+          default:
+            status = ThreeDSecureProcessStatus.canceled;
+            break;
+        }
+        _onThreeDSecureProcessFinishedCallback?.call(status);
         break;
     }
     return null;
@@ -251,5 +272,21 @@ class Payjp {
       'requiredBillingAddress': requiredBillingAddress ?? false
     };
     await channel.invokeMethod('makeApplePayToken', params);
+  }
+
+  /// Start 3D Secure process.
+  /// resourceIdを使用して3Dセキュア処理を行います
+  ///
+  /// [resourceId]は処理対象のリソースIDを指定します（例：charge_xxxやcard_xxx）
+  /// [onThreeDSecureProcessFinished]は3Dセキュア処理が終了した時のコールバック
+  static Future startThreeDSecure({
+    required String resourceId,
+    OnThreeDSecureProcessFinished? onThreeDSecureProcessFinished,
+  }) async {
+    _onThreeDSecureProcessFinishedCallback = onThreeDSecureProcessFinished;
+    final params = <String, dynamic>{
+      'resourceId': resourceId,
+    };
+    await channel.invokeMethod('startThreeDSecureProcess', params);
   }
 }

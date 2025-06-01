@@ -29,8 +29,10 @@ internal object ChannelContracts {
     const val START_CARD_FORM = "startCardForm"
     const val SHOW_TOKEN_PROCESSING_ERROR = "showTokenProcessingError"
     const val COMPLETE_CARD_FORM = "completeCardForm"
+    const val START_THREE_D_SECURE_PROCESS = "startThreeDSecureProcess"
 
     const val ON_CARD_FORM_COMPLETED = "onCardFormCompleted"
     const val ON_CARD_FORM_CANCELED = "onCardFormCanceled"
     const val ON_CARD_FORM_PRODUCED_TOKEN = "onCardFormProducedToken"
+    const val ON_THREE_D_SECURE_PROCESS_FINISHED = "onThreeDSecureProcessFinished"
 }

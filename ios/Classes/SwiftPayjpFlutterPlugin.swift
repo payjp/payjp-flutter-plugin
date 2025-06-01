@@ -11,11 +11,13 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
     private let channel: FlutterMethodChannel
     private let cardFormModule: CardFormModuleType
     private let applePayModule: ApplePayModule
+    private let threeDSecureHandler: ThreeDSecureHandler
 
     init(channel: FlutterMethodChannel) {
         self.channel = channel
         self.cardFormModule = CardFormModule(channel: channel)
         self.applePayModule = ApplePayModule(channel: channel)
+        self.threeDSecureHandler = ThreeDSecureHandler(channel: channel)
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -147,6 +149,47 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
                                                      isSuccess: isSuccess,
                                                      errorMessage: errorMessage)
             }
+            break
+        case .startThreeDSecureProcess:
+            guard let resourceId = argsDictionary?["resourceId"] as? String else {
+                result(FlutterError(code: "INVALID_ARGUMENT", 
+                                   message: "resourceId is required", 
+                                   details: nil))
+                return
+            }
+            
+            let viewController: UIViewController?
+            
+            if #available(iOS 13.0, *) {
+                guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                      let window = windowScene.windows.first(where: { $0.isKeyWindow }) else {
+                    result(FlutterError(code: "VIEW_CONTROLLER_NOT_FOUND", 
+                                       message: "Could not find root view controller", 
+                                       details: nil))
+                    return
+                }
+                viewController = window.rootViewController
+            } else {
+                guard let window = UIApplication.shared.keyWindow else {
+                    result(FlutterError(code: "VIEW_CONTROLLER_NOT_FOUND", 
+                                       message: "Could not find root view controller", 
+                                       details: nil))
+                    return
+                }
+                viewController = window.rootViewController
+            }
+            
+            guard let rootViewController = viewController else {
+                result(FlutterError(code: "VIEW_CONTROLLER_NOT_FOUND", 
+                                   message: "Could not find root view controller", 
+                                   details: nil))
+                return
+            }
+            
+            let handler = ThreeDSecureProcessHandler.shared
+            handler.startThreeDSecureProcess(viewController: rootViewController, 
+                                          delegate: threeDSecureHandler, 
+                                          resourceId: resourceId)
             break
         }
     }

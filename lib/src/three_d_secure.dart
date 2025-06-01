@@ -10,3 +10,9 @@ class PayjpThreeDSecureRedirect {
   final String key;
   PayjpThreeDSecureRedirect({required this.url, required this.key});
 }
+
+enum ThreeDSecureProcessStatus {
+  completed,
+  canceled,
+  failed,
+}

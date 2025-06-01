@@ -16,7 +16,8 @@ enum ChannelMethodToNative: String {
     setFormStyle,
     isApplePayAvailable,
     makeApplePayToken,
-    completeApplePay
+    completeApplePay,
+    startThreeDSecureProcess
 }
 
 /// MethodCall from Native
@@ -26,5 +27,6 @@ enum ChannelMethodFromNative: String {
     onCardFormProducedToken,
     onApplePayProducedToken,
     onApplePayFailedRequestToken,
-    onApplePayCompleted
+    onApplePayCompleted,
+    onThreeDSecureProcessFinished
 }
