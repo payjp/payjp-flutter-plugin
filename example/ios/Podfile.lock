@@ -23,7 +23,7 @@ PODS:
     - GoogleUtilities/Privacy
   - integration_test (0.0.1):
     - Flutter
-  - payjp_flutter (0.7.5):
+  - payjp_flutter (0.7.7):
     - Flutter
     - GoogleUtilities/AppDelegateSwizzler (~> 8)
     - PAYJPFlutterCore (~> 2.2.1)
@@ -56,13 +56,13 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/payjp_flutter/ios"
 
 SPEC CHECKSUMS:
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
-  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
-  payjp_flutter: 5cf15ae9f966154eb37d036e9960c18f16da02a8
+  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
+  payjp_flutter: 2787fdc0395d0e7eed14b0d94073e662cc11381c
   PAYJPFlutterCore: 23ef3f4e66075b0069b9dbca495b1fa488ee8f5d
   PhoneNumberKit: a74155066daa6450475f6a029068eb919fb00d5d
 
-PODFILE CHECKSUM: 4e8f8b2be68aeea4c0d5beb6ff1e79fface1d048
+PODFILE CHECKSUM: cc1f88378b4bfcf93a6ce00d2c587857c6008d3b
 
 COCOAPODS: 1.16.2

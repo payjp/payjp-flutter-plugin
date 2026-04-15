@@ -126,7 +126,8 @@ class HomeScreenState extends State<HomeScreen> {
         onCardFormCompletedCallback: _onCardFormCompleted,
         onCardFormProducedTokenCallback: _onCardFormProducedToken,
         cardFormType: formType,
-        extraAttributes: extraAttributes);
+        extraAttributes: extraAttributes,
+        useThreeDSecure: true);
   }
 
   void _onStartApplePay() async {
