@@ -161,13 +161,14 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
     }
 }
 
+@available(iOS 13.0, *)
 extension SwiftPayjpFlutterPlugin: FlutterSceneLifeCycleDelegate {
-    @available(iOS 13.0, *)
     public func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) -> Bool {
         var handled = false
         for context in URLContexts {
             if ThreeDSecureProcessHandler.shared.completeThreeDSecureProcess(url: context.url) {
                 handled = true
+                break
             }
         }
         return handled
