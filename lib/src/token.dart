@@ -59,39 +59,60 @@ class _$TokenSerializer implements StructuredSerializer<Token> {
   final String wireName = r'Token';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, Token object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    Token object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[];
     result
       ..add(r'id')
-      ..add(serializers.serialize(object.id,
-          specifiedType: const FullType(String)));
+      ..add(
+        serializers.serialize(object.id, specifiedType: const FullType(String)),
+      );
     result
       ..add(r'card')
-      ..add(serializers.serialize(object.card,
-          specifiedType: const FullType(Card)));
+      ..add(
+        serializers.serialize(object.card, specifiedType: const FullType(Card)),
+      );
     result
       ..add(r'created')
-      ..add(serializers.serialize(object.created,
-          specifiedType: const FullType(int)));
+      ..add(
+        serializers.serialize(
+          object.created,
+          specifiedType: const FullType(int),
+        ),
+      );
     result
       ..add(r'livemode')
-      ..add(serializers.serialize(object.livemode,
-          specifiedType: const FullType(bool)));
+      ..add(
+        serializers.serialize(
+          object.livemode,
+          specifiedType: const FullType(bool),
+        ),
+      );
     result
       ..add(r'object')
-      ..add(serializers.serialize(object.object,
-          specifiedType: const FullType(String)));
+      ..add(
+        serializers.serialize(
+          object.object,
+          specifiedType: const FullType(String),
+        ),
+      );
     result
       ..add(r'used')
-      ..add(serializers.serialize(object.used,
-          specifiedType: const FullType(bool)));
+      ..add(
+        serializers.serialize(object.used, specifiedType: const FullType(bool)),
+      );
     return result;
   }
 
   @override
-  Token deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  Token deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TokenBuilder();
 
     final iterator = serialized.iterator;
@@ -102,28 +123,47 @@ class _$TokenSerializer implements StructuredSerializer<Token> {
       final Object? value = iterator.current;
       switch (key) {
         case r'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'card':
-          result.card.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Card)) as Card);
+          result.card.replace(
+            serializers.deserialize(value, specifiedType: const FullType(Card))
+                as Card,
+          );
           break;
         case r'created':
-          result.created = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+          result.created =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int;
           break;
         case r'livemode':
-          result.livemode = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+          result.livemode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool;
           break;
         case r'object':
-          result.object = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.object =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'used':
-          result.used = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+          result.used =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool;
           break;
       }
     }

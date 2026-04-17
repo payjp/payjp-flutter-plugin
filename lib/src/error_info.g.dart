@@ -15,26 +15,38 @@ class _$ErrorInfoSerializer implements StructuredSerializer<ErrorInfo> {
   final String wireName = 'ErrorInfo';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ErrorInfo object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ErrorInfo object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'errorType',
-      serializers.serialize(object.errorType,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.errorType,
+        specifiedType: const FullType(String),
+      ),
       'errorCode',
-      serializers.serialize(object.errorCode,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.errorCode,
+        specifiedType: const FullType(int),
+      ),
       'errorMessage',
-      serializers.serialize(object.errorMessage,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.errorMessage,
+        specifiedType: const FullType(String),
+      ),
     ];
 
     return result;
   }
 
   @override
-  ErrorInfo deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  ErrorInfo deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = new ErrorInfoBuilder();
 
     final iterator = serialized.iterator;
@@ -44,16 +56,28 @@ class _$ErrorInfoSerializer implements StructuredSerializer<ErrorInfo> {
       final Object? value = iterator.current;
       switch (key) {
         case 'errorType':
-          result.errorType = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.errorType =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'errorCode':
-          result.errorCode = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.errorCode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'errorMessage':
-          result.errorMessage = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.errorMessage =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -73,15 +97,18 @@ class _$ErrorInfo extends ErrorInfo {
   factory _$ErrorInfo([void Function(ErrorInfoBuilder)? updates]) =>
       (new ErrorInfoBuilder()..update(updates))._build();
 
-  _$ErrorInfo._(
-      {required this.errorType,
-      required this.errorCode,
-      required this.errorMessage})
-      : super._() {
+  _$ErrorInfo._({
+    required this.errorType,
+    required this.errorCode,
+    required this.errorMessage,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(errorType, r'ErrorInfo', 'errorType');
     BuiltValueNullFieldError.checkNotNull(errorCode, r'ErrorInfo', 'errorCode');
     BuiltValueNullFieldError.checkNotNull(
-        errorMessage, r'ErrorInfo', 'errorMessage');
+      errorMessage,
+      r'ErrorInfo',
+      'errorMessage',
+    );
   }
 
   @override
@@ -163,14 +190,25 @@ class ErrorInfoBuilder implements Builder<ErrorInfo, ErrorInfoBuilder> {
   ErrorInfo build() => _build();
 
   _$ErrorInfo _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         new _$ErrorInfo._(
-            errorType: BuiltValueNullFieldError.checkNotNull(
-                errorType, r'ErrorInfo', 'errorType'),
-            errorCode: BuiltValueNullFieldError.checkNotNull(
-                errorCode, r'ErrorInfo', 'errorCode'),
-            errorMessage: BuiltValueNullFieldError.checkNotNull(
-                errorMessage, r'ErrorInfo', 'errorMessage'));
+          errorType: BuiltValueNullFieldError.checkNotNull(
+            errorType,
+            r'ErrorInfo',
+            'errorType',
+          ),
+          errorCode: BuiltValueNullFieldError.checkNotNull(
+            errorCode,
+            r'ErrorInfo',
+            'errorCode',
+          ),
+          errorMessage: BuiltValueNullFieldError.checkNotNull(
+            errorMessage,
+            r'ErrorInfo',
+            'errorMessage',
+          ),
+        );
     replace(_$result);
     return _$result;
   }

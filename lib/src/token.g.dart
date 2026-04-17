@@ -23,14 +23,14 @@ class _$Token extends Token {
   factory _$Token([void Function(TokenBuilder)? updates]) =>
       (new TokenBuilder()..update(updates))._build();
 
-  _$Token._(
-      {required this.id,
-      required this.card,
-      required this.created,
-      required this.livemode,
-      required this.object,
-      required this.used})
-      : super._() {
+  _$Token._({
+    required this.id,
+    required this.card,
+    required this.created,
+    required this.livemode,
+    required this.object,
+    required this.used,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'Token', 'id');
     BuiltValueNullFieldError.checkNotNull(card, r'Token', 'card');
     BuiltValueNullFieldError.checkNotNull(created, r'Token', 'created');
@@ -146,18 +146,28 @@ class TokenBuilder implements Builder<Token, TokenBuilder> {
   _$Token _build() {
     _$Token _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           new _$Token._(
-              id: BuiltValueNullFieldError.checkNotNull(id, r'Token', 'id'),
-              card: card.build(),
-              created: BuiltValueNullFieldError.checkNotNull(
-                  created, r'Token', 'created'),
-              livemode: BuiltValueNullFieldError.checkNotNull(
-                  livemode, r'Token', 'livemode'),
-              object: BuiltValueNullFieldError.checkNotNull(
-                  object, r'Token', 'object'),
-              used: BuiltValueNullFieldError.checkNotNull(
-                  used, r'Token', 'used'));
+            id: BuiltValueNullFieldError.checkNotNull(id, r'Token', 'id'),
+            card: card.build(),
+            created: BuiltValueNullFieldError.checkNotNull(
+              created,
+              r'Token',
+              'created',
+            ),
+            livemode: BuiltValueNullFieldError.checkNotNull(
+              livemode,
+              r'Token',
+              'livemode',
+            ),
+            object: BuiltValueNullFieldError.checkNotNull(
+              object,
+              r'Token',
+              'object',
+            ),
+            used: BuiltValueNullFieldError.checkNotNull(used, r'Token', 'used'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -165,7 +175,10 @@ class TokenBuilder implements Builder<Token, TokenBuilder> {
         card.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'Token', _$failedField, e.toString());
+          r'Token',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

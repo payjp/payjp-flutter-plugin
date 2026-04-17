@@ -55,30 +55,30 @@ class _$Card extends Card {
   factory _$Card([void Function(CardBuilder)? updates]) =>
       (new CardBuilder()..update(updates))._build();
 
-  _$Card._(
-      {required this.id,
-      this.object,
-      this.created,
-      this.name,
-      this.last4,
-      this.expMonth,
-      this.expYear,
-      this.brand,
-      this.cvcCheck,
-      this.threeDSecureStatus,
-      this.fingerprint,
-      this.email,
-      this.phone,
-      this.addressState,
-      this.addressCity,
-      this.addressLine1,
-      this.addressLine2,
-      this.country,
-      this.addressZip,
-      this.addressZipCheck,
-      this.customer,
-      this.metadata})
-      : super._() {
+  _$Card._({
+    required this.id,
+    this.object,
+    this.created,
+    this.name,
+    this.last4,
+    this.expMonth,
+    this.expYear,
+    this.brand,
+    this.cvcCheck,
+    this.threeDSecureStatus,
+    this.fingerprint,
+    this.email,
+    this.phone,
+    this.addressState,
+    this.addressCity,
+    this.addressLine1,
+    this.addressLine2,
+    this.country,
+    this.addressZip,
+    this.addressZipCheck,
+    this.customer,
+    this.metadata,
+  }) : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'Card', 'id');
   }
 
@@ -317,30 +317,32 @@ class CardBuilder implements Builder<Card, CardBuilder> {
   Card build() => _build();
 
   _$Card _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         new _$Card._(
-            id: BuiltValueNullFieldError.checkNotNull(id, r'Card', 'id'),
-            object: object,
-            created: created,
-            name: name,
-            last4: last4,
-            expMonth: expMonth,
-            expYear: expYear,
-            brand: brand,
-            cvcCheck: cvcCheck,
-            threeDSecureStatus: threeDSecureStatus,
-            fingerprint: fingerprint,
-            email: email,
-            phone: phone,
-            addressState: addressState,
-            addressCity: addressCity,
-            addressLine1: addressLine1,
-            addressLine2: addressLine2,
-            country: country,
-            addressZip: addressZip,
-            addressZipCheck: addressZipCheck,
-            customer: customer,
-            metadata: metadata);
+          id: BuiltValueNullFieldError.checkNotNull(id, r'Card', 'id'),
+          object: object,
+          created: created,
+          name: name,
+          last4: last4,
+          expMonth: expMonth,
+          expYear: expYear,
+          brand: brand,
+          cvcCheck: cvcCheck,
+          threeDSecureStatus: threeDSecureStatus,
+          fingerprint: fingerprint,
+          email: email,
+          phone: phone,
+          addressState: addressState,
+          addressCity: addressCity,
+          addressLine1: addressLine1,
+          addressLine2: addressLine2,
+          country: country,
+          addressZip: addressZip,
+          addressZipCheck: addressZipCheck,
+          customer: customer,
+          metadata: metadata,
+        );
     replace(_$result);
     return _$result;
   }

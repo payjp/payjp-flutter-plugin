@@ -141,145 +141,236 @@ class _$CardSerializer implements StructuredSerializer<Card> {
   final String wireName = r'Card';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, Card object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    Card object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[];
     result
       ..add(r'id')
-      ..add(serializers.serialize(object.id,
-          specifiedType: const FullType(String)));
+      ..add(
+        serializers.serialize(object.id, specifiedType: const FullType(String)),
+      );
     if (object.object != null) {
       result
         ..add(r'object')
-        ..add(serializers.serialize(object.object,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.object,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.created != null) {
       result
         ..add(r'created')
-        ..add(serializers.serialize(object.created,
-            specifiedType: const FullType(int)));
+        ..add(
+          serializers.serialize(
+            object.created,
+            specifiedType: const FullType(int),
+          ),
+        );
     }
     if (object.name != null) {
       result
         ..add(r'name')
-        ..add(serializers.serialize(object.name,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.name,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.last4 != null) {
       result
         ..add(r'last4')
-        ..add(serializers.serialize(object.last4,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.last4,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.expMonth != null) {
       result
         ..add(r'exp_month')
-        ..add(serializers.serialize(object.expMonth,
-            specifiedType: const FullType(int)));
+        ..add(
+          serializers.serialize(
+            object.expMonth,
+            specifiedType: const FullType(int),
+          ),
+        );
     }
     if (object.expYear != null) {
       result
         ..add(r'exp_year')
-        ..add(serializers.serialize(object.expYear,
-            specifiedType: const FullType(int)));
+        ..add(
+          serializers.serialize(
+            object.expYear,
+            specifiedType: const FullType(int),
+          ),
+        );
     }
     if (object.brand != null) {
       result
         ..add(r'brand')
-        ..add(serializers.serialize(object.brand,
-            specifiedType: const FullType(CardBrand)));
+        ..add(
+          serializers.serialize(
+            object.brand,
+            specifiedType: const FullType(CardBrand),
+          ),
+        );
     }
     if (object.cvcCheck != null) {
       result
         ..add(r'cvc_check')
-        ..add(serializers.serialize(object.cvcCheck,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.cvcCheck,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.threeDSecureStatus != null) {
       result
         ..add(r'three_d_secure_status')
-        ..add(serializers.serialize(object.threeDSecureStatus,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.threeDSecureStatus,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.fingerprint != null) {
       result
         ..add(r'fingerprint')
-        ..add(serializers.serialize(object.fingerprint,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.fingerprint,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.email != null) {
       result
         ..add(r'email')
-        ..add(serializers.serialize(object.email,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.email,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.phone != null) {
       result
         ..add(r'phone')
-        ..add(serializers.serialize(object.phone,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.phone,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.addressState != null) {
       result
         ..add(r'address_state')
-        ..add(serializers.serialize(object.addressState,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.addressState,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.addressCity != null) {
       result
         ..add(r'address_city')
-        ..add(serializers.serialize(object.addressCity,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.addressCity,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.addressLine1 != null) {
       result
         ..add(r'address_line1')
-        ..add(serializers.serialize(object.addressLine1,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.addressLine1,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.addressLine2 != null) {
       result
         ..add(r'address_line2')
-        ..add(serializers.serialize(object.addressLine2,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.addressLine2,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.country != null) {
       result
         ..add(r'country')
-        ..add(serializers.serialize(object.country,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.country,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.addressZip != null) {
       result
         ..add(r'address_zip')
-        ..add(serializers.serialize(object.addressZip,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.addressZip,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.addressZipCheck != null) {
       result
         ..add(r'address_zip_check')
-        ..add(serializers.serialize(object.addressZipCheck,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.addressZipCheck,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.customer != null) {
       result
         ..add(r'customer')
-        ..add(serializers.serialize(object.customer,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(
+            object.customer,
+            specifiedType: const FullType(String),
+          ),
+        );
     }
     if (object.metadata != null) {
       result
         ..add(r'metadata')
-        ..add(serializers.serialize(object.metadata,
-            specifiedType: const FullType(JsonObject)));
+        ..add(
+          serializers.serialize(
+            object.metadata,
+            specifiedType: const FullType(JsonObject),
+          ),
+        );
     }
     return result;
   }
 
   @override
-  Card deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  Card deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = CardBuilder();
 
     final iterator = serialized.iterator;
@@ -290,92 +381,171 @@ class _$CardSerializer implements StructuredSerializer<Card> {
       final Object? value = iterator.current;
       switch (key) {
         case r'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'object':
-          result.object = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.object =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'created':
-          result.created = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+          result.created =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int;
           break;
         case r'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'last4':
-          result.last4 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.last4 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'exp_month':
-          result.expMonth = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+          result.expMonth =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int;
           break;
         case r'exp_year':
-          result.expYear = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+          result.expYear =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int;
           break;
         case r'brand':
-          result.brand = serializers.deserialize(value,
-              specifiedType: const FullType(CardBrand)) as CardBrand;
+          result.brand =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(CardBrand),
+                  )
+                  as CardBrand;
           break;
         case r'cvc_check':
-          result.cvcCheck = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.cvcCheck =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'three_d_secure_status':
-          result.threeDSecureStatus = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.threeDSecureStatus =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'fingerprint':
-          result.fingerprint = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.fingerprint =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'email':
-          result.email = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.email =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'phone':
-          result.phone = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.phone =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'address_state':
-          result.addressState = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.addressState =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'address_city':
-          result.addressCity = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.addressCity =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'address_line1':
-          result.addressLine1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.addressLine1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'address_line2':
-          result.addressLine2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.addressLine2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'country':
-          result.country = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.country =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'address_zip':
-          result.addressZip = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.addressZip =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'address_zip_check':
-          result.addressZipCheck = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.addressZipCheck =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'customer':
-          result.customer = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.customer =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String;
           break;
         case r'metadata':
-          result.metadata = serializers.deserialize(value,
-              specifiedType: const FullType(JsonObject)) as JsonObject;
+          result.metadata =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(JsonObject),
+                  )
+                  as JsonObject;
           break;
       }
     }
