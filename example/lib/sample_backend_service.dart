@@ -29,7 +29,8 @@ class ApiException implements Exception {
 
 Future<void> saveCard(Token token) async {
   if (backendUrl.isEmpty) {
-    final message = """
+    final message =
+        """
 `backendUrl` is not replaced yet.
 You can send token(${token.id}) to your own server to make Customer etc.
        """;

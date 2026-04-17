@@ -7,6 +7,7 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
         let channel = FlutterMethodChannel(name: "payjp", binaryMessenger: registrar.messenger())
         let instance = SwiftPayjpFlutterPlugin(channel: channel)
         registrar.addMethodCallDelegate(instance, channel: channel)
+        registrar.addSceneDelegate(instance)
     }
     private let channel: FlutterMethodChannel
     private let cardFormModule: CardFormModuleType
@@ -157,5 +158,19 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
         let g = CGFloat((hex & 0x0000FF00) >>  8) / 255.0
         let b = CGFloat(hex & 0x000000FF) / 255.0
         return UIColor(red: r, green: g, blue: b, alpha: a)
+    }
+}
+
+@available(iOS 13.0, *)
+extension SwiftPayjpFlutterPlugin: FlutterSceneLifeCycleDelegate {
+    public func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) -> Bool {
+        var handled = false
+        for context in URLContexts {
+            if ThreeDSecureProcessHandler.shared.completeThreeDSecureProcess(url: context.url) {
+                handled = true
+                break
+            }
+        }
+        return handled
     }
 }

@@ -20,12 +20,12 @@ import 'package:payjp_flutter/src/token.dart';
 
 typedef OnCardFormCompletedCallback = void Function();
 typedef OnCardFormCanceledCallback = void Function();
-typedef OnCardFormProducedTokenCallback = FutureOr<CallbackResult> Function(
-    Token token);
-typedef OnApplePayProducedTokenCallback = FutureOr<CallbackResult> Function(
-    Token token);
-typedef OnApplePayFailedRequestTokenCallback = FutureOr<CallbackResultError>
-    Function(ErrorInfo errorInfo);
+typedef OnCardFormProducedTokenCallback =
+    FutureOr<CallbackResult> Function(Token token);
+typedef OnApplePayProducedTokenCallback =
+    FutureOr<CallbackResult> Function(Token token);
+typedef OnApplePayFailedRequestTokenCallback =
+    FutureOr<CallbackResultError> Function(ErrorInfo errorInfo);
 typedef OnApplePayCompletedCallback = void Function();
 
 // ignore: avoid_classes_with_only_static_members
@@ -36,7 +36,7 @@ class Payjp {
   static OnCardFormProducedTokenCallback? _onCardFormProducedTokenCallback;
   static OnApplePayProducedTokenCallback? _onApplePayProducedTokenCallback;
   static OnApplePayFailedRequestTokenCallback?
-      _onApplePayFailedRequestTokenCallback;
+  _onApplePayFailedRequestTokenCallback;
   static OnApplePayCompletedCallback? _onApplePayCompletedCallback;
 
   @visibleForTesting
@@ -56,8 +56,10 @@ class Payjp {
         break;
       case 'onCardFormProducedToken':
         CallbackResult result = CallbackResultOk();
-        final token =
-            _serializers.deserializeWith(Token.serializer, call.arguments)!;
+        final token = _serializers.deserializeWith(
+          Token.serializer,
+          call.arguments,
+        )!;
         final resultFutureOr = _onCardFormProducedTokenCallback?.call(token);
         if (resultFutureOr != null) {
           if (resultFutureOr is Future<CallbackResult>) {
@@ -74,8 +76,10 @@ class Payjp {
         break;
       case 'onApplePayProducedToken':
         CallbackResult result = CallbackResultOk();
-        final token =
-            _serializers.deserializeWith(Token.serializer, call.arguments)!;
+        final token = _serializers.deserializeWith(
+          Token.serializer,
+          call.arguments,
+        )!;
         final resultFutureOr = _onApplePayProducedTokenCallback?.call(token);
         if (resultFutureOr != null) {
           if (resultFutureOr is Future<CallbackResult>) {
@@ -85,19 +89,23 @@ class Payjp {
           }
           final params = <String, dynamic>{
             'isSuccess': result.isOk(),
-            'errorMessage':
-                result is CallbackResultError ? result.message : null,
+            'errorMessage': result is CallbackResultError
+                ? result.message
+                : null,
           };
           await channel.invokeMethod('completeApplePay', params);
         }
         break;
       case 'onApplePayFailedRequestToken':
-        final errorInfo =
-            _serializers.deserializeWith(ErrorInfo.serializer, call.arguments)!;
+        final errorInfo = _serializers.deserializeWith(
+          ErrorInfo.serializer,
+          call.arguments,
+        )!;
         var message = errorInfo.errorMessage;
         CallbackResultError result;
-        final resultFutureOr =
-            _onApplePayFailedRequestTokenCallback?.call(errorInfo);
+        final resultFutureOr = _onApplePayFailedRequestTokenCallback?.call(
+          errorInfo,
+        );
         if (resultFutureOr != null) {
           if (resultFutureOr is Future<CallbackResultError>) {
             result = await resultFutureOr;
@@ -128,17 +136,18 @@ class Payjp {
   /// You can also set [locale] manually, which is following the device setting
   /// by default. [threeDSecureRedirect] is required only if you support 3D Secure.
   /// You can register key and url in [PAY.JP dashboard](https://pay.jp/d/settings) if activated.
-  static Future init(
-      {required String publicKey,
-      bool debugEnabled = false,
-      Locale? locale,
-      PayjpThreeDSecureRedirect? threeDSecureRedirect}) async {
+  static Future init({
+    required String publicKey,
+    bool debugEnabled = false,
+    Locale? locale,
+    PayjpThreeDSecureRedirect? threeDSecureRedirect,
+  }) async {
     final params = <String, dynamic>{
       'publicKey': publicKey,
       'debugEnabled': debugEnabled,
       'locale': locale?.toLanguageTag(),
       'threeDSecureRedirectUrl': threeDSecureRedirect?.url,
-      'threeDSecureRedirectKey': threeDSecureRedirect?.key
+      'threeDSecureRedirectKey': threeDSecureRedirect?.key,
     };
     await channel.invokeMethod('initialize', params);
   }
@@ -150,22 +159,25 @@ class Payjp {
   /// [tenantId] is a parameter only for platform API.
   /// [cardFormType] is type of CardForm.(default MultiLine)
   /// [extraAttributes] is a list of extra attributes for card form. (default Email and Phone)
-  static Future startCardForm(
-      {OnCardFormCanceledCallback? onCardFormCanceledCallback,
-      OnCardFormCompletedCallback? onCardFormCompletedCallback,
-      OnCardFormProducedTokenCallback? onCardFormProducedTokenCallback,
-      String? tenantId,
-      CardFormType cardFormType = CardFormType.multiLine,
-      List<ExtraAttribute>? extraAttributes,
-      bool? useThreeDSecure}) async {
+  static Future startCardForm({
+    OnCardFormCanceledCallback? onCardFormCanceledCallback,
+    OnCardFormCompletedCallback? onCardFormCompletedCallback,
+    OnCardFormProducedTokenCallback? onCardFormProducedTokenCallback,
+    String? tenantId,
+    CardFormType cardFormType = CardFormType.multiLine,
+    List<ExtraAttribute>? extraAttributes,
+    bool? useThreeDSecure,
+  }) async {
     _onCardFormCanceledCallback = onCardFormCanceledCallback;
     _onCardFormCompletedCallback = onCardFormCompletedCallback;
     _onCardFormProducedTokenCallback = onCardFormProducedTokenCallback;
     extraAttributes ??= [ExtraAttributeEmail(), ExtraAttributePhone()];
-    final extraAttributesEmail =
-        extraAttributes.whereType<ExtraAttributeEmail>().firstOrNull;
-    final extraAttributesPhone =
-        extraAttributes.whereType<ExtraAttributePhone>().firstOrNull;
+    final extraAttributesEmail = extraAttributes
+        .whereType<ExtraAttributeEmail>()
+        .firstOrNull;
+    final extraAttributesPhone = extraAttributes
+        .whereType<ExtraAttributePhone>()
+        .firstOrNull;
     final params = <String, dynamic>{
       'tenantId': tenantId,
       'cardFormType': cardFormType.name,
@@ -174,7 +186,7 @@ class Payjp {
       'extraAttributesPhoneEnabled': extraAttributesPhone != null,
       'extraAttributesPhonePresetRegion': extraAttributesPhone?.presetRegion,
       'extraAttributesPhonePresetNumber': extraAttributesPhone?.presetNumber,
-      'useThreeDSecure': useThreeDSecure ?? false
+      'useThreeDSecure': useThreeDSecure ?? false,
     };
     await channel.invokeMethod('startCardForm', params);
   }
@@ -186,21 +198,20 @@ class Payjp {
 
   /// Keep displaying card form, and show [message] as error message.
   static Future showTokenProcessingError(String message) async {
-    final params = <String, dynamic>{
-      'message': message,
-    };
+    final params = <String, dynamic>{'message': message};
     await channel.invokeMethod('showTokenProcessingError', params);
   }
 
   /// Set CardForm Style for iOS.
-  static Future setIOSCardFormStyle(
-      {Color? labelTextColor,
-      Color? inputTextColor,
-      Color? errorTextColor,
-      Color? tintColor,
-      Color? inputFieldBackgroundColor,
-      Color? submitButtonColor,
-      Color? highlightColor}) async {
+  static Future setIOSCardFormStyle({
+    Color? labelTextColor,
+    Color? inputTextColor,
+    Color? errorTextColor,
+    Color? tintColor,
+    Color? inputFieldBackgroundColor,
+    Color? submitButtonColor,
+    Color? highlightColor,
+  }) async {
     final params = <String, dynamic>{
       'labelTextColor': labelTextColor?.value, // ignore: deprecated_member_use
       'inputTextColor': inputTextColor?.value, // ignore: deprecated_member_use
@@ -227,17 +238,17 @@ class Payjp {
   /// to send PAY.JP token to your server.
   ///
   /// [requiredBillingAddress] flag is false by default.
-  static Future makeApplePayToken(
-      {required String appleMerchantId,
-      required String currencyCode,
-      required String countryCode,
-      required String summaryItemLabel,
-      required String summaryItemAmount,
-      bool? requiredBillingAddress,
-      OnApplePayProducedTokenCallback? onApplePayProducedTokenCallback,
-      OnApplePayFailedRequestTokenCallback?
-          onApplePayFailedRequestTokenCallback,
-      OnApplePayCompletedCallback? onApplePayCompletedCallback}) async {
+  static Future makeApplePayToken({
+    required String appleMerchantId,
+    required String currencyCode,
+    required String countryCode,
+    required String summaryItemLabel,
+    required String summaryItemAmount,
+    bool? requiredBillingAddress,
+    OnApplePayProducedTokenCallback? onApplePayProducedTokenCallback,
+    OnApplePayFailedRequestTokenCallback? onApplePayFailedRequestTokenCallback,
+    OnApplePayCompletedCallback? onApplePayCompletedCallback,
+  }) async {
     _onApplePayProducedTokenCallback = onApplePayProducedTokenCallback;
     _onApplePayFailedRequestTokenCallback =
         onApplePayFailedRequestTokenCallback;
@@ -248,7 +259,7 @@ class Payjp {
       'countryCode': countryCode,
       'summaryItemLabel': summaryItemLabel,
       'summaryItemAmount': summaryItemAmount,
-      'requiredBillingAddress': requiredBillingAddress ?? false
+      'requiredBillingAddress': requiredBillingAddress ?? false,
     };
     await channel.invokeMethod('makeApplePayToken', params);
   }
