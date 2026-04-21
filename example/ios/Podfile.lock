@@ -23,7 +23,7 @@ PODS:
     - GoogleUtilities/Privacy
   - integration_test (0.0.1):
     - Flutter
-  - payjp_flutter (0.7.7):
+  - payjp_flutter (0.7.8):
     - Flutter
     - GoogleUtilities/AppDelegateSwizzler (~> 8)
     - PAYJPFlutterCore (~> 2.2.1)
@@ -59,7 +59,7 @@ SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
   integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
-  payjp_flutter: 2787fdc0395d0e7eed14b0d94073e662cc11381c
+  payjp_flutter: f27a9c31f580d135e21621f2b92235d850efa8ed
   PAYJPFlutterCore: 23ef3f4e66075b0069b9dbca495b1fa488ee8f5d
   PhoneNumberKit: a74155066daa6450475f6a029068eb919fb00d5d
 

@@ -1,3 +1,7 @@
+## 0.7.8
+
+- Fix: Resolved an app freeze during 3D Secure authentication on iOS with Flutter 3.38+. [#104](https://github.com/payjp/payjp-flutter-plugin/pull/104)
+
 ## 0.7.7
 
 - Update payjp-android to [2.2.1](https://github.com/payjp/payjp-android/releases/tag/2.2.1).
