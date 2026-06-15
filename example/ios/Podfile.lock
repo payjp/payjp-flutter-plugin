@@ -1,24 +1,24 @@
 PODS:
   - Flutter (1.0.0)
-  - GoogleUtilities/AppDelegateSwizzler (8.0.2):
+  - GoogleUtilities/AppDelegateSwizzler (8.1.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Environment (8.0.2):
+  - GoogleUtilities/Environment (8.1.0):
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Logger (8.0.2):
+  - GoogleUtilities/Logger (8.1.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Network (8.0.2):
+  - GoogleUtilities/Network (8.1.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Privacy
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (8.0.2)":
+  - "GoogleUtilities/NSData+zlib (8.1.0)":
     - GoogleUtilities/Privacy
-  - GoogleUtilities/Privacy (8.0.2)
-  - GoogleUtilities/Reachability (8.0.2):
+  - GoogleUtilities/Privacy (8.1.0)
+  - GoogleUtilities/Reachability (8.1.0):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
   - integration_test (0.0.1):
@@ -26,14 +26,14 @@ PODS:
   - payjp_flutter (0.7.8):
     - Flutter
     - GoogleUtilities/AppDelegateSwizzler (~> 8)
-    - PAYJPFlutterCore (~> 2.2.1)
-  - PAYJPFlutterCore (2.2.1):
+    - PAYJPFlutterCore (~> 2.2.3)
+  - PAYJPFlutterCore (2.2.3):
     - PhoneNumberKit (~> 4.0.0)
-  - PhoneNumberKit (4.0.1):
-    - PhoneNumberKit/PhoneNumberKitCore (= 4.0.1)
-    - PhoneNumberKit/UIKit (= 4.0.1)
-  - PhoneNumberKit/PhoneNumberKitCore (4.0.1)
-  - PhoneNumberKit/UIKit (4.0.1):
+  - PhoneNumberKit (4.0.3):
+    - PhoneNumberKit/PhoneNumberKitCore (= 4.0.3)
+    - PhoneNumberKit/UIKit (= 4.0.3)
+  - PhoneNumberKit/PhoneNumberKitCore (4.0.3)
+  - PhoneNumberKit/UIKit (4.0.3):
     - PhoneNumberKit/PhoneNumberKitCore
 
 DEPENDENCIES:
@@ -57,11 +57,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
+  GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
   integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
-  payjp_flutter: f27a9c31f580d135e21621f2b92235d850efa8ed
-  PAYJPFlutterCore: 23ef3f4e66075b0069b9dbca495b1fa488ee8f5d
-  PhoneNumberKit: a74155066daa6450475f6a029068eb919fb00d5d
+  payjp_flutter: 716be1dd9142369b31e076d5bd3423211049027c
+  PAYJPFlutterCore: 641c84041d89a0a283ac58fdc5bd280ddd94d4cb
+  PhoneNumberKit: 1695265e1dbce1d0516418ca10f32d1ba6700b5d
 
 PODFILE CHECKSUM: cc1f88378b4bfcf93a6ce00d2c587857c6008d3b
 
