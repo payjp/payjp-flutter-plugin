@@ -21,9 +21,7 @@ PODS:
   - GoogleUtilities/Reachability (8.1.0):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - integration_test (0.0.1):
-    - Flutter
-  - payjp_flutter (0.7.8):
+  - payjp_flutter (0.7.9):
     - Flutter
     - GoogleUtilities/AppDelegateSwizzler (~> 8)
     - PAYJPFlutterCore (~> 2.2.3)
@@ -38,7 +36,6 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - payjp_flutter (from `.symlinks/plugins/payjp_flutter/ios`)
 
 SPEC REPOS:
@@ -50,16 +47,13 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  integration_test:
-    :path: ".symlinks/plugins/integration_test/ios"
   payjp_flutter:
     :path: ".symlinks/plugins/payjp_flutter/ios"
 
 SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
-  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
-  payjp_flutter: 716be1dd9142369b31e076d5bd3423211049027c
+  payjp_flutter: 499d0b1fc737db23fe53319dc3c3e82f0a445202
   PAYJPFlutterCore: 641c84041d89a0a283ac58fdc5bd280ddd94d4cb
   PhoneNumberKit: 1695265e1dbce1d0516418ca10f32d1ba6700b5d
 

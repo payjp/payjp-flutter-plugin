@@ -1,3 +1,10 @@
+## 0.7.9
+
+* Update GitHub Actions to Node.js 24 compatible versions
+    * [#107](https://github.com/payjp/payjp-flutter-plugin/pull/107)
+* Native SDK Updates (iOS / Android)
+    * [#108](https://github.com/payjp/payjp-flutter-plugin/pull/108)
+
 ## 0.7.8
 
 - Fix: Resolved an app freeze during 3D Secure authentication on iOS with Flutter 3.38+. [#104](https://github.com/payjp/payjp-flutter-plugin/pull/104)
