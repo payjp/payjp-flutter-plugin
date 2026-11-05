@@ -4,6 +4,9 @@ analyzer:
     - "android"
     - "tool"
     - "build"
+    - build/**
+    - android/**
+    - ios/**
 
 linter:
   rules:
@@ -65,7 +68,6 @@ linter:
     - use_to_and_as_if_applicable
     # libraries
     # classes
-    - one_member_abstracts # avoid
     - avoid_classes_with_only_static_members # avoid
     # constructors
     - prefer_constructors_over_static_methods
@@ -79,9 +81,7 @@ linter:
     - avoid_types_on_closure_parameters # avoid
     - avoid_return_types_on_setters
     - prefer_generic_function_type_aliases
-    - avoid_private_typedef_functions # prefer
     # parameters
     - avoid_positional_boolean_parameters # avoid
     # equality
     - hash_and_equals
-    - avoid_null_checks_in_equality_operators

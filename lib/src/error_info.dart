@@ -16,6 +16,6 @@ abstract class ErrorInfo implements Built<ErrorInfo, ErrorInfoBuilder> {
   String get errorMessage;
 
   ErrorInfo._();
-  factory ErrorInfo([updates(ErrorInfoBuilder b)]) = _$ErrorInfo;
+  factory ErrorInfo([void Function(ErrorInfoBuilder b)? updates]) = _$ErrorInfo;
   static Serializer<ErrorInfo> get serializer => _$errorInfoSerializer;
 }
