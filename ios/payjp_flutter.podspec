@@ -17,14 +17,13 @@ A Flutter plugin for PAY.JP Mobile SDK.
   s.author           = { 'PAY.JP (https://pay.jp)' => 'support@pay.jp' }
   s.swift_version    = '5.0'
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
-  s.public_header_files = 'Classes/**/*.h'
+  s.source_files = 'payjp_flutter/Sources/payjp_flutter/**/*.swift'
   s.static_framework = true
   s.dependency 'PAYJPFlutterCore', "~> #{payjp_sdk['ios']}"
   s.dependency 'GoogleUtilities/AppDelegateSwizzler', '~> 8'
   s.dependency 'Flutter'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
 
-  s.ios.deployment_target = '12.0'
+  s.ios.deployment_target = '13.0'
 end
 
