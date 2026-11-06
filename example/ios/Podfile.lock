@@ -1,61 +1,15 @@
 PODS:
   - Flutter (1.0.0)
-  - GoogleUtilities/AppDelegateSwizzler (8.1.0):
-    - GoogleUtilities/Environment
-    - GoogleUtilities/Logger
-    - GoogleUtilities/Network
-    - GoogleUtilities/Privacy
-  - GoogleUtilities/Environment (8.1.0):
-    - GoogleUtilities/Privacy
-  - GoogleUtilities/Logger (8.1.0):
-    - GoogleUtilities/Environment
-    - GoogleUtilities/Privacy
-  - GoogleUtilities/Network (8.1.0):
-    - GoogleUtilities/Logger
-    - "GoogleUtilities/NSData+zlib"
-    - GoogleUtilities/Privacy
-    - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (8.1.0)":
-    - GoogleUtilities/Privacy
-  - GoogleUtilities/Privacy (8.1.0)
-  - GoogleUtilities/Reachability (8.1.0):
-    - GoogleUtilities/Logger
-    - GoogleUtilities/Privacy
-  - payjp_flutter (0.7.9):
-    - Flutter
-    - GoogleUtilities/AppDelegateSwizzler (~> 8)
-    - PAYJPFlutterCore (~> 2.2.4)
-  - PAYJPFlutterCore (2.2.4):
-    - PhoneNumberKit (~> 4.0.0)
-  - PhoneNumberKit (4.0.3):
-    - PhoneNumberKit/PhoneNumberKitCore (= 4.0.3)
-    - PhoneNumberKit/UIKit (= 4.0.3)
-  - PhoneNumberKit/PhoneNumberKitCore (4.0.3)
-  - PhoneNumberKit/UIKit (4.0.3):
-    - PhoneNumberKit/PhoneNumberKitCore
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - payjp_flutter (from `.symlinks/plugins/payjp_flutter/ios`)
-
-SPEC REPOS:
-  trunk:
-    - GoogleUtilities
-    - PAYJPFlutterCore
-    - PhoneNumberKit
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  payjp_flutter:
-    :path: ".symlinks/plugins/payjp_flutter/ios"
 
 SPEC CHECKSUMS:
   Flutter: 71a624a5bc0c04062bf19101d501e466baf2fb47
-  GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
-  payjp_flutter: 577141abde74e01668a5875f08d72a4b65ade54c
-  PAYJPFlutterCore: 6a7bdcdc49bdab55b75a7dbb8238724ca3b2d64e
-  PhoneNumberKit: 1695265e1dbce1d0516418ca10f32d1ba6700b5d
 
 PODFILE CHECKSUM: 57c8aed26fba39d3ec9424816221f294a07c58eb
 

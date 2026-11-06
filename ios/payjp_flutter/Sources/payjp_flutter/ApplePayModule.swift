@@ -5,6 +5,7 @@
 //  Created by Tatsuya Kitagawa on 2019/12/27.
 //
 
+import Flutter
 import Foundation
 import PAYJP
 import PassKit
