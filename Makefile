@@ -4,6 +4,7 @@ dependencies:
 
 .PHONY: check
 check:
+	tool/check_sdk_version.sh
 	dart format --set-exit-if-changed -o none lib/ example/lib
 	flutter analyze
 	flutter test

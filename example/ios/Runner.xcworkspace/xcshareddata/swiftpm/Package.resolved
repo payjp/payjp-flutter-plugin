@@ -1,0 +1,32 @@
+{
+  "pins" : [
+    {
+      "identity" : "googleutilities",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/google/GoogleUtilities.git",
+      "state" : {
+        "revision" : "5459ee5603def3db0fe14ca522185f42c48d978e",
+        "version" : "8.1.5"
+      }
+    },
+    {
+      "identity" : "payjp-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/payjp/payjp-ios.git",
+      "state" : {
+        "revision" : "85a0e09c0fada53620711b09a9e0acf4490c7bc7",
+        "version" : "2.2.4"
+      }
+    },
+    {
+      "identity" : "phonenumberkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/marmelroy/PhoneNumberKit.git",
+      "state" : {
+        "revision" : "169ab10234347fb19b37441f2867ace896a284b0",
+        "version" : "4.3.0"
+      }
+    }
+  ],
+  "version" : 2
+}

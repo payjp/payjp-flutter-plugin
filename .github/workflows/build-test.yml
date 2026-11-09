@@ -12,7 +12,7 @@ env:
   FLUTTER_CHANNEL: stable
   CACHE_NUMBER: 0 # increment to truncate cache
   IOS_SIMULATOR_DEVICE: iPhone 17 Pro
-  IOS_SIMULATOR_RUNTIME: iOS-26-0
+  IOS_SIMULATOR_RUNTIME: iOS-26-5
   USER_JAVA_VERSION: 17
 
 jobs:
@@ -90,8 +90,12 @@ jobs:
 
   build-ios:
     needs: build
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        swift-package-manager: [true, false]
     steps:
       # setup flutter
       - uses: actions/checkout@v6
@@ -111,6 +115,8 @@ jobs:
           key: ${{ runner.os }}-pub-${{ env.FLUTTER_VERSION }}-${{ env.CACHE_NUMBER }}-${{ hashFiles('**/*/pubspec.lock') }}
           restore-keys: |
             ${{ runner.os }}-pub-${{ env.FLUTTER_VERSION }}-${{ env.CACHE_NUMBER }}-
+      - name: Configure Swift Package Manager
+        run: flutter config --${{ matrix.swift-package-manager && 'enable' || 'no-enable' }}-swift-package-manager
       # prepare flutter
       - run: make dependencies
       # build app

@@ -2,10 +2,10 @@ import Flutter
 import UIKit
 import PAYJP
 
-public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
+public class PayjpFlutterPlugin: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "payjp", binaryMessenger: registrar.messenger())
-        let instance = SwiftPayjpFlutterPlugin(channel: channel)
+        let instance = PayjpFlutterPlugin(channel: channel)
         registrar.addMethodCallDelegate(instance, channel: channel)
         registrar.addSceneDelegate(instance)
     }
@@ -42,7 +42,7 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
                                                      redirectURLKey: tdsRedirectKey)
                 }
             }
-            PayjpAppDelegateInterceptor.sharedInstance()
+            _ = PayjpAppDelegateInterceptor.sharedInstance
             result(nil)
             break
         case .startCardForm:
@@ -162,7 +162,7 @@ public class SwiftPayjpFlutterPlugin: NSObject, FlutterPlugin {
 }
 
 @available(iOS 13.0, *)
-extension SwiftPayjpFlutterPlugin: FlutterSceneLifeCycleDelegate {
+extension PayjpFlutterPlugin: FlutterSceneLifeCycleDelegate {
     public func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) -> Bool {
         var handled = false
         for context in URLContexts {
