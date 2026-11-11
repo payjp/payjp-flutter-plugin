@@ -1,3 +1,12 @@
+
+## 0.7.10
+
+* Support Swift Package Manager on iOS (CocoaPods is still supported)
+    * Raise the minimum iOS deployment target to 13.0
+    * [#113](https://github.com/payjp/payjp-flutter-plugin/pull/113)
+* Update the example app and CI to Flutter 3.47.8
+    * [#112](https://github.com/payjp/payjp-flutter-plugin/pull/112)
+
 ## 0.7.9
 
 * Update GitHub Actions to Node.js 24 compatible versions
